@@ -1,0 +1,30 @@
+{
+  "type": "choice",
+  "keys": [
+    "tera_type"
+  ],
+  "default": "none",
+  "choices": [
+    "tera_bug",
+    "tera_dark",
+    "tera_dragon",
+    "tera_electric",
+    "tera_fairy",
+    "tera_fighting",
+    "tera_fire",
+    "tera_flying",
+    "tera_ghost",
+    "tera_grass",
+    "tera_ground",
+    "tera_ice",
+    "tera_normal",
+    "tera_poison",
+    "tera_psychic",
+    "tera_rock",
+    "tera_steel",
+    "tera_stellar",
+    "tera_water"
+  ],
+  "isAspect": true,
+  "aspectFormat": "{{choice}}"
+}

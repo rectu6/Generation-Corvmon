@@ -1,0 +1,12 @@
+{
+  "type": "choice",
+  "keys": ["deoxys_form"],
+  "default": "false",
+  "choices": [
+    "attack",
+    "defense",
+    "speed"
+  ],
+  "isAspect": true,
+  "aspectFormat": "{{choice}}"
+}

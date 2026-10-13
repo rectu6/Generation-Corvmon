@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "biomesoplenty:visceral_heap",
+      "required": false
+    },
+    {
+      "id": "biomesoplenty:erupting_inferno",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:brimstone_caverns",
+      "required": false
+    },
+    {
+      "id": "biomeswevegone:wailing_garth",
+      "required": false
+    },
+    {
+      "id": "incendium:toxic_heap",
+      "required": false
+    }
+  ]
+}

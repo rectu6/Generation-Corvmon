@@ -1,0 +1,47 @@
+modLoader="kotlinforforge"
+loaderVersion="[5.3,)"
+license="GNU GPL 3.0"
+issueTrackerURL="https://github.com/GenerationsMod/Generations-Core/issues"
+
+[[mods]]
+modId="generations_core"
+version="${version}"
+displayName="Generations-Core"
+authors="Joseph T. McQuigg (JT122406), Waterpicker, Stampede"
+credits="Generations Development Team"
+logoFile="generations.png"
+catalogueImageIcon="generations.png"
+description="${description}"
+
+[[accessTransformers]]
+file="META-INF/accesstransformer.cfg"
+
+[[mixins]]
+config="GenerationsCore-common.mixins.json"
+
+[[dependencies.generations_core]]
+   modId="neoforge"
+   mandatory=true
+   versionRange="[${neoforge},)"
+   ordering="NONE"
+   side="BOTH"
+
+[[dependencies.generations_core]]
+   modId="minecraft"
+   mandatory=true
+   versionRange="[${minecraft},)"
+   ordering="NONE"
+   side="BOTH"
+
+[[dependencies.generations_core]]
+   modId="cobblemon"
+   mandatory=true
+   versionRange="[${cobblemon}]"
+   ordering="AFTER"
+   side="BOTH"
+
+#[[dependencies.generations_core]]
+#   modId="wthit"
+#   mandatory=false
+#   versionRange="[${wthit},)"
+#   ordering="NONE"

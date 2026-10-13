@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "id": "generations_core",
+  "version": "${version}",
+  "name": "Generations-Core",
+  "description": "${description}",
+  "authors": ["Joseph T. McQuigg (JT122406)", "Waterpicker"],
+  "contributors": ["Greg_lor, Hydos, Dysthymic"],
+  "icon": "generations.png",
+  "license": "GNU GPL 3.0",
+  "environment": "*",
+  "entrypoints": {
+    "preLaunch": [
+      {
+        "adapter": "kotlin",
+        "value": "generations.gg.generations.core.generationscore.fabric.GenerationsCoreFabric"
+      }],
+    "main": [
+      {
+        "adapter": "kotlin",
+        "value": "generations.gg.generations.core.generationscore.fabric.GenerationsCoreFabric"
+      }
+    ],
+    "client" : [
+      {
+        "adapter": "kotlin",
+        "value": "generations.gg.generations.core.generationscore.fabric.client.GenerationsCoreClientFabric"
+      }
+    ],
+    "fabric-datagen": ["generations.gg.generations.core.generationscore.fabric.datagen.DataGen"],
+    "rei_client": [
+      "generations.gg.generations.core.generationscore.common.compat.rei.ReiCompatClient"
+    ],
+    "jei_mod_plugin": [
+      "generations.gg.generations.core.generationscore.common.compat.jei.GenerationsCoreJeiCompat"
+    ]
+  },
+  "mixins": [
+    "GenerationsCore.mixins.json",
+    "GenerationsCore-common.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${fabricloader}",
+    "minecraft": ">=${minecraft}",
+    "cobblemon": "=${cobblemon}"
+  },
+  "suggests": {
+    "wthit": ">=${wthit}"
+  },
+  "custom": {
+    "catalogue": {
+      "icon": {
+        "image": "generations.png"
+      }
+    }
+  }
+}

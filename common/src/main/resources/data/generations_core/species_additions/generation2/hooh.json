@@ -1,0 +1,24 @@
+{
+  "target": "cobblemon:hooh",
+  "behaviour": {
+    "moving": {
+      "fly": {
+        "canFly": true
+      }
+    }
+  },
+  "drops": {
+    "amount": 2,
+    "entries": [
+      {
+        "item": "generations_core:hooh_doll",
+        "percentage": 100.0
+      },
+      {
+        "item": "generations_core:rainbow_wing",
+        "percentage": 100.0,
+        "quantityRange": 6-6
+      }
+    ]
+  }
+}

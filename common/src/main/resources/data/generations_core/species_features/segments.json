@@ -1,0 +1,11 @@
+{
+  "type": "choice",
+  "keys": ["segments"],
+  "default": "random",
+  "choices": [
+    "two",
+    "three"
+  ],
+  "isAspect": true,
+  "aspectFormat": "{{choice}}"
+}

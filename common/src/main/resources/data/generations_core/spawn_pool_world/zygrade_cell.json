@@ -1,0 +1,17 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "zygardecell-2",
+      "presets": [
+        "natural"
+      ],
+      "type": "zygarde",
+      "context": "grounded",
+      "bucket": "collectibles",
+      "weight": 1.0
+    }
+  ]
+}

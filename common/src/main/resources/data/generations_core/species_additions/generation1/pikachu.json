@@ -1,0 +1,24 @@
+{
+  "target":"cobblemon:pikachu",
+  "drops":{
+    "amount":3,
+    "entries":[
+      {
+        "item":"cobblemon:thunder_stone",
+        "percentage":5.0
+      },
+      {
+        "item":"cobblemon:oran_berry",
+        "percentage":5.0
+      },
+      {
+        "item":"generations_core:pikachu_doll",
+        "percentage":1.0
+      },
+      {
+        "item":"generations_core:dynite_ore",
+        "percentage":5.0
+      }
+    ]
+  }
+}

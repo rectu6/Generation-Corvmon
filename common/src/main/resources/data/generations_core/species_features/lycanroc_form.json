@@ -1,0 +1,12 @@
+{
+  "type": "choice",
+  "keys": ["lycanroc_form"],
+  "default": "random",
+  "choices": [
+    "midday",
+    "midnight",
+    "dusk"
+  ],
+  "isAspect": true,
+  "aspectFormat": "{{choice}}"
+}

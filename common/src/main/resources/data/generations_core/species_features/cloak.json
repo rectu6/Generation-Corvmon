@@ -1,0 +1,12 @@
+{
+  "type": "choice",
+  "keys": ["cloak"],
+  "default": "random",
+  "choices": [
+    "plant",
+    "sandy",
+    "trash"
+  ],
+  "isAspect": true,
+  "aspectFormat": "{{choice}}"
+}

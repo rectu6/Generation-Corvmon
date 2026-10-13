@@ -1,0 +1,11 @@
+{
+  "type": "choice",
+  "keys": ["cramorant_form"],
+  "default": "false",
+  "choices": [
+    "gorging",
+    "gulping"
+  ],
+  "isAspect": true,
+  "aspectFormat": "{{choice}}"
+}

@@ -1,0 +1,54 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "chance": 0.0025,
+          "condition": "minecraft:random_chance"
+        },
+        {
+          "block": "minecraft:carrots",
+          "condition": "minecraft:block_state_property",
+          "properties": {
+            "age": "7"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "chance": 0.5,
+                  "condition": "minecraft:random_chance"
+                },
+                {
+                  "condition": "generations_core:species_key",
+                  "key": "cobblemon:spectrier"
+                }
+              ],
+              "name": "generations_core:shaderoot_carrot"
+            },
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "generations_core:species_key",
+                  "key": "cobblemon:glastrier"
+                }
+              ],
+              "name": "generations_core:iceroot_carrot"
+            }
+          ]
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "generations_core:blocks/calyrex_roots"
+}

@@ -1,0 +1,11 @@
+{
+  "type": "choice",
+  "keys": ["kyurem_form"],
+  "default": "false",
+  "choices": [
+    "black",
+    "white"
+  ],
+  "isAspect": true,
+  "aspectFormat": "{{choice}}"
+}

@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "generations_core:double_street_lamp",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "height": "0",
+                "width": "1"
+              }
+            }
+          ],
+          "name": "generations_core:double_street_lamp"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "generations_core:blocks/double_street_lamp"
+}

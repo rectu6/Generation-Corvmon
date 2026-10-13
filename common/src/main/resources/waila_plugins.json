@@ -1,0 +1,7 @@
+{
+  "generations_core:general": {
+    "entrypoints": {
+        "client": "generations.gg.generations.core.generationscore.common.compat.WTHIT"
+    }
+  }
+}

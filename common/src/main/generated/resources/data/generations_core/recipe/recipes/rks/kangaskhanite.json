@@ -1,0 +1,35 @@
+{
+  "type": "generations_core:shaped_rks",
+  "consumesTimeCapsules": false,
+  "experience": 1.0,
+  "group": "",
+  "pattern": {
+    "key": {
+      "A": {
+        "type": "generations_core:item",
+        "items": "generations_core:key_stone"
+      },
+      "B": {
+        "type": "generations_core:time_capsule",
+        "key": "cobblemon:kangaskhan",
+        "strict": false
+      },
+      "C": {
+        "type": "generations_core:item",
+        "items": "minecraft:netherite_scrap"
+      }
+    },
+    "pattern": [
+      "ABC"
+    ]
+  },
+  "processingTime": 240,
+  "result": {
+    "type": "generations_core:item",
+    "stack": {
+      "count": 1,
+      "id": "generations_core:kangaskhanite"
+    }
+  },
+  "showNotification": false
+}
