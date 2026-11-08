@@ -330,71 +330,241 @@
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_36"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "rocktomb"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_51"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "sandstorm"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_76"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "rockblast"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_86"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "rockslide"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_101"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "powergem"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_116"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "stealthrock"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_150"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "stoneedge"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_31"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "metalclaw"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_53"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "smartstrike"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_93"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "flashcannon"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_43"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "fling"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_99"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "ironhead"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_104"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "irondefense"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_121"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "heavyslam"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_180"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "gyroball"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_223"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "metalsound"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_225"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "hardpress"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
@@ -402,15 +572,45 @@
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_176"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "sandtomb"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_186"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "highhorsepower"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_215"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "scorchingsands"
+                }
+              }
+            }
+          ]
         }
       ],
       "rolls": 1.0

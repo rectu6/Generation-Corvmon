@@ -207,6 +207,10 @@ class BlockDatagen(provider: GenerationsBlockStateProvider) : GenerationsBlockSt
         registerPillar(GenerationsBlocks.HAUNTED_PILLAR.asValue())
         registerPillar(GenerationsBlocks.BROKEN_HAUNTED_PILLAR.asValue())
 
+        registerPillar(GenerationsBlocks.ULTRA_PILLAR.asValue())
+        // Its textures do not follow the block id.
+        registerPillar(GenerationsBlocks.BROKEN_ULTRA_PILLAR.asValue(), "ultra_pillar_fractured", "broken_ultra_pillar")
+
         registerBlockItem(GenerationsBlocks.DAWN_STONE_BLOCK.asValue())
         registerBlockItem(GenerationsBlocks.DUSK_STONE_BLOCK.asValue())
         registerBlockItem(GenerationsBlocks.FIRE_STONE_BLOCK.asValue())
@@ -820,9 +824,13 @@ class BlockDatagen(provider: GenerationsBlockStateProvider) : GenerationsBlockSt
             model.withSuffix("_top")))
     }
 
-    private fun registerPillar(block: Block) {
-        val texture = id("block/${block.id.path}")
-        val item = id("item/blocks/pillars/" + BuiltInRegistries.BLOCK.getKey(block).path)
+    private fun registerPillar(
+        block: Block,
+        textureName: String = block.id.path,
+        itemTextureName: String = block.id.path
+    ) {
+        val texture = id("block/$textureName")
+        val item = id("item/blocks/pillars/$itemTextureName")
 
         val model = models().withExistingParent(block.id.path, id("block/pillar"))
             .texture("texture", texture)

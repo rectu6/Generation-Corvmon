@@ -338,79 +338,269 @@
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_12"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "lowkick"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_39"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "lowsweep"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_58"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "brickbreak"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_64"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "bulkup"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_73"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "drainpunch"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_89"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "bodypress"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_112"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "aurasphere"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_134"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "reversal"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_158"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "focusblast"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_167"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "closecombat"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_189"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "heatcrash"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_195"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "burningjealousy"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_207"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "temperflare"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_179"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "smackdown"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_220"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "meteorbeam"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_184"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "vacuumwave"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_192"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "focuspunch"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_213"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "coaching"
+                }
+              }
+            }
+          ]
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:tm_229"
+          "name": "cobblemon:technical_machine",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "cobblemon:tm_move": {
+                  "move": "upperhand"
+                }
+              }
+            }
+          ]
         }
       ],
       "rolls": {

@@ -7,7 +7,6 @@
             "id": "tynamo-1",
             "pokemon": "tynamo",
             "presets": [
-                "river",
                 "water"
             ],
             "type": "pokemon",
@@ -16,7 +15,10 @@
             "level": "10-32",
             "weight": 9.0,
             "condition": {
-                "canSeeSky": true
+                "canSeeSky": true,
+                "biomes": [
+                    "#cobblemon:is_river"
+                ]
             }
         }
     ]

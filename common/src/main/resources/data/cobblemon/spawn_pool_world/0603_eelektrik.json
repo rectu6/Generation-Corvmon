@@ -7,7 +7,6 @@
             "id": "eelektrik-1",
             "pokemon": "eelektrik",
             "presets": [
-                "river",
                 "water"
             ],
             "type": "pokemon",
@@ -16,7 +15,10 @@
             "level": "39-50",
             "weight": 9.0,
             "condition": {
-                "canSeeSky": true
+                "canSeeSky": true,
+                "biomes": [
+                    "#cobblemon:is_river"
+                ]
             }
         }
     ]

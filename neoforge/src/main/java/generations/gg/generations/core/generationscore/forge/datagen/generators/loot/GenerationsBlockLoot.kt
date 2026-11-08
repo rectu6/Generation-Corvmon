@@ -259,6 +259,8 @@ internal class GenerationsBlockLoot(provider: HolderLookup.Provider) : BlockLoot
         dropSelf(GenerationsBlocks.GHOST_PILLAR)
         dropSelf(GenerationsBlocks.HAUNTED_PILLAR)
         dropSelf(GenerationsBlocks.BROKEN_HAUNTED_PILLAR)
+        dropSelf(GenerationsBlocks.ULTRA_PILLAR)
+        dropSelf(GenerationsBlocks.BROKEN_ULTRA_PILLAR)
         dropSelf(GenerationsBlocks.DAWN_STONE_BLOCK)
         dropSelf(GenerationsBlocks.DUSK_STONE_BLOCK)
         dropSelf(GenerationsBlocks.FIRE_STONE_BLOCK)
