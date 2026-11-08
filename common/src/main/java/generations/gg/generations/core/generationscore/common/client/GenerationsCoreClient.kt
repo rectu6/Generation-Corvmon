@@ -280,7 +280,8 @@ object GenerationsCoreClient {
             val flag = entity.mainHandItem == arg
             var flag1 = entity.offhandItem == arg
 
-            if (entity.mainHandItem.item is TieredFishingRodItem) {
+            // Any rod in the main hand casts, so the offhand one shows as not cast.
+            if (entity.mainHandItem.item is net.minecraft.world.item.FishingRodItem) {
                 flag1 = false
             }
 

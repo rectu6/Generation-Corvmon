@@ -14,6 +14,7 @@
     "MoveTypeMixin",
     "NbtUtilsMixin",
     "PokemonBattleMixin",
+    "PokerodItemMixin",
     "PokemonEntityAccessor",
     "PokemonEntityMixin",
     "ItemStackMixin",

@@ -9,15 +9,18 @@
         "creation_event": "event_sparkle",
         "timeline": {
           "0.00": "event_buildup",
+          "0.10": "event_symbol",
           "1.00": "event_obscuring",
           "1.01": "event_color_godrays",
           "1.10": "event_godrays",
+          "1.50": "event_symbols_rising",
           "1.60": "event_flyingsparkles",
           "2.20": "event_bigsparkle",
           "3.05": "event_implode",
           "3.40": "event_smokeburst",
           "3.41": "event_sparkleburst",
-          "3.42": "event_sparklefetti"
+          "3.42": "event_sparklefetti",
+          "3.45": "event_symbol"
         }
       },
       "minecraft:emitter_lifetime_once": {
@@ -133,6 +136,18 @@
       "event_sparklefetti": {
         "particle_effect": {
           "effect": "generations_core:mega_sparklefetti",
+          "type": "emitter_bound"
+        }
+      },
+      "event_symbol": {
+        "particle_effect": {
+          "effect": "generations_core:mega_symbol",
+          "type": "emitter_bound"
+        }
+      },
+      "event_symbols_rising": {
+        "particle_effect": {
+          "effect": "generations_core:mega_symbols_rising",
           "type": "emitter_bound"
         }
       }

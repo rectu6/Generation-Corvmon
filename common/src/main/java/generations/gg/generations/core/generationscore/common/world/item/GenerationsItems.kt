@@ -5,6 +5,7 @@ import com.cobblemon.mod.common.api.types.ElementalTypes
 import com.cobblemon.mod.common.api.types.tera.TeraType
 import com.cobblemon.mod.common.api.types.tera.TeraTypes
 import com.cobblemon.mod.common.item.PokeBallItem
+import com.cobblemon.mod.common.item.interactive.PokerodItem
 import com.cobblemon.mod.common.pokemon.helditem.CobblemonHeldItemManager
 import com.cobblemon.mod.common.util.cobblemonResource
 import generations.gg.generations.core.generationscore.common.GenerationsCore
@@ -536,9 +537,11 @@ object GenerationsItems: ItemPlatformRegistry() {
     val MARK_CHARM = register("mark_charm", ::Item, PLAYER_ITEMS)
     val CATCHING_CHARM = register("catching_charm", ::Item, PLAYER_ITEMS)
     val EXP_CHARM = register("exp_charm", ::Item, PLAYER_ITEMS)
-    val OLD_ROD = register("old_rod", { TieredFishingRodItem(it, TieredFishingHookEntity.Teir.OLD) }, PLAYER_ITEMS)
-    val GOOD_ROD = register("good_rod", { TieredFishingRodItem(it, TieredFishingHookEntity.Teir.GOOD) }, PLAYER_ITEMS)
-    val SUPER_ROD = register("super_rod", { TieredFishingRodItem(it, TieredFishingHookEntity.Teir.SUPER) }, PLAYER_ITEMS)
+    // Cobblemon rods (Poké / Great / Ultra Ball bobber, data/generations_core/pokerods),
+    // with Pixelmon-like tiers on what they catch: see GenerationsFishing.
+    val OLD_ROD = register("old_rod", { PokerodItem(GenerationsCore.id("old_rod"), it.stacksTo(1).durability(256)) }, PLAYER_ITEMS)
+    val GOOD_ROD = register("good_rod", { PokerodItem(GenerationsCore.id("good_rod"), it.stacksTo(1).durability(256)) }, PLAYER_ITEMS)
+    val SUPER_ROD = register("super_rod", { PokerodItem(GenerationsCore.id("super_rod"), it.stacksTo(1).durability(256)) }, PLAYER_ITEMS)
     val RUBY_ROD = register("ruby_rod", { RubyRodItem(it.durability(27), TieredFishingHookEntity.Teir.RUBY) }, PLAYER_ITEMS)
     val CAMERA = register("camera", ::CameraItem, PLAYER_ITEMS)
     val SNAP_CAMERA = register("snap_camera", ::CameraItem, PLAYER_ITEMS)
@@ -725,7 +728,7 @@ object GenerationsItems: ItemPlatformRegistry() {
     /**
      * Utility Items
      */
-    val POKEMON_WAND = register("pokemon_wand", ::Item, UTILITY)
+    val POKEMON_WAND = register("pokemon_wand", { PokeWandItem(it.stacksTo(1)) }, UTILITY)
     val CHISEL = register("chisel", ::StatueSpawnerItem, UTILITY)
     val SUICUNE_STATUE = register("suicune_statue", { StatueSpawnerItem(it, LegendKeys.SUICUNE) }, LEGENDARY_ITEMS)
     val RAIKOU_STATUE = register("raikou_statue", { StatueSpawnerItem(it, LegendKeys.RAIKOU) }, LEGENDARY_ITEMS)

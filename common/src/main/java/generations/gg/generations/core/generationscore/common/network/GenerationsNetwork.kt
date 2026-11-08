@@ -9,6 +9,7 @@ import com.cobblemon.mod.common.util.server
 import generations.gg.generations.core.generationscore.common.GenerationsCore
 import generations.gg.generations.core.generationscore.common.network.packets.*
 import generations.gg.generations.core.generationscore.common.network.packets.shop.*
+import generations.gg.generations.core.generationscore.common.network.packets.pokewand.*
 import generations.gg.generations.core.generationscore.common.network.packets.statue.S2COpenStatueEditorScreenHandler
 import generations.gg.generations.core.generationscore.common.network.packets.statue.S2COpenStatueEditorScreenPacket
 import generations.gg.generations.core.generationscore.common.network.packets.statue.UpdateStatueHandler
@@ -44,6 +45,7 @@ object GenerationsNetwork {
         list.add(PacketRegisterInfo(S2CSyncPlayerMoneyPacket.ID, ::S2CSyncPlayerMoneyPacket, S2CSyncPlayerMoneyHandler))
         list.add(PacketRegisterInfo(SpawnStatuePacket.ID, SpawnStatuePacket::decode, SpawnExtraDataEntityHandler()))
         list.add(PacketRegisterInfo(S2CPlaySoundPacket.ID, S2CPlaySoundPacket::decode, S2CPlaySoundHandler))
+        list.add(PacketRegisterInfo(S2CPokeWandPartyPacket.ID, S2CPokeWandPartyPacket::decode, S2CPokeWandPartyHandler))
         // TODO: remove TeraTypeUpdatePacket when its registered in Cobblemon's own network
 //        list.add(PacketRegisterInfo(TeraTypeUpdatePacket.ID, TeraTypeUpdatePacket::decode, PokemonUpdatePacketHandler()))
 
@@ -56,6 +58,7 @@ object GenerationsNetwork {
         list.add(PacketRegisterInfo(GensInteractPokemonPacket.ID, GensInteractPokemonPacket::decode, GensInteractPokemonHandler))
         list.add(PacketRegisterInfo(C2STogglePacket.ID, C2STogglePacket::decode, C2SToggleHandler))
         list.add(PacketRegisterInfo(C2SEditMailPacket.ID, C2SEditMailPacket::decode, C2SEditMailHandler))
+        list.add(PacketRegisterInfo(C2SPokeWandActionPacket.ID, C2SPokeWandActionPacket::decode, C2SPokeWandActionHandler))
         list.add(PacketRegisterInfo(C2SShopItemPacket.ID, C2SShopItemPacket::decode, C2SShopItemHandler))
         list.add(PacketRegisterInfo(HeadPatPacket.ID, ::HeadPatPacket, HeadPatPacketHandler))
 
