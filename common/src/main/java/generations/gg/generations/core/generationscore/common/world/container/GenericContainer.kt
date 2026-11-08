@@ -34,10 +34,14 @@ object GenericContainer {
                 super.setChanged()
                 storage.set(DataComponents.CONTAINER, ItemContainerContents.fromItems(items))
             }
-        }, width, height, title, player, lock, {})
+        }, width, height, title, player, lock)
     }
 
-    fun openScreen(storage: Container, width: Int, height: Int, title: Component, player: Player, lock: Int = -1, onClose: () -> Unit = {}) {
+    // onClose stays last: callers pass it as a trailing lambda.
+    fun openScreen(
+        storage: Container, width: Int, height: Int, title: Component, player: Player, lock: Int = -1,
+        filter: ContainerFilter? = null, valid: (Player) -> Boolean = { true }, onClose: () -> Unit = {},
+    ) {
 
         if (!player.isLocalPlayer) GenerationsCore.implementation.openExtendedMenu(
             player as ServerPlayer,
@@ -52,6 +56,8 @@ object GenericContainer {
                         height,
                         if(lock != -1) { slot -> slot == lock } else { _ -> false },
                         onClose,
+                        filter,
+                        valid,
                     )
                 }
 
@@ -62,6 +68,8 @@ object GenericContainer {
                 override fun saveExtraData(buffer: FriendlyByteBuf) {
                     buffer.writeVarInt(width)
                     buffer.writeVarInt(height)
+                    buffer.writeVarInt(lock)
+                    buffer.writeUtf(filter?.id ?: "")
                 }
             }
         )

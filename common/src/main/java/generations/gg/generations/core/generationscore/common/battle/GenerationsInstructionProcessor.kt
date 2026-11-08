@@ -88,10 +88,9 @@ object GenerationsInstructionProcessor {
                 is Boolean -> it.let { FlagSpeciesFeature(it.first, it.second as Boolean) }
                 else -> null
             }
-        }?.let {
-            battle.dispatchGo {
-                battlePokemon.entity
-                battlePokemon.effectedPokemon.applyBattleFeature(it)
+        }?.let { feature ->
+            val applyForm = {
+                battlePokemon.effectedPokemon.applyBattleFeature(feature)
                 val active = battle.activePokemon.find {
                     it.battlePokemon?.uuid == battlePokemon.uuid || it.battlePokemon?.effectedPokemon?.uuid == battlePokemon.uuid
                 }
@@ -108,8 +107,20 @@ object GenerationsInstructionProcessor {
                     }
                 }
             }
+
+            val entity = battlePokemon.entity
+            if (name in MEGA_FORMS && entity != null) {
+                // The battle waits for the animation; the Mega form appears at its
+                // burst, while the light still hides the Pokémon.
+                battle.dispatchWaiting(MegaEvolutionAnimation.REVEAL_SECONDS) { MegaEvolutionAnimation.play(entity) }
+                battle.dispatchWaiting(MegaEvolutionAnimation.LENGTH_SECONDS - MegaEvolutionAnimation.REVEAL_SECONDS, applyForm)
+            } else {
+                battle.dispatchGo(applyForm)
+            }
         }
     }
+
+    private val MEGA_FORMS = setOf("mega", "mega-x", "mega-y")
 
     @JvmStatic
     fun processTerastallization(terastallizationEvent: TerastallizationEvent) {
@@ -253,6 +264,9 @@ fun grantExp(battle: PokemonBattle, actor: BattleActor) {
 
             if (player != null) {
                 if (player.hasExpAll()) {
+                    // Cobblemon awards nothing on a capture: the Pokémon that fought
+                    // get theirs here, the others the Exp All's share.
+                    grantExpCapture(battle, opponent, targetPokemon, includeExpShare = false)
                     grantExpAll(battle, opponent, targetPokemon)
                 } else {
                     grantExpCapture(battle, opponent, targetPokemon)
@@ -308,14 +322,15 @@ fun grantExpAll(battle: PokemonBattle, opponent: BattleActor, faintedPokemonList
     }
 }
 
-fun grantExpCapture(battle: PokemonBattle, opponent: BattleActor, caughtPokemon: List<BattlePokemon>) {
+/** includeExpShare: false when an Exp All already gives the Pokémon that did not fight their share. */
+fun grantExpCapture(battle: PokemonBattle, opponent: BattleActor, caughtPokemon: List<BattlePokemon>, includeExpShare: Boolean = true) {
     val opponentNonFaintedPokemonList = opponent.pokemonList.filter {it.health > 0}
 
     for (opponentPokemon in opponentNonFaintedPokemonList) {
         val facedFainted = opponentPokemon.facedOpponents.contains(caughtPokemon.first())
         val pokemon = opponentPokemon.effectedPokemon
         val multiplier = when {
-            !facedFainted && pokemon.heldItem().`is`(CobblemonItemTags.EXPERIENCE_SHARE) -> Cobblemon.config.experienceShareMultiplier
+            includeExpShare && !facedFainted && pokemon.heldItem().`is`(CobblemonItemTags.EXPERIENCE_SHARE) -> Cobblemon.config.experienceShareMultiplier
             facedFainted -> 1.0
             else -> continue
         }

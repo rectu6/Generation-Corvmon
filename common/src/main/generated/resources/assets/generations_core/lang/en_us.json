@@ -1568,7 +1568,6 @@
   "item.generations_core.ampharosite": "Ampharosite",
   "item.generations_core.amulet_coin": "Amulet Coin",
   "item.generations_core.apricorn_box": "Apricorn Box",
-  "item.generations_core.apricorn_box.desc": "Not currently implemented",
   "item.generations_core.aqua_boots": "Aqua Boots",
   "item.generations_core.aqua_chestplate": "Aqua Chestplate",
   "item.generations_core.aqua_helmet": "Aqua Helmet",
@@ -1915,7 +1914,6 @@
   "item.generations_core.eterna_city_disc": "Eterna City Disc",
   "item.generations_core.event_ribbon": "Event Ribbon",
   "item.generations_core.exp_all": "Exp All",
-  "item.generations_core.exp_all.desc": "Not currently implemented",
   "item.generations_core.exp_charm": "Exp Charm",
   "item.generations_core.expert_battler_ribbon": "Expert Battler Ribbon",
   "item.generations_core.explorer_kit": "Explorer Kit",
@@ -3211,5 +3209,14 @@
   "painting.generations_core.time_travel_award.title": "Time Travel Award",
   "painting.generations_core.town_map_sprite.author": "Pokemon",
   "painting.generations_core.town_map_sprite.title": "Town Map Sprite",
-  "upgrade.minecraft.ultrite_upgrade": "Ultrite Upgrade Smithing Template"
+  "upgrade.minecraft.ultrite_upgrade": "Ultrite Upgrade Smithing Template",
+  "effect.generations_core.repel": "Repel",
+  "item.generations_core.repel.tooltip": "Wild Pokémon flee and do not appear within %s blocks for %s min",
+  "item.generations_core.repel.used": "Repel active: %s blocks for %s min",
+  "item.generations_core.repel.stronger_active": "A stronger repel is already active",
+  "item.generations_core.exp_all.on": "Exp All turned on",
+  "item.generations_core.exp_all.off": "Exp All turned off",
+  "item.generations_core.exp_all.tooltip.on": "On: every party Pokémon gains experience (right-click to turn off)",
+  "item.generations_core.exp_all.tooltip.off": "Off (right-click to turn on)",
+  "item.generations_core.apricorn_box.tooltip": "Holds Apricorns only: %s inside"
 }

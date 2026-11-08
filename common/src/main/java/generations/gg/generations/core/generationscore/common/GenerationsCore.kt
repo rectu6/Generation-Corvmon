@@ -25,6 +25,7 @@ import generations.gg.generations.core.generationscore.common.event.GenerationsA
 import generations.gg.generations.core.generationscore.common.event.GenerationsCobblemonEvents
 import generations.gg.generations.core.generationscore.common.recipe.GenerationsIngredidents
 import generations.gg.generations.core.generationscore.common.world.container.GenerationsContainers
+import generations.gg.generations.core.generationscore.common.world.effect.GenerationsMobEffects
 import generations.gg.generations.core.generationscore.common.world.entity.GenerationsEntities
 import generations.gg.generations.core.generationscore.common.world.item.GenerationsArmor
 import generations.gg.generations.core.generationscore.common.world.item.GenerationsCobblemonInteractions.registerDefaultCustomInteractions
@@ -176,6 +177,7 @@ object GenerationsCore {
     fun registerRegistires() {
         GenerationsDataComponents.init()
         GenerationsSounds.init()
+        GenerationsMobEffects.init()
         GenerationsBlocks.init()
         GenerationsPokeDolls.init()
         GenerationsWood.init()

@@ -8,16 +8,24 @@ import net.minecraft.world.SimpleContainer
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.inventory.ClickType
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 
+/**
+ * lock: inventory slots the player cannot touch, e.g. the item this menu is stored in
+ * (0-8 hotbar, 40 offhand). filter: items the container slots accept. valid: the menu
+ * closes once it returns false, e.g. when the storing item left the hand.
+ */
 open class GenericChestContainer(
     containerId: Int,
     val playerInventory: Inventory,
     val container: Container,
     val inventoryWidth: Int,
     val inventoryHeight: Int,
-    lock: (Int) -> Boolean = { false }, val onClosed: () -> Unit = {}
+    private val lock: (Int) -> Boolean = { false }, val onClosed: () -> Unit = {},
+    private val filter: ContainerFilter? = null,
+    private val valid: (Player) -> Boolean = { true },
 ) : AbstractContainerMenu(GenerationsContainers.GENERIC.value(), containerId) {
     @JvmField
     val guiWidth: Int = 14 + this.inventoryWidth.coerceAtLeast(9) * 18
@@ -65,7 +73,20 @@ open class GenericChestContainer(
     }
 
     private fun addSlot(container: Container, slot: Int, x: Int, y: Int) {
-        this.addSlot(Slot(container, slot, x, y))
+        this.addSlot(object : Slot(container, slot, x, y) {
+            override fun mayPlace(stack: ItemStack): Boolean = filter?.test(stack) ?: true
+        })
+    }
+
+    override fun clicked(slotId: Int, button: Int, clickType: ClickType, player: Player) {
+        // Number keys and F swap the hovered slot with a hotbar or offhand slot
+        // without asking that slot: they could move a locked item, e.g. the item
+        // this menu is stored in, and duplicate its content.
+        if (clickType == ClickType.SWAP && lock.invoke(button)) return
+        // The menu only closes on the next tick once invalid (e.g. the storing item
+        // was dropped on death or cleared): refuse clicks until then.
+        if (!valid.invoke(player)) return
+        super.clicked(slotId, button, clickType, player)
     }
 
     override fun quickMoveStack(player: Player, index: Int): ItemStack {
@@ -96,7 +117,7 @@ open class GenericChestContainer(
     }
 
     override fun stillValid(player: Player): Boolean {
-        return true
+        return valid.invoke(player)
     }
 
     override fun removed(player: Player) {
@@ -115,8 +136,16 @@ open class GenericChestContainer(
         ): GenericChestContainer {
             val row = buffer.readVarInt()
             val column = buffer.readVarInt()
+            // Written by GenericContainer.openScreen: the client locks and filters
+            // the same slots as the server.
+            val lock = buffer.readVarInt()
+            val filter = ContainerFilter.byId(buffer.readUtf())
 
-            return GenericChestContainer(containerId, playerInventory, SimpleContainer(row * column), row, column,)
+            return GenericChestContainer(
+                containerId, playerInventory, SimpleContainer(row * column), row, column,
+                if (lock != -1) { slot -> slot == lock } else { _ -> false },
+                filter = filter,
+            )
         }
     }
 }

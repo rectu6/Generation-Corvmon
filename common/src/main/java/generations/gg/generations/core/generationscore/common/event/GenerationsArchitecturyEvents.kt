@@ -11,6 +11,7 @@ import generations.gg.generations.core.generationscore.common.api.events.TriStat
 import generations.gg.generations.core.generationscore.common.api.events.general.EntityEvents
 import generations.gg.generations.core.generationscore.common.api.events.general.InteractionEvents
 import generations.gg.generations.core.generationscore.common.client.render.rarecandy.instanceOrNull
+import generations.gg.generations.core.generationscore.common.world.effect.RepelEffect
 import generations.gg.generations.core.generationscore.common.world.entity.GenerationsEntities
 import generations.gg.generations.core.generationscore.common.world.item.GenerationsCobblemonInteractions
 import generations.gg.generations.core.generationscore.common.world.item.GenerationsItems
@@ -48,6 +49,11 @@ object GenerationsArchitecturyEvents {
                 if (list.isNotEmpty()) {
                     it.cancel()
                 }
+            }
+
+            // No wild Pokémon appears within a player's repel radius.
+            if (entity is PokemonEntity && !it.isCanceled && RepelEffect.isRepelled(level, entity.position())) {
+                it.cancel()
             }
         }
 

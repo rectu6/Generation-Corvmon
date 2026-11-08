@@ -1,0 +1,76 @@
+{
+  "format_version": "1.10.0",
+  "particle_effect": {
+    "components": {
+      "cobblemon:emitter_space": {
+        "scaling": "entity"
+      },
+      "minecraft:emitter_lifetime_once": {
+        "active_time": 1.2
+      },
+      "minecraft:emitter_local_space": {
+        "position": true,
+        "rotation": false
+      },
+      "minecraft:emitter_rate_steady": {
+        "max_particles": 100,
+        "spawn_rate": "v.emitter_age * 40"
+      },
+      "minecraft:emitter_shape_sphere": {
+        "direction": "inwards",
+        "radius": "math.max(q.entity_size, 1) * 2",
+        "surface_only": true
+      },
+      "minecraft:particle_appearance_billboard": {
+        "facing_camera_mode": "rotate_xyz",
+        "size": [
+          "math.clamp(math.clamp(q.entity_size, 1,2), 1, 2)/8",
+          "math.clamp(math.clamp(q.entity_size, 1,2), 1, 2)/8"
+        ],
+        "uv": {
+          "flipbook": {
+            "base_UV": [
+              0,
+              24
+            ],
+            "frames_per_second": 3,
+            "loop": true,
+            "max_frame": 3,
+            "size_UV": [
+              8,
+              8
+            ],
+            "step_UV": [
+              0,
+              -8
+            ]
+          },
+          "texture_height": 32,
+          "texture_width": 8
+        }
+      },
+      "minecraft:particle_appearance_tinting": {
+        "color": [
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "minecraft:particle_initial_speed": "0.275 * math.clamp(q.entity_size,1,4)",
+      "minecraft:particle_lifetime_expression": {
+        "max_lifetime": 0.75
+      },
+      "minecraft:particle_motion_dynamic": {
+        "linear_drag_coefficient": -4.5
+      }
+    },
+    "description": {
+      "basic_render_parameters": {
+        "material": "particles_blend",
+        "texture": "textures/particles/generic/orb/glowing_dots_cyan"
+      },
+      "identifier": "generations_core:mega_buildup"
+    }
+  }
+}

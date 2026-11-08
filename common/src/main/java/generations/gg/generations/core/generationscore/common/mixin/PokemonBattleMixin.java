@@ -8,6 +8,7 @@ import com.cobblemon.mod.common.battles.BattleFormat;
 import com.cobblemon.mod.common.battles.BattleSide;
 import com.cobblemon.mod.common.battles.pokemon.BattlePokemon;
 import generations.gg.generations.core.generationscore.common.battle.BattleConditionsProcessor;
+import generations.gg.generations.core.generationscore.common.battle.ExpAllCalculator;
 import generations.gg.generations.core.generationscore.common.battle.GenerationsInstructionProcessor;
 import generations.gg.generations.core.generationscore.common.world.item.GenerationsItems;
 import net.minecraft.server.level.ServerPlayer;
@@ -46,23 +47,23 @@ public abstract class PokemonBattleMixin {
             ),
             remap = false
     )
+    /**
+     * Cobblemon calls the calculator for the Pokémon that faced the fainted one, and
+     * for Exp Share holders that did not. With an Exp All on, the latter get the Exp
+     * All's share instead (GenerationsInstructionProcessor.grantExpAll): their Exp
+     * Share gives nothing. Pokémon that fought keep their experience.
+     */
     private void interceptExpShareArgs(Args args) {
-        BattlePokemon opponent = args.get(0);
+        BattlePokemon receiver = args.get(0);
+        BattlePokemon fainted = args.get(1);
 
-        ServerPlayer player = opponent.getEffectedPokemon().getOwnerPlayer();
+        ServerPlayer player = receiver.getEffectedPokemon().getOwnerPlayer();
+        if (player == null || !ExpAllCalculator.hasExpAll(player)) return;
 
-        boolean hasExpAll = false;
-        if (player != null) {
-            hasExpAll = player.getInventory().items.stream()
-                    .anyMatch(item -> item.is(GenerationsItems.INSTANCE.getEXP_ALL())) ||
-                    player.getOffhandItem().is(GenerationsItems.INSTANCE.getEXP_ALL());
-        }
-
-        boolean hasExpShare = opponent.getEffectedPokemon().heldItemNoCopy$common().is(CobblemonItemTags.EXPERIENCE_SHARE);
-
-        if (hasExpAll && hasExpShare) {
+        boolean hasExpShare = receiver.getEffectedPokemon().heldItemNoCopy$common().is(CobblemonItemTags.EXPERIENCE_SHARE);
+        if (hasExpShare && !receiver.getFacedOpponents().contains(fainted)) {
+            // A negative amount is never awarded.
             args.set(2, -1.0D);
-            System.out.println("neutralized xp gain from xp share");
         }
     }
 }

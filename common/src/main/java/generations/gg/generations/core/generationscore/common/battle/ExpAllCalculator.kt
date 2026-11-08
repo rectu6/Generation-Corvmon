@@ -3,6 +3,7 @@ package generations.gg.generations.core.generationscore.common.battle
 import com.cobblemon.mod.common.api.battles.model.PokemonBattle
 import com.cobblemon.mod.common.api.battles.model.actor.BattleActor
 import com.cobblemon.mod.common.battles.pokemon.BattlePokemon
+import generations.gg.generations.core.generationscore.common.world.item.ExpAllItem
 import generations.gg.generations.core.generationscore.common.world.item.GenerationsItems
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.item.ItemStack
@@ -25,11 +26,10 @@ object ExpAllCalculator {
         return multiplier
     }
 
+    /** An Exp All turned on (ExpAllItem) is in the inventory or the offhand. */
+    @JvmStatic
     fun ServerPlayer.hasExpAll(): Boolean {
-        if (this.inventory.items.any { it.item == GenerationsItems.EXP_ALL.value() } || this.offhandItem.`is`(GenerationsItems.EXP_ALL.value())) {
-            return true
-        }
-
-        return false
+        val isOn = { stack: ItemStack -> stack.`is`(GenerationsItems.EXP_ALL.value()) && ExpAllItem.isActive(stack) }
+        return this.inventory.items.any(isOn) || isOn(this.offhandItem)
     }
 }

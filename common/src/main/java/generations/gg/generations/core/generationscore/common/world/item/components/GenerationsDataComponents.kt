@@ -38,6 +38,13 @@ object GenerationsDataComponents: PlatformRegistry<DataComponentType<*>>(Registr
         StreamCodec.of(ByteBufCodecs.BOOL::encode, ByteBufCodecs.BOOL::decode)
     )
 
+    /** Exp All turned on (ExpAllItem). */
+    val ACTIVE = register<Boolean>(
+        "active",
+        Codec.BOOL,
+        StreamCodec.of(ByteBufCodecs.BOOL::encode, ByteBufCodecs.BOOL::decode)
+    )
+
     val CURRY_DATA = register("curry_data", CurryData.CODEC, CurryData.STREAM_CODEC)
     val TM_DETAILS = register("tm_details", TmDetails.CODEC, TmDetails.STREAM_CODEC)
     val EMBEDDED_POKEMON = register("embedded_pokemon", Pokemon.CODEC, ByteBufCodecs.fromCodecWithRegistries(Pokemon.CODEC))

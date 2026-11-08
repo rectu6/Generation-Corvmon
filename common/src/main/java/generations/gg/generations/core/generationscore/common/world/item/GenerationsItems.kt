@@ -543,9 +543,10 @@ object GenerationsItems: ItemPlatformRegistry() {
     val CAMERA = register("camera", ::CameraItem, PLAYER_ITEMS)
     val SNAP_CAMERA = register("snap_camera", ::CameraItem, PLAYER_ITEMS)
     val FILM = register("film", ::Item, PLAYER_ITEMS)
-    val REPEL = register("repel", ::Item, PLAYER_ITEMS)
-    val SUPER_REPEL = register("super_repel", ::Item, PLAYER_ITEMS)
-    val MAX_REPEL = register("max_repel", ::Item, PLAYER_ITEMS)
+    // Radius 10 / 15 / 25 blocks for 3 / 5 / 8 minutes (RepelEffect).
+    val REPEL = register("repel", { RepelItem(it, 0, 3 * 60 * 20) }, PLAYER_ITEMS)
+    val SUPER_REPEL = register("super_repel", { RepelItem(it, 1, 5 * 60 * 20) }, PLAYER_ITEMS)
+    val MAX_REPEL = register("max_repel", { RepelItem(it, 2, 8 * 60 * 20) }, PLAYER_ITEMS)
     val WAILMER_PAIL = register("wailmer_pail", ::Item, PLAYER_ITEMS)
     val SPRINK_LOTAD = register("sprink_lotad", ::Item, PLAYER_ITEMS)
     val SPRAYDUCK = register("sprayduck", { Item(it.stacksTo(1)) }, PLAYER_ITEMS)
@@ -1020,9 +1021,9 @@ object GenerationsItems: ItemPlatformRegistry() {
      * Un-Implemented Items : Items currently have no in-game function
      */
     val ABILITY_URGE = register("ability_urge", { Item(it.stacksTo(64)) }, UNIMPLEMENTED)
-    val EXP_ALL = register("exp_all", ::Item, UNIMPLEMENTED)
+    val EXP_ALL = register("exp_all", { ExpAllItem(it.stacksTo(1)) }, PLAYER_ITEMS)
     val ADVENTURE_GUIDE = register("adventure_guide", { Item(it.stacksTo(64)) }, UNIMPLEMENTED)
-    val APRICORN_BOX = register("apricorn_box", { Item(it.stacksTo(1)) }, UNIMPLEMENTED)
+    val APRICORN_BOX = register("apricorn_box", { ApricornBoxItem(it.stacksTo(1)) }, PLAYER_ITEMS)
     val AQUA_SUIT = register("aqua_suit", { Item(it.stacksTo(64)) }, UNIMPLEMENTED)
     val ARMOR_PASS = register("armor_pass", { Item(it.stacksTo(64)) }, UNIMPLEMENTED)
     val ARMORITE_ORE = register("armorite_ore", { Item(it.stacksTo(64)) }, UNIMPLEMENTED)

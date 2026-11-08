@@ -1,0 +1,28 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.mega_evolution.mega_evolution": {
+      "animation_length": 4.5,
+      "particle_effects": {
+        "0.0": {
+          "effect": "generations_core:mega_particles",
+          "locator": "middle"
+        }
+      },
+      "sound_effects": {
+        "0.0": {
+          "effect": "minecraft:block.beacon.activate"
+        },
+        "1.0": {
+          "effect": "minecraft:block.amethyst_block.resonate"
+        },
+        "3.4": {
+          "effect": "minecraft:entity.firework_rocket.twinkle"
+        },
+        "3.42": {
+          "effect": "minecraft:block.beacon.power_select"
+        }
+      }
+    }
+  }
+}

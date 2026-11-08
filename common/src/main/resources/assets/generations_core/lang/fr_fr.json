@@ -1542,7 +1542,6 @@
 "item.generations_core.ampharosite": "Pharampite",
 "item.generations_core.amulet_coin": "Pièce Rune",
 "item.generations_core.apricorn_box": "Boîte Noigrume",
-"item.generations_core.apricorn_box.desc": "Non implémenté actuellement",
 "item.generations_core.aqua_boots": "Bottes aquatiques",
 "item.generations_core.aqua_chestplate": "Plastron Aqua",
 "item.generations_core.aqua_helmet": "Casque Aqua",
@@ -1891,8 +1890,7 @@
 "item.generations_core.eterna_city_disc": "Disque de Vestigion",
 "item.generations_core.eterna_city_disc.desc": "GlitchxCity - Eterna City",
 "item.generations_core.event_ribbon": "Ruban Évènement",
-"item.generations_core.exp_all": "Omni Exp",
-"item.generations_core.exp_all.desc": "Non implémenté actuellement",
+"item.generations_core.exp_all": "Multi Exp",
 "item.generations_core.exp_charm": "Charme Exp",
 "item.generations_core.expert_battler_ribbon": "Ruban Génie du Combat",
 "item.generations_core.explorer_kit": "Explorakit",
@@ -3418,5 +3416,14 @@
 "painting.generations_core.time_travel_award.title": "Certif. Temporel",
 "painting.generations_core.town_map_sprite.author": "Pokémon",
 "painting.generations_core.town_map_sprite.title": "Plan de la ville Sprite",
-"upgrade.minecraft.ultrite_upgrade": "Modèle de forge d'amélioration en Ultrite"
+"upgrade.minecraft.ultrite_upgrade": "Modèle de forge d'amélioration en Ultrite",
+"effect.generations_core.repel": "Repousse",
+"item.generations_core.repel.tooltip": "Les Pokémon sauvages fuient et n'apparaissent pas à moins de %s blocs pendant %s min",
+"item.generations_core.repel.used": "Repousse actif : %s blocs pendant %s min",
+"item.generations_core.repel.stronger_active": "Un Repousse plus fort est déjà actif",
+"item.generations_core.exp_all.on": "Multi Exp activé",
+"item.generations_core.exp_all.off": "Multi Exp désactivé",
+"item.generations_core.exp_all.tooltip.on": "Activé : tous les Pokémon de l'équipe gagnent de l'expérience (clic droit pour désactiver)",
+"item.generations_core.exp_all.tooltip.off": "Désactivé (clic droit pour activer)",
+"item.generations_core.apricorn_box.tooltip": "Ne contient que des Noigrumes : %s dedans"
 }
