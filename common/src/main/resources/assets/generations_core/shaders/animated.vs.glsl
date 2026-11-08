@@ -67,13 +67,34 @@ vec4 getVertexColor() {
     return vec4(lightAccum, lightAccum, lightAccum, 1);
 }
 
+// Sun or moon light with a shader pack (RareCandyLighting): world space, towards the light.
+uniform vec3 sunDirection;
+// rgb: light colour, a: strength. 0 keeps Minecraft's fixed entity lighting.
+uniform vec4 sunLight;
+
+#define SUN_AMBIENT (0.45)
+#define SUN_DIRECT  (0.75)
+
+vec4 getLighting(mat4 modelTransform) {
+    vec4 vanilla = getVertexColor();
+    if (legacy || sunLight.a <= 0.0) return vanilla;
+
+    // modelTransform is world-aligned (camera-relative), like sunDirection.
+    vec3 normal = normalize(mat3(modelTransform) * inNormal);
+    vec3 sun = SUN_AMBIENT + sunLight.rgb * (max(dot(normal, sunDirection), 0.0) * SUN_DIRECT);
+
+    // Underground or indoors the sky is not visible: back to the fixed lighting.
+    float sky = clamp(float(light.y) / 240.0, 0.0, 1.0);
+    return vec4(mix(vanilla.rgb, sun, sunLight.a * sky * sky), 1.0);
+}
+
 void main() {
     mat4 worldSpace = projectionMatrix * viewMatrix;
     mat4 modelTransform = modelMatrix * getBoneTransform();
     vec4 worldPosition = modelTransform * vec4(positions, 1.0);
 
     gl_Position = worldSpace * worldPosition;
-    vertexColor = getVertexColor();
+    vertexColor = getLighting(modelTransform);
     vertexDistance = fog_distance(gl_Position.xyz, FogShape);
     lightMapColor = texelFetch(lightmap, light / 16, 0);
     skyLight = float(light.y) / 240.0;

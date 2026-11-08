@@ -28,6 +28,7 @@ import generations.gg.generations.core.generationscore.common.client.render.rare
 import generations.gg.generations.core.generationscore.common.client.render.rarecandy.MinecraftClientGameProvider
 import generations.gg.generations.core.generationscore.common.client.render.rarecandy.ModelRegistry
 import generations.gg.generations.core.generationscore.common.client.render.rarecandy.Pipelines
+import generations.gg.generations.core.generationscore.common.client.render.rarecandy.RareCandyLighting
 import generations.gg.generations.core.generationscore.common.client.render.rarecandy.RareCandyPass
 import generations.gg.generations.core.generationscore.common.client.render.rarecandy.instanceOrNull
 import generations.gg.generations.core.generationscore.common.client.screen.container.*
@@ -569,6 +570,7 @@ object GenerationsCoreClient {
 
     fun firstRenderPass() {
         ModelRegistry.worldRareCandy.update(MinecraftClientGameProvider.getTimePassed())
+        RareCandyLighting.update()
 
         MatrixCache.projectionMatrix = RenderSystem.getProjectionMatrix()
         MatrixCache.viewMatrix = RenderSystem.getModelViewMatrix()

@@ -106,8 +106,30 @@ pas d'un pack à l'autre.
   plus grossière (grille de 16) est utilisée. Au-delà de
   `client.shaderShadowDistance` blocs (32 par défaut, 0 = sans limite), les
   modèles ne projettent plus d'ombre. Mesuré avec Complementary (scène d'une
-  vingtaine de Pokémon 3D) : 66 fps avec les ombres d'entités, 90 sans.
+  vingtaine de Pokémon 3D) : 66 fps avec les ombres d'entités à 48 blocs, 70 à
+  32 blocs, 90 sans ombres d'entités.
 - `ModelRegistry.tick` ne crée plus de collections temporaires à chaque image.
+
+## Éclairage par le soleil (validé en jeu)
+
+Minecraft éclaire les entités avec deux directions fixes ; un pack de shaders les
+éclaire avec son soleil. RareCandy dessine hors des programmes du pack, ses
+modèles gardaient donc l'éclairage fixe : le côté tourné vers le soleil n'était
+pas plus clair que l'autre.
+
+- `RareCandyLighting` calcule, une fois par image, la direction que Iris donne
+  au pack (`CelestialUniforms.getShadowLightPositionInWorldSpace`) : rotation du
+  ciel vanilla, inclinée par le `sunPathRotation` du pack (lu par réflexion,
+  `IrisFramebufferCompat.sunPathRotation`), le soleil le jour et la lune la nuit.
+  L'éclairage est donc cohérent avec les ombres du décor.
+- Couleur : blanche à midi, orangée près de l'horizon, bleutée et plus faible la
+  nuit. Intensité nulle à l'horizon, réduite sous la pluie.
+- `animated.vs.glsl` (`getLighting`) mélange l'éclairage d'origine et celui du
+  soleil (ambiant 0,45 + direct 0,75) selon cette intensité et la lumière du
+  ciel au niveau du modèle : sous terre ou à l'intérieur, l'éclairage d'origine
+  revient.
+- Uniquement avec un pack actif ; réglage `client.shaderSunLighting` (activé par
+  défaut). Coût négligeable : un calcul par sommet sur le GPU.
 
 ## Fuite de textures et crash au changement de pack
 

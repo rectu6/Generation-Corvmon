@@ -48,6 +48,8 @@ public final class IrisFramebufferCompat {
     private static int auxMode = AUX_NONE;
     private static Method currentPackName;
     private static boolean packNameUnavailable;
+    private static Method pipelineManager, pipelineNullable, sunPath;
+    private static boolean sunPathUnavailable;
 
     private IrisFramebufferCompat() {
     }
@@ -55,6 +57,40 @@ public final class IrisFramebufferCompat {
     /** Which extra pack targets animated.fs.glsl must fill during the current pass. */
     public static int auxMode() {
         return auxMode;
+    }
+
+    /** Whether Iris is rendering the world with a shader pack (it then replaces the entity shaders). */
+    public static boolean isShaderPackActive() {
+        ShaderInstance shader = GameRenderer.getRendertypeEntityCutoutNoCullShader();
+        return shader != null && shader.getClass().getName().startsWith(IRIS_PACKAGE);
+    }
+
+    /**
+     * The pack's sunPathRotation (degrees), which tilts the sun's path and so the
+     * direction of its shadows: IrisRenderingPipeline.getSunPathRotation(). 0 if unknown.
+     */
+    public static float sunPathRotation() {
+        if (sunPathUnavailable) return 0;
+        try {
+            if (pipelineManager == null) {
+                Class<?> iris = Class.forName("net.irisshaders.iris.Iris");
+                pipelineManager = iris.getMethod("getPipelineManager");
+                pipelineNullable = pipelineManager.getReturnType().getMethod("getPipelineNullable");
+            }
+            Object pipeline = pipelineNullable.invoke(pipelineManager.invoke(null));
+            if (pipeline == null) return 0;
+            if (sunPath == null || sunPath.getDeclaringClass() != pipeline.getClass()) {
+                sunPath = pipeline.getClass().getMethod("getSunPathRotation");
+            }
+            return ((Number) sunPath.invoke(pipeline)).floatValue();
+        } catch (NoSuchMethodException e) {
+            // Vanilla pipeline (shaders off): no tilt.
+            return 0;
+        } catch (ReflectiveOperationException | RuntimeException e) {
+            sunPathUnavailable = true;
+            LOGGER.warn("Could not read the shader pack's sun path rotation", e);
+            return 0;
+        }
     }
 
     /**

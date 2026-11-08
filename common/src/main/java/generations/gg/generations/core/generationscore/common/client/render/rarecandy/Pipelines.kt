@@ -110,6 +110,11 @@ object Pipelines {
         .oncePerPass("FogEnd") { it.uniform().uploadFloat(RenderSystem.getShaderFogEnd()) }
         .oncePerPass("FogColor") { it.uploadColor(RenderSystem.getShaderFogColor()) }
         .oncePerPass("auxMode") { it.uniform().uploadInt(IrisFramebufferCompat.auxMode()) }
+        .oncePerPass("sunDirection") { it.uniform().uploadVec3f(RareCandyLighting.direction) }
+        .oncePerPass("sunLight") {
+            val color = RareCandyLighting.color
+            it.uniform().upload4f(color.x, color.y, color.z, RareCandyLighting.strength)
+        }
 
         .supplyTexture("diffuse", 0) { it.instance().instanceOrNull<StatueInstance>()?.material?.let { GenerationsTextureLoader.getTextureOrNull(it) } ?: it.getTextureOrOther({ it.material.images().diffuse }) { ITextureLoader.instance().nuetralFallback } }
         .supplyTexture("mask", 1) { it.getTextureOrOther({ it.material.images().mask }) { ITextureLoader.instance().darkFallback } }

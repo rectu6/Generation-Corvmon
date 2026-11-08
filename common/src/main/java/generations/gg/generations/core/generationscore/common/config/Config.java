@@ -163,6 +163,8 @@ public class Config {
         public boolean shaderShadows = true;
         // Blocks from the camera beyond which RareCandy models stop casting shadows (0 = no limit).
         public int shaderShadowDistance = 32;
+        // With an Iris shader pack, RareCandy models are lit by the sun or the moon like the scene.
+        public boolean shaderSunLighting = true;
     }
 
     public static class Economy {
