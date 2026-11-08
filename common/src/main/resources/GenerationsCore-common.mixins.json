@@ -42,6 +42,7 @@
     "client.BattleOverlayMixin",
     "client.BattleTransformPokemonHandlerMixin",
     "client.ClientRecipeBookMixin",
+    "client.EntityRenderDispatcherMixin",
     "client.GuiMixin",
     "client.LevelRendererMixin",
     "client.LightTextureMixin",

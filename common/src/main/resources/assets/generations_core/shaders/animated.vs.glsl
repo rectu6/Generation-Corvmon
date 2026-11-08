@@ -16,6 +16,7 @@ out vec3 fragNormal;
 out vec3 fragViewDir;
 out vec3 worldPos;
 out vec4 lightMapColor;
+out float skyLight;
 
 uniform sampler2D lightmap;
 
@@ -75,6 +76,7 @@ void main() {
     vertexColor = getVertexColor();
     vertexDistance = fog_distance(gl_Position.xyz, FogShape);
     lightMapColor = texelFetch(lightmap, light / 16, 0);
+    skyLight = float(light.y) / 240.0;
     texCoord0 = (texcoords * uvScale) + uvOffset;
 
     fragViewDir = normalize(-(viewMatrix * worldPosition).xyz);

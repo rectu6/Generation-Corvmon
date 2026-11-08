@@ -4,8 +4,17 @@ in vec2 texCoord0;
 in vec4 vertexColor;
 in float vertexDistance;
 in vec4 lightMapColor;
+in float skyLight;
 
-out vec4 outColor;
+layout(location = 0) out vec4 outColor;
+// Extra gbuffer targets of an Iris shader pack. They only receive data when
+// IrisFramebufferCompat binds them; otherwise these outputs are discarded.
+layout(location = 1) out vec4 outAux1;
+layout(location = 2) out vec4 outAux2;
+layout(location = 3) out vec4 outAux3;
+
+// 0: no extra targets. 1: Complementary's gbuffers_entities layout (colortex 0, 3, 6[, 4]).
+uniform int auxMode;
 
 uniform vec4 ColorModulator;
 
@@ -375,9 +384,31 @@ void main() {
     if(useTera) {
         outColor.rgb = calculateTersaalizationEffect(outColor.rgb);
     } else if (useLight) {
-        outColor *= vertexColor;
-        outColor *= mix(lightMapColor, vec4(1, 1, 1, 1), texture(emission, texCoord0).r);
+        // Lighting affects brightness, never material opacity. Shader mods may
+        // use the lightmap alpha channel for data unrelated to transparency.
+        outColor.rgb *= vertexColor.rgb;
+        outColor.rgb *= mix(lightMapColor.rgb, vec3(1), texture(emission, texCoord0).r);
     }
 
     outColor = linear_fog(outColor, vertexDistance, FogStart, FogEnd, FogColor);
+
+    outAux1 = vec4(0.0);
+    outAux2 = vec4(0.0);
+    outAux3 = vec4(0.0);
+    if (auxMode == 1) {
+        // What Complementary's gbuffers_entities writes for an opaque entity. Without
+        // it, these pixels keep the data of the terrain behind: TAA then blends in
+        // older frames and the model looks see-through.
+        // colortex3: 1 - translucentMult, nothing behind is tinted.
+        outAux1 = vec4(0.0, 0.0, 0.0, 1.0);
+        // colortex6: smoothness 0, materialMask OSIEBCA * 254 ("no SSAO, no TAA,
+        // reduce reflection"), then GetSkyLightFactor.
+        float skyLightFactor = max(skyLight - 0.7, 0.0) * 3.33333;
+        outAux2 = vec4(0.0, 254.0 / 255.0, skyLightFactor * skyLightFactor, 1.0);
+        // colortex4 (only bound with reflections): player-space normal. worldPos is
+        // camera-relative and world-aligned, so the face normal is in that space.
+        vec3 normal = normalize(cross(dFdx(worldPos), dFdy(worldPos)));
+        if (dot(normal, worldPos) > 0.0) normal = -normal;
+        outAux3 = vec4(normal, 1.0);
+    }
 }

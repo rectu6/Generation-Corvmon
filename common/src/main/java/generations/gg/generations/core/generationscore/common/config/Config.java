@@ -159,6 +159,10 @@ public class Config {
         public boolean useRenderDoc = false;
         public boolean useVanilla = false;
         public boolean logModelLoading = false;
+        // With an Iris shader pack, RareCandy models (Pokémon, statues) cast shadows.
+        public boolean shaderShadows = true;
+        // Blocks from the camera beyond which RareCandy models stop casting shadows (0 = no limit).
+        public int shaderShadowDistance = 32;
     }
 
     public static class Economy {

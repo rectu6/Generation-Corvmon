@@ -24,11 +24,14 @@ import org.lwjgl.opengl.GL13C
 import java.io.ByteArrayInputStream
 import java.io.IOException
 import java.util.concurrent.CompletableFuture
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.Executor
 import kotlin.random.Random
 
 object GenerationsTextureLoader : ITextureLoader() {
-    val REGULAR = mutableMapOf<String, ResourceLocation>()
+    // RareCandy registers model images from its loading threads while the render
+    // thread reads and releases them.
+    val REGULAR: MutableMap<String, ResourceLocation> = ConcurrentHashMap()
     val CODEC = Codec.unboundedMap(Codec.STRING, ResourceLocation.CODEC)
     val RARE_CANDY = FileToIdConverter("textures", "rare_candy_texture.json")
     val gson = Gson()
@@ -78,22 +81,49 @@ object GenerationsTextureLoader : ITextureLoader() {
 
 
     override fun getTexture(s: String?): ITexture? {
-        val texture = REGULAR.getOrDefault(s, null)?.let { Minecraft.getInstance().textureManager.getTexture(it, null) }.takeIf { it is ITextureWithResourceLocation } ?: return MissingTextureProxy
+        val texture = s?.let { REGULAR[it] }?.let { Minecraft.getInstance().textureManager.getTexture(it, null) }.takeIf { it is ITextureWithResourceLocation } ?: return MissingTextureProxy
 
         return texture as ITexture
     }
 
     override fun register(s: String, iTexture: ITexture) {
-        if(iTexture is ITextureWithResourceLocation) REGULAR.putIfAbsent(s, iTexture.location)
+        if (iTexture !is ITextureWithResourceLocation) return
+        val location = iTexture.location
+        val previous = REGULAR.putIfAbsent(s, location)
+        // The texture already registered itself with Minecraft when it was created:
+        // a duplicate that is not kept here would never be released.
+        if (previous != null && previous != location) {
+            RenderSystem.recordRenderCall { Minecraft.getInstance().textureManager.release(location) }
+        }
     }
 
     override fun register(id: String, name: String, data: ByteArray) {
+        // Reloading a model registers its images again; keep the existing texture.
+        if (REGULAR.containsKey(id)) return
         SimpleTextureIndependentData.read(data, name)?.let { register(id, it) }
     }
 
 
     override fun remove(s: String) {
         REGULAR.remove(s)?.run { Minecraft.getInstance().textureManager.release(this) }
+    }
+
+    /**
+     * Releases every image of a RareCandy model. ModelLoader.readImages registers
+     * all of them as "<model>-<image>", but Material.close (RareCandy 2.14.2) only
+     * removes some: it removes the diffuse texture twice and never the emission
+     * one, and images no material uses are never removed. Models are unloaded 5 s
+     * after they leave the screen, so each reload leaked textures. Render thread only.
+     */
+    fun removeModelTextures(model: String) {
+        val prefix = "$model-"
+        val iterator = REGULAR.entries.iterator()
+        while (iterator.hasNext()) {
+            val entry = iterator.next()
+            if (!entry.key.startsWith(prefix)) continue
+            iterator.remove()
+            Minecraft.getInstance().textureManager.release(entry.value)
+        }
     }
 
     fun clear() {
@@ -113,9 +143,9 @@ object GenerationsTextureLoader : ITextureLoader() {
 
     override fun getTextureEntries(): Set<String> = REGULAR.keys
 
-    fun has(texture: String?): Boolean = REGULAR.containsKey(texture)
+    fun has(texture: String?): Boolean = texture != null && REGULAR.containsKey(texture)
 
-    fun getLocation(material: String?): ResourceLocation? = REGULAR.getOrDefault(material, null)
+    fun getLocation(material: String?): ResourceLocation? = material?.let { REGULAR[it] }
     fun getTextureOrNull(name: String?): ITexture? {
         return if(has(name)) getTexture(name) else null
     }

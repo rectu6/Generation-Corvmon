@@ -1,6 +1,7 @@
 package generations.gg.generations.core.generationscore.common.client.render.rarecandy
 
 import generations.gg.generations.core.generationscore.common.GenerationsCore
+import generations.gg.generations.core.generationscore.common.client.GenerationsTextureLoader
 import generations.gg.generations.core.generationscore.common.client.render.rarecandy.loading.GenerationsModelLoader
 import generations.gg.generations.core.generationscore.common.client.render.rarecandy.loading.VanilaRenderModel
 import generations.gg.generations.core.generationscore.common.util.TaskQueue
@@ -46,8 +47,12 @@ class CompiledModel @JvmOverloads constructor(
 
         if(GenerationsCore.CONFIG.client.useVanilla) {
             renderVanilla(instance, source)
+        } else if (RareCandyShadows.isShadowPass()) {
+            // Iris's shadow pass: cast the shadow, but keep the model out of RareCandy's queue.
+            RareCandyShadows.renderShadow(renderObject!!, instance, source)
         } else {
-        renderRareCandy(instance, ModelRegistry.worldRareCandy.objectManager)
+            RareCandyShadows.rememberMainPassPose(instance)
+            renderRareCandy(instance, ModelRegistry.worldRareCandy.objectManager)
         }
     }
 
@@ -75,6 +80,8 @@ class CompiledModel @JvmOverloads constructor(
     fun delete() {
         if(GenerationsCore.CONFIG.client.logModelLoading) System.out.println("Deleting GPU Resources for: $name")
         renderObject?.close()
+        // RareCandy's own cleanup misses some of the model's textures.
+        GenerationsTextureLoader.removeModelTextures(name.toString())
     }
 
     companion object {

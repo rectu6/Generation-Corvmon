@@ -26,6 +26,8 @@ object ModelRegistry {
 
     private val CACHE = mutableMapOf<ResourceLocation, CompiledModel>()
     private val TIMES = mutableMapOf<ResourceLocation, Double>()
+    /** Models that could not be loaded; retried after the next resource reload (clear). */
+    private val FAILED = mutableSetOf<ResourceLocation>()
 
     @JvmStatic
     operator fun get(modelProvider: ModelContextProviders.ModelProvider): CompiledModel? {
@@ -38,6 +40,7 @@ object ModelRegistry {
             CACHE.forEach { (_, value) -> value.delete() }
 
             CACHE.clear()
+            FAILED.clear()
         }
     }
 
@@ -54,21 +57,28 @@ object ModelRegistry {
             val time = MinecraftClientGameProvider.getTimePassed();
 
             modelsToLoad.forEach {
-                CACHE[it] = of(it);
-                TIMES[it] = time
+                // A resource pack can be removed while entities still reference its
+                // models (switching back to Cobblemon's models): skip the model
+                // instead of crashing the game.
+                try {
+                    CACHE[it] = of(it)
+                    TIMES[it] = time
+                } catch (e: Exception) {
+                    FAILED += it
+                    GenerationsCore.LOGGER.warn("Could not load model {}: {}", it, e.message)
+                }
             }
 
             modelsToLoad.clear()
 
-            val keys = TIMES.filter { time - it.value >= 5.0 }.map { it.key }
+            // Runs every frame: iterate in place instead of building filtered copies.
+            val iterator = TIMES.entries.iterator()
+            while (iterator.hasNext()) {
+                val (key, lastUse) = iterator.next()
+                if (time - lastUse < 5.0) continue
 
-            for(key in keys) {
-                CACHE[key]?.also {
-                    it.delete()
-                }
-
-                CACHE.remove(key)
-                TIMES.remove(key)
+                CACHE.remove(key)?.delete()
+                iterator.remove()
             }
         }
     }
@@ -76,7 +86,7 @@ object ModelRegistry {
     @JvmStatic
     operator fun get(location: ResourceLocation): CompiledModel? {
         return try {
-            if(modelsToLoad.contains(location)) null;
+            if(modelsToLoad.contains(location) || location in FAILED) null;
             else {
                 CACHE[location]?.also { TIMES[location] = MinecraftClientGameProvider.getTimePassed() } ?: run { modelsToLoad += location }.let { null }
             }

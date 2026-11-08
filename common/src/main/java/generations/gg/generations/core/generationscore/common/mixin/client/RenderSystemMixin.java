@@ -49,7 +49,7 @@ public class RenderSystemMixin {
 
     @Inject(method = "disableDepthTest", at = @At("HEAD"))
     private static void onDisableDepth(CallbackInfo ci) {
-        if(!isActive()) RenderStateRecord.INSTANCE.setBlendEnabled(false);
+        if(!isActive()) RenderStateRecord.INSTANCE.setDepthTestEnabled(false);
     }
 
     @Inject(method = "depthMask", at = @At("HEAD"))
@@ -69,7 +69,7 @@ public class RenderSystemMixin {
 
     @Inject(method = "disableCull", at = @At("HEAD"))
     private static void onDisableCull(CallbackInfo ci) {
-        if(!isActive()) RenderStateRecord.INSTANCE.setBlendEnabled(false);
+        if(!isActive()) RenderStateRecord.INSTANCE.setCullEnabled(false);
     }
 
     @Unique

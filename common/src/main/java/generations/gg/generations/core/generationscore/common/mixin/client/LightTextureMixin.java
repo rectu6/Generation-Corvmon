@@ -13,12 +13,12 @@ import org.spongepowered.asm.mixin.Shadow;
 public abstract class LightTextureMixin implements ILightTexture {
     @Shadow @Final private DynamicTexture lightTexture;
 
-    @Shadow public abstract void turnOnLightLayer();
-
     @Override
     public void bind(int i) {
+        // Bind RareCandy's sampler (lightmap = 3) directly, without also
+        // changing vanilla shader texture slot 2 through turnOnLightLayer.
         RenderSystem.activeTexture(GL13C.GL_TEXTURE0 + i);
-        turnOnLightLayer();
+        RenderSystem.bindTexture(lightTexture.getId());
     }
 
     @Override

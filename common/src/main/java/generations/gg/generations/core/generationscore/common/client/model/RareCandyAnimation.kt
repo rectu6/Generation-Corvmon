@@ -6,6 +6,7 @@ import generations.gg.generations.core.generationscore.common.client.render.rare
 import gg.generations.rarecandy.renderer.animation.Animation
 import gg.generations.rarecandy.renderer.components.AnimatedMeshObject
 import net.minecraft.resources.ResourceLocation
+import org.joml.Matrix4f
 
 data class RareCandyAnimation(private val model: ResourceLocation, private val name: String) {
 
@@ -41,7 +42,19 @@ data class RareCandyAnimation(private val model: ResourceLocation, private val n
 
         instance.setAnimation(anim)
 
-        instance.matrixTransforms = anim.getFrameTransform((currentSeconds).toDouble())
+        // getFrameTransform returns one array per Animation, shared by every Pokémon
+        // playing it: each instance copies the pose into its own array, otherwise all
+        // of them would be drawn with the pose computed last. The pose is computed
+        // once per time: Iris's shadow pass and the main pass both pose the model.
+        val transforms = instance.matrixTransforms
+        if (instance.posedAnimation !== anim || instance.posedSeconds != currentSeconds || transforms == null) {
+            val frame = anim.getFrameTransform(currentSeconds.toDouble())
+            val target = transforms?.takeIf { it.size == frame.size } ?: Array(frame.size) { Matrix4f() }
+            for (i in frame.indices) target[i].set(frame[i])
+            instance.matrixTransforms = target
+            instance.posedAnimation = anim
+            instance.posedSeconds = currentSeconds
+        }
         anim.getFrameOffset(instance.currentAnimation!!)
 
         return true

@@ -24,9 +24,11 @@ import generations.gg.generations.core.generationscore.common.client.render.Rend
 import generations.gg.generations.core.generationscore.common.client.render.TimeCapsuleItemRender
 import generations.gg.generations.core.generationscore.common.client.render.block.entity.*
 import generations.gg.generations.core.generationscore.common.client.render.entity.*
+import generations.gg.generations.core.generationscore.common.client.render.rarecandy.IrisFramebufferCompat
 import generations.gg.generations.core.generationscore.common.client.render.rarecandy.MinecraftClientGameProvider
 import generations.gg.generations.core.generationscore.common.client.render.rarecandy.ModelRegistry
 import generations.gg.generations.core.generationscore.common.client.render.rarecandy.Pipelines
+import generations.gg.generations.core.generationscore.common.client.render.rarecandy.RareCandyPass
 import generations.gg.generations.core.generationscore.common.client.render.rarecandy.instanceOrNull
 import generations.gg.generations.core.generationscore.common.client.screen.container.*
 import generations.gg.generations.core.generationscore.common.orFalse
@@ -554,11 +556,11 @@ object GenerationsCoreClient {
 //        renderHighlightedPath(stack, Minecraft.getInstance().levelRenderer.ticks, camera)
 
         RenderStateRecord.push()
-        RenderSystem.enableDepthTest()
-        RenderSystem.defaultBlendFunc()
-        RenderSystem.enableBlend()
-        renderRareCandyTransparent()
-        RenderStateRecord.pop()
+        try {
+            renderRareCandyTransparent()
+        } finally {
+            RenderStateRecord.pop()
+        }
 
         ModelRegistry.worldRareCandy.end()
 
@@ -572,11 +574,11 @@ object GenerationsCoreClient {
         MatrixCache.viewMatrix = RenderSystem.getModelViewMatrix()
 
         RenderStateRecord.push()
-
-        renderRareCandySolid()
-        renderRareCandyTransparent()
-
-        RenderStateRecord.pop()
+        try {
+            renderRareCandySolid()
+        } finally {
+            RenderStateRecord.pop()
+        }
     }
 
 
@@ -593,9 +595,19 @@ object GenerationsCoreClient {
 
         var startTime = System.currentTimeMillis()
         RenderSystem.enableDepthTest()
+        RenderSystem.depthMask(stage == RenderStage.SOLID)
         BufferUploader.reset()
 
-        ModelRegistry.worldRareCandy.render(stage, false)
+        // With a shader pack, draw into Iris's gbuffers instead of the main
+        // framebuffer, whose colour Iris discards (see IrisFramebufferCompat).
+        IrisFramebufferCompat.begin(stage == RenderStage.SOLID)
+        RareCandyPass.begin()
+        try {
+            ModelRegistry.worldRareCandy.render(stage, false)
+        } finally {
+            RareCandyPass.end()
+            IrisFramebufferCompat.end()
+        }
         if (shouldRenderFpsPie()) LOGGER.warn("RareCandy render took " + (System.currentTimeMillis() - startTime) + "ms")
     }
 }

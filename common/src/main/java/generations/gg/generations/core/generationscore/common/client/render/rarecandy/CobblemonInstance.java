@@ -12,6 +12,9 @@ import org.joml.Vector3f;
 public class CobblemonInstance extends AnimatedObjectInstance implements BlockLightValueProvider, TeraProvider {
 
     public Matrix4f[] matrixTransforms;
+    /** Animation and time matrixTransforms was last posed with (see RareCandyAnimation). */
+    public Animation posedAnimation;
+    public float posedSeconds;
     public Transform offsets;
     private final Vector3f tint = new Vector3f();
     private boolean teraActive = false;
