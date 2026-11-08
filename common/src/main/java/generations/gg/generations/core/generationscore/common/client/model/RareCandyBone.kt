@@ -104,6 +104,13 @@ class RareCandyBone /*Remove when cobblemon doesn't have parts of code that assu
             instance.transformationMatrix().set(stack.last().pose())
             stack.popPose()
 
+            // Size of the model in blocks (all scales included), for the culling box:
+            // big models outgrow their hitbox. RareCandy's dimensions are the largest
+            // vertex coordinates, so a margin covers parts on the negative side (tails).
+            val dimensions = model.renderObject!!.dimensions
+            instance.modelRadius = maxOf(dimensions.x, dimensions.y, dimensions.z) *
+                instance.transformationMatrix().getScale(SCALE).x * 1.25f
+
             model.render(instance, Minecraft.getInstance().renderBuffers().bufferSource())
         }
     }
@@ -128,6 +135,7 @@ class RareCandyBone /*Remove when cobblemon doesn't have parts of code that assu
             }
         )
         private val ROTATION_CORRECTION = Axis.YP.rotationDegrees(180f)
+        private val SCALE = Vector3f()
     }
 }
 

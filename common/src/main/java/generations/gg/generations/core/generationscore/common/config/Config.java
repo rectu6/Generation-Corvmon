@@ -165,6 +165,8 @@ public class Config {
         public int shaderShadowDistance = 32;
         // With an Iris shader pack, RareCandy models are lit by the sun or the moon like the scene.
         public boolean shaderSunLighting = true;
+        // Logs the Java call stack of the first OpenGL errors (diagnostic, slightly slower).
+        public boolean traceOpenGlErrors = false;
     }
 
     public static class Economy {

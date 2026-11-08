@@ -43,6 +43,7 @@
     "client.BattleTransformPokemonHandlerMixin",
     "client.ClientRecipeBookMixin",
     "client.EntityRenderDispatcherMixin",
+    "client.GlDebugMixin",
     "client.GuiMixin",
     "client.LevelRendererMixin",
     "client.LightTextureMixin",

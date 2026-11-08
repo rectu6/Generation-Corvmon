@@ -13,6 +13,8 @@ import generations.gg.generations.core.generationscore.common.util.GenerationsUt
 import gg.generations.rarecandy.pokeutils.reader.ITextureLoader
 import gg.generations.rarecandy.renderer.loading.ITexture
 import net.minecraft.client.Minecraft
+import com.mojang.blaze3d.platform.TextureUtil
+import net.minecraft.client.renderer.texture.AbstractTexture
 import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite
 import net.minecraft.client.renderer.texture.SimpleTexture
 import net.minecraft.resources.FileToIdConverter
@@ -20,6 +22,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.packs.resources.PreparableReloadListener
 import net.minecraft.server.packs.resources.ResourceManager
 import net.minecraft.util.profiling.ProfilerFiller
+import org.lwjgl.opengl.GL11C
 import org.lwjgl.opengl.GL13C
 import java.io.ByteArrayInputStream
 import java.io.IOException
@@ -158,7 +161,8 @@ object GenerationsTextureLoader : ITextureLoader() {
 
         override fun bind(slot: Int) {
             RenderSystem.activeTexture(GL13C.GL_TEXTURE0 + slot)
-            RenderSystem.bindTexture(id)
+            // getId, not the id field: it is -1 until Minecraft creates the texture.
+            RenderSystem.bindTexture(getId())
         }
 
         override fun width(): Int {
@@ -170,61 +174,72 @@ object GenerationsTextureLoader : ITextureLoader() {
         }
     }
 
-    private class SimpleTextureIndependentData(override var location: ResourceLocation, private val texture: ByteArray?) : SimpleTexture(location), ITextureWithResourceLocation {
+    /**
+     * An image of a RareCandy model. Models are loaded on RareCandy's threads and
+     * become drawable during a frame (RareCandy.update), but a SimpleTexture
+     * created off the render thread is only uploaded at the start of the next
+     * frame: the first frame bound texture name -1 ("Texture name does not refer to
+     * a texture object" GL error) and drew the model with whatever texture was
+     * bound. The image is decoded on the loading thread and uploaded on the render
+     * thread the first time the texture is used.
+     */
+    private class SimpleTextureIndependentData(override var location: ResourceLocation, image: NativeImage) : AbstractTexture(), ITextureWithResourceLocation {
+        @Volatile
+        private var image: NativeImage? = image
+        private val width = image.width
+        private val height = image.height
 
         init {
             Minecraft.getInstance().textureManager.register(location, this)
         }
 
+        override fun load(resourceManager: ResourceManager) {}
+
+        override fun getId(): Int {
+            val id = super.getId()
+            if (image != null && RenderSystem.isOnRenderThread()) upload(id)
+            return id
+        }
+
+        @Synchronized
+        private fun upload(id: Int) {
+            val image = image ?: return
+            this.image = null
+            // Uploading binds the texture: keep the caller's binding.
+            val previous = GL11C.glGetInteger(GL11C.GL_TEXTURE_BINDING_2D)
+            TextureUtil.prepareImage(id, 0, width, height)
+            image.upload(0, 0, 0, true)
+            RenderSystem.bindTexture(previous)
+        }
+
         override fun bind(slot: Int) {
             RenderSystem.activeTexture(GL13C.GL_TEXTURE0 + slot)
-            RenderSystem.bindTexture(id)
+            RenderSystem.bindTexture(getId())
         }
 
-        override fun width(): Int {
-            TODO("Not yet implemented")
-        }
+        override fun width(): Int = width
 
-        override fun height(): Int {
-            TODO("Not yet implemented")
-        }
+        override fun height(): Int = height
 
-        override fun getTextureImage(resourceManager: ResourceManager): TextureImage {
-            return load()!!
-        }
-
-        fun load(): TextureImage? {
-            return try {
-                val inputStream = ByteArrayInputStream(texture)
-                val nativeImage: NativeImage = try {
-                    NativeImage.read(inputStream)
-                } catch (var9: Throwable) {
-                    try {
-                        inputStream.close()
-                    } catch (var7: Throwable) {
-                        var9.addSuppressed(var7)
-                    }
-                    throw var9
-                }
-
-                inputStream.close()
-//                var textureMetadataSection: TextureMetadataSection? = null //TODO: See if implmenting is viable
-//                try {
-//                    textureMetadataSection = resource.metadata().getSection(TextureMetadataSection.SERIALIZER)
-//                        .orElse(null as Any?) as TextureMetadataSection
-//                } catch (var8: java.lang.RuntimeException) {
-//                    LOGGER.warn("Failed reading metadata of: {}", location, var8)
-//                }
-                TextureImage(null, nativeImage)
-            } catch (var10: IOException) {
-                TextureImage(var10)
-            }
+        @Synchronized
+        override fun close() {
+            // Never used: the image was not uploaded and is still in memory.
+            image?.close()
+            image = null
         }
 
         companion object {
-            @Throws(IOException::class)
             fun read(imageBytes: ByteArray?, name: String): SimpleTextureIndependentData? {
                 if(imageBytes == null) return null
+
+                // Through a stream: NativeImage.read(ByteArray) copies the file onto
+                // LWJGL's small thread stack and fails on large images.
+                val image = try {
+                    ByteArrayInputStream(imageBytes).use { NativeImage.read(it) }
+                } catch (e: IOException) {
+                    GenerationsCore.LOGGER.warn("Could not read model image {}: {}", name, e.message)
+                    return null
+                }
 
                 val resource = if(name.contains(":")) {
                     name.lowercase().asResource()
@@ -232,7 +247,7 @@ object GenerationsTextureLoader : ITextureLoader() {
                     GenerationsCore.id((1..4).joinToString("") { Random.nextInt(0, 10).toString() }  + name.lowercase())
                 }
 
-                return SimpleTextureIndependentData(resource, imageBytes)
+                return SimpleTextureIndependentData(resource, image)
             }
 
         }

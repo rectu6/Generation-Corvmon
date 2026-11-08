@@ -15,6 +15,8 @@ public class CobblemonInstance extends AnimatedObjectInstance implements BlockLi
     public Matrix4f[] matrixTransforms;
     /** Minecraft's packed overlay coordinates (red while hurt), see Pipelines' overlayColor. */
     public int overlay = OverlayTexture.NO_OVERLAY;
+    /** Half size of the drawn model in blocks, for the entity's culling box (PokemonEntityMixin). */
+    public float modelRadius;
     /** Animation and time matrixTransforms was last posed with (see RareCandyAnimation). */
     public Animation posedAnimation;
     public float posedSeconds;

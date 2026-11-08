@@ -163,6 +163,60 @@ RareCandy ignorait cette valeur.
   (`FileNotFoundException` sur le `.pk`). Le modèle est maintenant ignoré et
   réessayé au prochain rechargement des ressources.
 
+## Erreur OpenGL « Texture name does not refer to a texture object »
+
+Cette erreur revenait plusieurs fois par minute dans les logs, surtout après un
+rechargement des ressources ou près de modèles nouvellement chargés. Elle
+existait avant ces corrections.
+
+- **Cause** (trouvée avec `client.traceOpenGlErrors`, voir plus bas) :
+  RareCandy charge les modèles sur ses propres threads et les rend dessinables
+  pendant une image (`RareCandy.update`). Leurs images étaient des
+  `SimpleTexture`, que Minecraft n'envoie au GPU qu'au début de l'image
+  suivante quand elles sont créées hors du thread de rendu. Pendant la
+  première image, `bind` lisait le champ `id` encore à -1 : erreur OpenGL, et le
+  modèle était dessiné avec la texture déjà liée.
+- **Correction** : `GenerationsTextureLoader.SimpleTextureIndependentData`
+  décode l'image sur le thread de chargement et l'envoie au GPU sur le thread de
+  rendu à sa première utilisation (`getId`), y compris pour les ombres. L'image
+  est lue par un flux : `NativeImage.read(ByteArray)` copie le fichier sur la
+  petite pile mémoire de LWJGL (64 Ko) et échoue sur les grandes textures.
+- **File de chargement** (`TaskQueue`) : elle n'attrapait que les `Exception`.
+  Une `Error` sur un seul modèle arrêtait son thread, et plus aucun modèle ne se
+  chargeait jusqu'au redémarrage du jeu ; chaque tâche est maintenant isolée.
+  Quand la file était vide, sa boucle tournait sans attendre et occupait un
+  cœur du processeur en permanence ; elle attend maintenant la tâche suivante
+  (`take`).
+- **Diagnostic** : `client.traceOpenGlErrors` (désactivé par défaut) passe la
+  sortie de débogage OpenGL en mode synchrone et écrit dans le log la pile
+  d'appels Java des 10 premières erreurs (`GlDebugMixin`).
+
+## Grands Pokémon qui disparaissent en levant la tête
+
+Minecraft (et Sodium) ne dessine une entité que si sa boîte de culling est à
+l'écran, et cette boîte est la hitbox. Plusieurs Pokémon ajoutés par Generations
+ont une hitbox provisoire bien plus petite que leur modèle : Arceus a une hitbox
+de 1 × 1 bloc pour un modèle d'environ 5 blocs, Giratina n'en a pas (taille par
+défaut) pour 7 blocs, 9,6 en forme Originelle. En levant la tête, la hitbox
+sortait de l'écran et tout le modèle disparaissait.
+
+- `RareCandyBone` note à chaque rendu la demi-taille du modèle en blocs
+  (`CobblemonInstance.modelRadius`), d'après les dimensions RareCandy et
+  l'échelle réelle de la matrice du modèle, avec une marge de 25 %.
+- `PokemonEntityMixin.getBoundingBoxForCulling` étend la boîte de culling à cette
+  taille. Les hitbox (collisions, clics) ne changent pas.
+- La taille est connue après le premier rendu du modèle : un modèle jamais
+  dessiné garde la boîte de sa hitbox.
+
+## Distributeurs et PC de table transparents
+
+Tous les matériaux de `vending_machine.pk` et `table_pc.pk` étaient en
+`blend: Regular`, même les parties pleines. Un matériau transparent est dessiné
+sans écrire la profondeur, donc l'intérieur du modèle apparaissait par-dessus
+l'extérieur. Leur `config.json` met maintenant le corps en `blend: None`. Seule
+la vitre du distributeur reste transparente, avec son propre matériau `glass`
+(même texture qu'avant). Les autres modèles du mod séparent déjà leurs vitres.
+
 ## Limites connues
 
 - Les modèles RareCandy gardent leur propre éclairage : le pack ne recalcule pas

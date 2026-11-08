@@ -50,7 +50,8 @@ class Texture(override var location: ResourceLocation, image: NativeImage) : Dyn
                 id((1..4).joinToString("") { Random.nextInt(0, 10).toString() }  + name.lowercase())
             }
 
-            return Texture(resource, imageBytes.let { NativeImage.read(imageBytes) })
+            // Not NativeImage.read(ByteArray): it copies the file onto LWJGL's small thread stack.
+            return Texture(resource, java.io.ByteArrayInputStream(imageBytes).use { NativeImage.read(it) })
         }
 
     }
