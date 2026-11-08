@@ -171,6 +171,8 @@ public final class RenderRegression {
         glUniform2f(glGetUniformLocation(p, "uvScale"), 1f, 1f);
         glUniform4f(glGetUniformLocation(p, "ColorModulator"), 1f, 1f, 1f, 1f);
         glUniform3f(glGetUniformLocation(p, "tint"), 1f, 1f, 1f);
+        // OverlayTexture.NO_OVERLAY: white, colour fully kept.
+        glUniform4f(glGetUniformLocation(p, "overlayColor"), 1f, 1f, 1f, 1f);
         glUniform1i(glGetUniformLocation(p, "legacy"), 1);
         glUniform1i(glGetUniformLocation(p, "useLight"), lit ? 1 : 0);
         glUniform1f(glGetUniformLocation(p, "FogStart"), 100f);

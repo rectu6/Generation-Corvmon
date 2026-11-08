@@ -6,12 +6,15 @@ import gg.generations.rarecandy.renderer.animation.Animation;
 import gg.generations.rarecandy.renderer.animation.AnimationInstance;
 import gg.generations.rarecandy.renderer.animation.Transform;
 import gg.generations.rarecandy.renderer.storage.AnimatedObjectInstance;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 public class CobblemonInstance extends AnimatedObjectInstance implements BlockLightValueProvider, TeraProvider {
 
     public Matrix4f[] matrixTransforms;
+    /** Minecraft's packed overlay coordinates (red while hurt), see Pipelines' overlayColor. */
+    public int overlay = OverlayTexture.NO_OVERLAY;
     /** Animation and time matrixTransforms was last posed with (see RareCandyAnimation). */
     public Animation posedAnimation;
     public float posedSeconds;

@@ -16,6 +16,9 @@ layout(location = 3) out vec4 outAux3;
 // 0: no extra targets. 1: Complementary's gbuffers_entities layout (colortex 0, 3, 6[, 4]).
 uniform int auxMode;
 
+// Minecraft's overlay colour for this entity (see Pipelines): rgb mixed in, a = colour kept.
+uniform vec4 overlayColor;
+
 uniform vec4 ColorModulator;
 
 //fog
@@ -380,6 +383,8 @@ void main() {
     }
 
     outColor.rgb *= tint;
+    // Red while hurt, as vanilla entity shaders do with the overlay texture.
+    outColor.rgb = mix(overlayColor.rgb, outColor.rgb, overlayColor.a);
 
     if(useTera) {
         outColor.rgb = calculateTersaalizationEffect(outColor.rgb);

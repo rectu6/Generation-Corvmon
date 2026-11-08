@@ -22,6 +22,7 @@ import generations.gg.generations.core.generationscore.common.client.render.tera
 import generations.gg.generations.core.generationscore.common.util.extensions.battleTeraType
 import net.minecraft.client.Minecraft
 import net.minecraft.client.model.geom.ModelPart
+import net.minecraft.client.renderer.texture.OverlayTexture
 import net.minecraft.core.Direction
 import net.minecraft.resources.ResourceLocation
 import org.joml.Vector3f
@@ -81,6 +82,10 @@ class RareCandyBone /*Remove when cobblemon doesn't have parts of code that assu
         }
         if (model.renderObject!!.isReady) {
             instance.light = packedLight
+            // Red while hurt by a player, like vanilla mobs and Cobblemon's own
+            // models; not during a Pokémon battle.
+            val battling = context.entity.instanceOrNull<PokemonEntity>()?.isBattling == true
+            instance.overlay = if (battling) OverlayTexture.NO_OVERLAY else packedOverlay
             instance.teraActive = context.request(RenderContext.ASPECTS)?.contains("terastal_active") ?: false
             if (instance.teraActive) {
                 context.entity.instanceOrNull<PokemonEntity>()?.battleTeraType?.let {

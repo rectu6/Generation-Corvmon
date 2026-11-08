@@ -18,6 +18,7 @@ import gg.generations.rarecandy.renderer.pipeline.Pipeline
 import gg.generations.rarecandy.renderer.pipeline.UniformUploadContext
 import gg.generations.rarecandy.renderer.storage.AnimatedObjectInstance
 import net.minecraft.client.Minecraft
+import net.minecraft.client.renderer.texture.OverlayTexture
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.packs.resources.ResourceManager
 import org.joml.Vector2f
@@ -129,6 +130,17 @@ object Pipelines {
         .oncePerInstance("light") { ctx: UniformUploadContext ->
             val light = (ctx.instance() as BlockLightValueProvider).light
             ctx.uniform().upload2i(light and 0xFFFF, light shr 16 and 0xFFFF)
+        }
+
+        // Same colours as Minecraft's OverlayTexture, which vanilla shaders sample with
+        // the packed overlay: red while hurt or dying (v < 8), else white with a
+        // strength set by u (creeper flash). NO_OVERLAY leaves the colour unchanged.
+        .oncePerInstance("overlayColor") {
+            val overlay = (it.instance() as? CobblemonInstance)?.overlay ?: OverlayTexture.NO_OVERLAY
+            val u = overlay and 0xFFFF
+            val v = overlay shr 16 and 0xFFFF
+            if (v < 8) it.uniform().upload4f(1f, 0f, 0f, 178f / 255f)
+            else it.uniform().upload4f(1f, 1f, 1f, 1f - u / 15f * 0.75f)
         }
 
         .oncePerInstance("tint") { it.uniform().uploadVec3f(it.instance().instanceOrNull<CobblemonInstance>()?.tint?.takeIf { it != ZERO } ?: ONE) }

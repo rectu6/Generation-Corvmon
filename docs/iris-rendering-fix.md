@@ -131,6 +131,22 @@ pas plus clair que l'autre.
 - Uniquement avec un pack actif ; réglage `client.shaderSunLighting` (activé par
   défaut). Coût négligeable : un calcul par sommet sur le GPU.
 
+## Rouge quand on frappe un Pokémon (validé en jeu)
+
+Les mobs vanilla et les Pokémon cubiques de Cobblemon deviennent rouges quand
+on les frappe : Minecraft passe un `packedOverlay` (`OverlayTexture`) au rendu.
+RareCandy ignorait cette valeur.
+
+- `RareCandyBone` copie le `packedOverlay` reçu dans `CobblemonInstance.overlay`,
+  sauf pendant un combat Pokémon (`PokemonEntity.isBattling`) : les attaques de
+  combat ne font pas rougir le modèle.
+- `Pipelines` (`overlayColor`, une fois par instance) traduit cette valeur comme
+  la texture d'overlay de Minecraft : rouge avec une opacité de 178/255 quand
+  l'entité est touchée ou meurt, blanc sinon.
+- `animated.fs.glsl` mélange cette couleur après la teinte
+  (`mix(overlayColor.rgb, color, overlayColor.a)`). Coût négligeable : un
+  uniform par instance.
+
 ## Fuite de textures et crash au changement de pack
 
 - **Fuite** : `ModelLoader.readImages` enregistre toutes les images d'un modèle
