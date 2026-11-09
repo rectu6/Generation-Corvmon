@@ -1,0 +1,1352 @@
+{
+  "starRolls": [
+    2,
+    2,
+    3,
+    3,
+    4,
+    5
+  ],
+  "typeRolls": [
+    1,
+    1,
+    1,
+    2,
+    2,
+    2
+  ],
+  "guaranteed": [
+    {
+      "item": "cobblemon:exp_candy_xs",
+      "weight": 1.0,
+      "min": 3,
+      "max": 4,
+      "rarity": "common",
+      "stars": [
+        1
+      ]
+    },
+    {
+      "item": "cobblemon:exp_candy_s",
+      "weight": 1.0,
+      "min": 3,
+      "max": 5,
+      "rarity": "common",
+      "stars": [
+        2
+      ]
+    },
+    {
+      "item": "cobblemon:exp_candy_m",
+      "weight": 1.0,
+      "min": 3,
+      "max": 5,
+      "rarity": "common",
+      "stars": [
+        3
+      ]
+    },
+    {
+      "item": "cobblemon:exp_candy_l",
+      "weight": 1.0,
+      "min": 3,
+      "max": 5,
+      "rarity": "common",
+      "stars": [
+        4
+      ]
+    },
+    {
+      "item": "cobblemon:exp_candy_xl",
+      "weight": 1.0,
+      "min": 3,
+      "max": 5,
+      "rarity": "common",
+      "stars": [
+        5
+      ]
+    },
+    {
+      "item": "cobblemon:exp_candy_xl",
+      "weight": 1.0,
+      "min": 5,
+      "max": 7,
+      "rarity": "common",
+      "stars": [
+        6
+      ]
+    },
+    {
+      "item": "generations_core:dynamax_candy",
+      "weight": 0.5,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        3
+      ]
+    },
+    {
+      "item": "generations_core:dynamax_candy",
+      "weight": 0.8,
+      "min": 1,
+      "max": 2,
+      "rarity": "common",
+      "stars": [
+        4
+      ]
+    },
+    {
+      "item": "generations_core:dynamax_candy",
+      "weight": 1.0,
+      "min": 2,
+      "max": 3,
+      "rarity": "common",
+      "stars": [
+        5
+      ]
+    },
+    {
+      "item": "generations_core:dynamax_candy",
+      "weight": 1.0,
+      "min": 3,
+      "max": 4,
+      "rarity": "common",
+      "stars": [
+        6
+      ]
+    },
+    {
+      "item": "cobblemon:rare_candy",
+      "weight": 0.6,
+      "min": 1,
+      "max": 1,
+      "rarity": "rare",
+      "stars": [
+        5
+      ]
+    },
+    {
+      "item": "cobblemon:rare_candy",
+      "weight": 1.0,
+      "min": 1,
+      "max": 2,
+      "rarity": "rare",
+      "stars": [
+        6
+      ]
+    }
+  ],
+  "starRewards": [
+    {
+      "item": "cobblemon:exp_candy_s",
+      "weight": 30,
+      "min": 1,
+      "max": 2,
+      "rarity": "common",
+      "stars": [
+        1,
+        2
+      ]
+    },
+    {
+      "item": "cobblemon:exp_candy_m",
+      "weight": 25,
+      "min": 1,
+      "max": 2,
+      "rarity": "common",
+      "stars": [
+        2,
+        3
+      ]
+    },
+    {
+      "item": "cobblemon:exp_candy_l",
+      "weight": 20,
+      "min": 1,
+      "max": 2,
+      "rarity": "common",
+      "stars": [
+        4,
+        5
+      ]
+    },
+    {
+      "item": "cobblemon:exp_candy_xl",
+      "weight": 15,
+      "min": 1,
+      "max": 2,
+      "rarity": "common",
+      "stars": [
+        5,
+        6
+      ]
+    },
+    {
+      "item": "generations_core:dynamax_candy",
+      "weight": 12,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "item": "cobblemon:sitrus_berry",
+      "weight": 20,
+      "min": 1,
+      "max": 3,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "item": "cobblemon:lum_berry",
+      "weight": 12,
+      "min": 1,
+      "max": 2,
+      "rarity": "common",
+      "stars": [
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "item": "cobblemon:poke_ball",
+      "weight": 15,
+      "min": 2,
+      "max": 4,
+      "rarity": "common",
+      "stars": [
+        1,
+        2
+      ]
+    },
+    {
+      "item": "cobblemon:great_ball",
+      "weight": 12,
+      "min": 2,
+      "max": 3,
+      "rarity": "common",
+      "stars": [
+        2,
+        3
+      ]
+    },
+    {
+      "item": "cobblemon:ultra_ball",
+      "weight": 10,
+      "min": 1,
+      "max": 3,
+      "rarity": "common",
+      "stars": [
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "item": "cobblemon:hp_up",
+      "weight": 6,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "item": "cobblemon:protein",
+      "weight": 6,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "item": "cobblemon:iron",
+      "weight": 6,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "item": "cobblemon:calcium",
+      "weight": 6,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "item": "cobblemon:zinc",
+      "weight": 6,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "item": "cobblemon:carbos",
+      "weight": 6,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "item": "cobblemon:pp_up",
+      "weight": 6,
+      "min": 1,
+      "max": 1,
+      "rarity": "rare",
+      "stars": [
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "item": "cobblemon:pp_max",
+      "weight": 2,
+      "min": 1,
+      "max": 1,
+      "rarity": "very_rare",
+      "stars": [
+        5,
+        6
+      ]
+    },
+    {
+      "item": "cobblemon:rare_candy",
+      "weight": 5,
+      "min": 1,
+      "max": 1,
+      "rarity": "rare",
+      "stars": [
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "item": "cobblemon:ability_capsule",
+      "weight": 4,
+      "min": 1,
+      "max": 1,
+      "rarity": "rare",
+      "stars": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "item": "cobblemon:ability_patch",
+      "weight": 1,
+      "min": 1,
+      "max": 1,
+      "rarity": "very_rare",
+      "stars": [
+        5
+      ]
+    },
+    {
+      "item": "cobblemon:ability_patch",
+      "weight": 2,
+      "min": 1,
+      "max": 1,
+      "rarity": "very_rare",
+      "stars": [
+        6
+      ]
+    },
+    {
+      "item": "generations_core:bottle_cap",
+      "weight": 3,
+      "min": 1,
+      "max": 1,
+      "rarity": "rare",
+      "stars": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "item": "generations_core:max_mushrooms",
+      "weight": 5,
+      "min": 1,
+      "max": 2,
+      "rarity": "rare",
+      "stars": [
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "item": "generations_core:gold_bottle_cap",
+      "weight": 1,
+      "min": 1,
+      "max": 1,
+      "rarity": "very_rare",
+      "stars": [
+        6
+      ]
+    },
+    {
+      "item": "cobblemon:adamant_mint",
+      "weight": 2,
+      "min": 1,
+      "max": 1,
+      "rarity": "rare",
+      "stars": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "item": "cobblemon:modest_mint",
+      "weight": 2,
+      "min": 1,
+      "max": 1,
+      "rarity": "rare",
+      "stars": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "item": "cobblemon:jolly_mint",
+      "weight": 2,
+      "min": 1,
+      "max": 1,
+      "rarity": "rare",
+      "stars": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "item": "cobblemon:timid_mint",
+      "weight": 2,
+      "min": 1,
+      "max": 1,
+      "rarity": "rare",
+      "stars": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "item": "minecraft:emerald",
+      "weight": 6,
+      "min": 1,
+      "max": 3,
+      "rarity": "common",
+      "stars": [
+        3,
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "item": "minecraft:diamond",
+      "weight": 3,
+      "min": 1,
+      "max": 2,
+      "rarity": "rare",
+      "stars": [
+        5,
+        6
+      ]
+    }
+  ],
+  "typeRewards": [
+    {
+      "item": "cobblemon:charcoal_stick",
+      "weight": 10,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "fire"
+      ]
+    },
+    {
+      "item": "minecraft:blaze_powder",
+      "weight": 12,
+      "min": 1,
+      "max": 3,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "fire"
+      ]
+    },
+    {
+      "item": "cobblemon:fire_stone",
+      "weight": 4,
+      "min": 1,
+      "max": 1,
+      "rarity": "rare",
+      "stars": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "fire"
+      ]
+    },
+    {
+      "item": "cobblemon:mystic_water",
+      "weight": 10,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "water"
+      ]
+    },
+    {
+      "item": "minecraft:prismarine_shard",
+      "weight": 12,
+      "min": 2,
+      "max": 4,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "water"
+      ]
+    },
+    {
+      "item": "cobblemon:water_stone",
+      "weight": 4,
+      "min": 1,
+      "max": 1,
+      "rarity": "rare",
+      "stars": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "water"
+      ]
+    },
+    {
+      "item": "cobblemon:miracle_seed",
+      "weight": 10,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "grass"
+      ]
+    },
+    {
+      "item": "minecraft:moss_block",
+      "weight": 12,
+      "min": 2,
+      "max": 4,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "grass"
+      ]
+    },
+    {
+      "item": "cobblemon:leaf_stone",
+      "weight": 4,
+      "min": 1,
+      "max": 1,
+      "rarity": "rare",
+      "stars": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "grass"
+      ]
+    },
+    {
+      "item": "cobblemon:magnet",
+      "weight": 10,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "electric"
+      ]
+    },
+    {
+      "item": "minecraft:copper_ingot",
+      "weight": 12,
+      "min": 2,
+      "max": 5,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "electric"
+      ]
+    },
+    {
+      "item": "cobblemon:thunder_stone",
+      "weight": 4,
+      "min": 1,
+      "max": 1,
+      "rarity": "rare",
+      "stars": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "electric"
+      ]
+    },
+    {
+      "item": "cobblemon:never_melt_ice",
+      "weight": 10,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "ice"
+      ]
+    },
+    {
+      "item": "minecraft:packed_ice",
+      "weight": 12,
+      "min": 2,
+      "max": 4,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "ice"
+      ]
+    },
+    {
+      "item": "cobblemon:ice_stone",
+      "weight": 4,
+      "min": 1,
+      "max": 1,
+      "rarity": "rare",
+      "stars": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "ice"
+      ]
+    },
+    {
+      "item": "cobblemon:black_belt",
+      "weight": 10,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "fighting"
+      ]
+    },
+    {
+      "item": "minecraft:leather",
+      "weight": 12,
+      "min": 2,
+      "max": 4,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "fighting"
+      ]
+    },
+    {
+      "item": "cobblemon:poison_barb",
+      "weight": 10,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "poison"
+      ]
+    },
+    {
+      "item": "minecraft:spider_eye",
+      "weight": 12,
+      "min": 2,
+      "max": 4,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "poison"
+      ]
+    },
+    {
+      "item": "cobblemon:soft_sand",
+      "weight": 10,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "ground"
+      ]
+    },
+    {
+      "item": "minecraft:clay_ball",
+      "weight": 12,
+      "min": 3,
+      "max": 6,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "ground"
+      ]
+    },
+    {
+      "item": "cobblemon:sharp_beak",
+      "weight": 10,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "flying"
+      ]
+    },
+    {
+      "item": "minecraft:feather",
+      "weight": 12,
+      "min": 3,
+      "max": 6,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "flying"
+      ]
+    },
+    {
+      "item": "cobblemon:twisted_spoon",
+      "weight": 10,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "psychic"
+      ]
+    },
+    {
+      "item": "minecraft:ender_pearl",
+      "weight": 8,
+      "min": 1,
+      "max": 2,
+      "rarity": "common",
+      "stars": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "psychic"
+      ]
+    },
+    {
+      "item": "cobblemon:dawn_stone",
+      "weight": 3,
+      "min": 1,
+      "max": 1,
+      "rarity": "rare",
+      "stars": [
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "psychic"
+      ]
+    },
+    {
+      "item": "cobblemon:silver_powder",
+      "weight": 10,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "bug"
+      ]
+    },
+    {
+      "item": "minecraft:honeycomb",
+      "weight": 12,
+      "min": 2,
+      "max": 4,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "bug"
+      ]
+    },
+    {
+      "item": "cobblemon:hard_stone",
+      "weight": 10,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "rock"
+      ]
+    },
+    {
+      "item": "minecraft:amethyst_shard",
+      "weight": 12,
+      "min": 2,
+      "max": 4,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "rock"
+      ]
+    },
+    {
+      "item": "cobblemon:spell_tag",
+      "weight": 10,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "ghost"
+      ]
+    },
+    {
+      "item": "minecraft:phantom_membrane",
+      "weight": 8,
+      "min": 1,
+      "max": 2,
+      "rarity": "common",
+      "stars": [
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "ghost"
+      ]
+    },
+    {
+      "item": "cobblemon:dusk_stone",
+      "weight": 3,
+      "min": 1,
+      "max": 1,
+      "rarity": "rare",
+      "stars": [
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "ghost"
+      ]
+    },
+    {
+      "item": "cobblemon:dragon_fang",
+      "weight": 10,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "dragon"
+      ]
+    },
+    {
+      "item": "cobblemon:dragon_scale",
+      "weight": 3,
+      "min": 1,
+      "max": 1,
+      "rarity": "rare",
+      "stars": [
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "dragon"
+      ]
+    },
+    {
+      "item": "cobblemon:black_glasses",
+      "weight": 10,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "dark"
+      ]
+    },
+    {
+      "item": "minecraft:obsidian",
+      "weight": 10,
+      "min": 1,
+      "max": 3,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "dark"
+      ]
+    },
+    {
+      "item": "cobblemon:dusk_stone",
+      "weight": 3,
+      "min": 1,
+      "max": 1,
+      "rarity": "rare",
+      "stars": [
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "dark"
+      ]
+    },
+    {
+      "item": "cobblemon:metal_coat",
+      "weight": 8,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "steel"
+      ]
+    },
+    {
+      "item": "minecraft:iron_ingot",
+      "weight": 14,
+      "min": 2,
+      "max": 5,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "steel"
+      ]
+    },
+    {
+      "item": "minecraft:gold_ingot",
+      "weight": 6,
+      "min": 1,
+      "max": 3,
+      "rarity": "rare",
+      "stars": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "steel"
+      ]
+    },
+    {
+      "item": "cobblemon:fairy_feather",
+      "weight": 10,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "fairy"
+      ]
+    },
+    {
+      "item": "minecraft:glow_berries",
+      "weight": 12,
+      "min": 2,
+      "max": 5,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "fairy"
+      ]
+    },
+    {
+      "item": "cobblemon:moon_stone",
+      "weight": 4,
+      "min": 1,
+      "max": 1,
+      "rarity": "rare",
+      "stars": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "fairy"
+      ]
+    },
+    {
+      "item": "cobblemon:shiny_stone",
+      "weight": 3,
+      "min": 1,
+      "max": 1,
+      "rarity": "rare",
+      "stars": [
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "fairy"
+      ]
+    },
+    {
+      "item": "cobblemon:silk_scarf",
+      "weight": 10,
+      "min": 1,
+      "max": 1,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "normal"
+      ]
+    },
+    {
+      "item": "minecraft:leather",
+      "weight": 10,
+      "min": 2,
+      "max": 4,
+      "rarity": "common",
+      "stars": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "normal"
+      ]
+    },
+    {
+      "item": "cobblemon:moon_stone",
+      "weight": 3,
+      "min": 1,
+      "max": 1,
+      "rarity": "rare",
+      "stars": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "types": [
+        "normal"
+      ]
+    }
+  ]
+}

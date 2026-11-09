@@ -68,6 +68,13 @@ object GenerationsFabricBiomemodifiers {
         registerUnderGroundOres(GenerationsPlacedFeatures.ORE_TERASHARD)
 
         registerSurfaceFeatures(GenerationsPlacedFeatures.POKE_BALL_LOOT)
+
+        // Dynamax dens (raids) everywhere in the overworld, on land and water (RaidDenFeature).
+        BiomeModifications.addFeature(
+            BiomeSelectors.foundInOverworld(),
+            GenerationStep.Decoration.SURFACE_STRUCTURES,
+            ResourceKey.create(net.minecraft.core.registries.Registries.PLACED_FEATURE, generations.gg.generations.core.generationscore.common.GenerationsCore.id("raid_den"))
+        )
         registerSurfaceFeatures(GenerationsPlacedFeatures.BEAST_BALL_LOOT, BiomeSelectors.foundInTheEnd())
         registerSurfaceFeatures(
             GenerationsPlacedFeatures.CHERISH_BALL_LOOT,

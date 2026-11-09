@@ -193,6 +193,8 @@ object GenerationsInstructionProcessor {
 
             if (!actor.getPlayerUUIDs().iterator().hasNext()) return@forEach
             actor.pokemonList.forEach { battlePokemon ->
+                // A Pokémon still Dynamaxed when the battle ends gets its size back.
+                DynamaxVisuals.end(battlePokemon.effectedPokemon)
                 val tempAbility = battlePokemon.originalPokemon.ability
                 val data = battlePokemon.effectedPokemon.persistentData
 

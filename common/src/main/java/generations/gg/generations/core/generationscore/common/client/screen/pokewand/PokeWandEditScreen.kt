@@ -34,6 +34,7 @@ class PokeWandEditScreen(
     private var form = shown.form
     private var shiny = shown.shiny
     private var gender = shown.gender
+    private var gmax = shown.gmaxFactor
     private var status: Component? = null
     private var confirmDelete = false
 
@@ -52,6 +53,8 @@ class PokeWandEditScreen(
     private lateinit var formButton: Button
     private lateinit var shinyButton: Button
     private lateinit var genderButton: Button
+    private lateinit var gmaxButton: Button
+    private lateinit var dynamaxBox: EditBox
     private val moveFields = mutableListOf<SuggestionField>()
     private val ivBoxes = mutableListOf<EditBox>()
     private val evBoxes = mutableListOf<EditBox>()
@@ -79,6 +82,13 @@ class PokeWandEditScreen(
         }.bounds(left + 8, top + 140, 110, 16).build())
         levelBox = numberBox(left + 8, top + 168, 54, if (shown.level > 0) shown.level.toString() else "", "generations_core.pokewand.level_hint")
         friendshipBox = numberBox(left + 64, top + 168, 54, if (shown.friendship >= 0 && original != null) shown.friendship.toString() else "", "generations_core.pokewand.friendship_hint")
+        // Dynamax Level (0-10) and G-Max Factor.
+        dynamaxBox = numberBox(left + 8, top + 186, 54, if (shown.dynamaxLevel >= 0 && original != null) shown.dynamaxLevel.toString() else "", "generations_core.pokewand.dynamax_hint")
+        dynamaxBox.setTooltip(net.minecraft.client.gui.components.Tooltip.create(Component.translatable("generations_core.pokewand.dynamax_hint")))
+        gmaxButton = addRenderableWidget(Button.builder(Component.empty()) {
+            gmax = !gmax
+            updateLabels()
+        }.bounds(left + 64, top + 186, 54, 16).build())
 
         // Middle column: identity of the Pokémon.
         val mx = left + 124
@@ -174,6 +184,7 @@ class PokeWandEditScreen(
         formButton.message = Component.translatable("generations_core.pokewand.form", formName)
         shinyButton.message = Component.translatable(if (shiny) "generations_core.pokewand.shiny_on" else "generations_core.pokewand.shiny_off")
         genderButton.message = Component.translatable("generations_core.pokewand.gender." + gender.lowercase())
+        gmaxButton.message = Component.translatable(if (gmax) "generations_core.pokewand.gmax_on" else "generations_core.pokewand.gmax_off")
     }
 
     private fun updatePreview() {
@@ -199,6 +210,8 @@ class PokeWandEditScreen(
         nickname = nicknameBox.value.trim(),
         pokeball = ballField.value,
         friendship = friendshipBox.value.toIntOrNull() ?: -1,
+        dynamaxLevel = dynamaxBox.value.toIntOrNull() ?: -1,
+        gmaxFactor = gmax,
     )
 
     private fun save() {

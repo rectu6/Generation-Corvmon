@@ -10,6 +10,7 @@ import com.cobblemon.mod.common.net.messages.client.storage.pc.OpenPCPacket
 import com.cobblemon.mod.common.pokemon.Gender
 import com.cobblemon.mod.common.pokemon.Pokemon
 import generations.gg.generations.core.generationscore.common.GenerationsCore
+import generations.gg.generations.core.generationscore.common.battle.DynamaxLevel
 import generations.gg.generations.core.generationscore.common.network.packets.pokewand.C2SPokeWandActionPacket
 import generations.gg.generations.core.generationscore.common.network.packets.pokewand.S2CPokeWandPartyPacket
 import net.minecraft.core.registries.BuiltInRegistries
@@ -119,6 +120,8 @@ object PokeWand {
         pokemon.nickname = data.nickname.takeIf(String::isNotBlank)?.let(Component::literal)
         ResourceLocation.tryParse(data.pokeball)?.let(PokeBalls::getPokeBall)?.let { pokemon.caughtBall = it }
         if (data.friendship >= 0) pokemon.setFriendship(data.friendship.coerceAtMost(255), true)
+        if (data.dynamaxLevel >= 0) DynamaxLevel.set(pokemon, data.dynamaxLevel)
+        pokemon.gmaxFactor = data.gmaxFactor
         pokemon.heal()
 
         if (existing == null) party.set(slot, pokemon)

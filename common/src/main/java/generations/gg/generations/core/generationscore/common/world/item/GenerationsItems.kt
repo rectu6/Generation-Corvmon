@@ -121,11 +121,12 @@ object GenerationsItems: ItemPlatformRegistry() {
     /**
      * Consumable Items
      */
-    val DYNAMAX_CANDY = register("dynamax_candy", ::Item, RESTORATION)
-    val MAX_HONEY = register("max_honey", ::Item, RESTORATION)
+    // Dynamax items (DynamaxItems.kt): Dynamax Level, revive, G-Max Factor.
+    val DYNAMAX_CANDY = register("dynamax_candy", ::DynamaxCandyItem, RESTORATION)
+    val MAX_HONEY = register("max_honey", ::MaxHoneyItem, RESTORATION)
     val MAX_MUSHROOMS = register("max_mushrooms", ::Item, RESTORATION)
     val MAX_POWDER = register("max_powder", ::Item, RESTORATION)
-    val MAX_SOUP = register("max_soup", ::Item, RESTORATION)
+    val MAX_SOUP = register("max_soup", { MaxSoupItem(it.stacksTo(16)) }, RESTORATION)
 
     /**
      * Badges
@@ -574,7 +575,8 @@ object GenerationsItems: ItemPlatformRegistry() {
     val LURE_MODULE = register("lure_module", ::Item, PLAYER_ITEMS)
     val BOTTLE_CAP = register("bottle_cap", ::Item, PLAYER_ITEMS)
     val GOLD_BOTTLE_CAP = register("gold_bottle_cap", ::Item, PLAYER_ITEMS)
-    val WISHING_STAR = register("wishing_star", ::Item, PLAYER_ITEMS)
+    // Thrown into a raid den: 5-star raid, rarely a 6-star legendary (RaidManager).
+    val WISHING_STAR = register("wishing_star", { WishingItem(it, "wishing_star") }, PLAYER_ITEMS)
     val DYNAMAX_BAND = register("dynamax_band", { Item(it.stacksTo(1)) }, PLAYER_ITEMS)
     val TIME_CAPSULE = register("time_capsule", { TimeCapsule(it.fireResistant().stacksTo(1)) }, PLAYER_ITEMS)
     val STRANGE_BALL = register("strange_ball", { PokeBallItem(GenerationsPokeBalls.STRANGE_BALL) })
@@ -1229,8 +1231,9 @@ object GenerationsItems: ItemPlatformRegistry() {
     val UNOWN_REPORT = register("unown_report", { Item(it.stacksTo(64)) }, UNIMPLEMENTED)
     val VS_RECORDER = register("vs_recorder", { Item(it.stacksTo(64)) }, UNIMPLEMENTED)
     val VS_SEEKER = register("vs_seeker", { Item(it.stacksTo(64)) }, UNIMPLEMENTED)
-    val WISHING_CHIP = register("wishing_chip", { Item(it.stacksTo(64)) }, UNIMPLEMENTED)
-    val WISHING_PIECE = register("wishing_piece", { Item(it.stacksTo(64)) }, UNIMPLEMENTED)
+    // Thrown into a raid den: 1-2 and 3-4 star raids (RaidManager).
+    val WISHING_CHIP = register("wishing_chip", { WishingItem(it, "wishing_chip") }, PLAYER_ITEMS)
+    val WISHING_PIECE = register("wishing_piece", { WishingItem(it, "wishing_piece") }, PLAYER_ITEMS)
     val WOODEN_CROWN = register("wooden_crown", { Item(it.stacksTo(64)) }, UNIMPLEMENTED)
     val WORKS_KEY = register("works_key", { Item(it.stacksTo(64)) }, UNIMPLEMENTED)
     val X_ACCURACY_2 = register("x_accuracy_2", { Item(it.stacksTo(64)) }, UNIMPLEMENTED)

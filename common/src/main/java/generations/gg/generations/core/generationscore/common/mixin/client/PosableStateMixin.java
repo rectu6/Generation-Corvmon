@@ -25,4 +25,14 @@ public class PosableStateMixin implements CobblemonInstanceProvider, RareCandyMo
         // Does not create the instance: entities drawn with Cobblemon's own models have none.
         return instance != null ? instance.modelRadius : 0f;
     }
+
+    @Override
+    public float generations$modelTopY() {
+        return instance != null ? instance.modelTopY : 0f;
+    }
+
+    @Override
+    public float generations$modelHalfWidth() {
+        return instance != null ? instance.modelHalfWidth : 0f;
+    }
 }

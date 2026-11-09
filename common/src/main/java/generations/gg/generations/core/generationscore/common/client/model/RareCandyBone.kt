@@ -13,6 +13,7 @@ import com.mojang.blaze3d.systems.RenderSystem
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import com.mojang.math.Axis
+import generations.gg.generations.core.generationscore.common.battle.DynamaxVisuals
 import generations.gg.generations.core.generationscore.common.client.IVariant
 import generations.gg.generations.core.generationscore.common.client.render.CobblemonInstanceProvider
 import generations.gg.generations.core.generationscore.common.client.render.rarecandy.CompiledModel
@@ -84,9 +85,15 @@ class RareCandyBone /*Remove when cobblemon doesn't have parts of code that assu
             instance.light = packedLight
             // Red while hurt by a player, like vanilla mobs and Cobblemon's own
             // models; not during a Pokémon battle.
-            val battling = context.entity.instanceOrNull<PokemonEntity>()?.isBattling == true
+            val pokemonEntity = context.entity.instanceOrNull<PokemonEntity>()
+            val battling = pokemonEntity?.isBattling == true
             instance.overlay = if (battling) OverlayTexture.NO_OVERLAY else packedOverlay
-            instance.teraActive = context.request(RenderContext.ASPECTS)?.contains("terastal_active") ?: false
+            // The entity's synced aspects: those of the client Pokémon are only the ones it
+            // had when it appeared, so Dynamax or Tera started meanwhile would only show
+            // once the entity is loaded again.
+            val aspects = pokemonEntity?.aspects ?: context.request(RenderContext.ASPECTS)
+            instance.teraActive = aspects?.contains("terastal_active") ?: false
+            instance.dynamax = aspects?.contains(DynamaxVisuals.ASPECT) ?: false
             if (instance.teraActive) {
                 context.entity.instanceOrNull<PokemonEntity>()?.battleTeraType?.let {
                     instance.teraTint.set(it.tint)
@@ -108,8 +115,12 @@ class RareCandyBone /*Remove when cobblemon doesn't have parts of code that assu
             // big models outgrow their hitbox. RareCandy's dimensions are the largest
             // vertex coordinates, so a margin covers parts on the negative side (tails).
             val dimensions = model.renderObject!!.dimensions
-            instance.modelRadius = maxOf(dimensions.x, dimensions.y, dimensions.z) *
-                instance.transformationMatrix().getScale(SCALE).x * 1.25f
+            val modelScale = instance.transformationMatrix().getScale(SCALE).x
+            instance.modelRadius = maxOf(dimensions.x, dimensions.y, dimensions.z) * modelScale * 1.25f
+            // Top of the model (camera-relative height, like the pose) and its half width,
+            // for what sits on it: the Dynamax clouds.
+            instance.modelTopY = instance.transformationMatrix().transformPosition(0f, dimensions.y, 0f, TOP).y
+            instance.modelHalfWidth = maxOf(dimensions.x, dimensions.z) * modelScale
 
             model.render(instance, Minecraft.getInstance().renderBuffers().bufferSource())
         }
@@ -136,6 +147,7 @@ class RareCandyBone /*Remove when cobblemon doesn't have parts of code that assu
         )
         private val ROTATION_CORRECTION = Axis.YP.rotationDegrees(180f)
         private val SCALE = Vector3f()
+        private val TOP = Vector3f()
     }
 }
 

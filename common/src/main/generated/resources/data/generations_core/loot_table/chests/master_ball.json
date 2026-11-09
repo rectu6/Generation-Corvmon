@@ -226,10 +226,6 @@
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:wishing_piece"
-        },
-        {
-          "type": "minecraft:item",
           "name": "generations_core:x_accuracy_6"
         },
         {

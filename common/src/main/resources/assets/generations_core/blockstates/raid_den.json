@@ -1,0 +1,25 @@
+{
+  "variants": {
+    "beam=none": {
+      "model": "generations_core:block/raid_den"
+    },
+    "beam=lime": {
+      "model": "generations_core:block/raid_den_active"
+    },
+    "beam=green": {
+      "model": "generations_core:block/raid_den_active"
+    },
+    "beam=blue": {
+      "model": "generations_core:block/raid_den_active"
+    },
+    "beam=red": {
+      "model": "generations_core:block/raid_den_active"
+    },
+    "beam=purple": {
+      "model": "generations_core:block/raid_den_active"
+    },
+    "beam=gold": {
+      "model": "generations_core:block/raid_den_active"
+    }
+  }
+}

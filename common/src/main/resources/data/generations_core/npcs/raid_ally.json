@@ -1,0 +1,18 @@
+{
+  "resourceIdentifier": "cobblemon:standard",
+  "hitbox": "player",
+  "names": [
+    "Dresseur"
+  ],
+  "battleConfiguration": {
+    "canChallenge": false
+  },
+  "canDespawn": false,
+  "isMovable": false,
+  "isInvulnerable": true,
+  "isLeashable": false,
+  "allowProjectileHits": false,
+  "hideNameTag": false,
+  "autoHealParty": true,
+  "skill": 0
+}

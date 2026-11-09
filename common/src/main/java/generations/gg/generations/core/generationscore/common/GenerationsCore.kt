@@ -191,6 +191,7 @@ object GenerationsCore {
         GenerationsArmor.init()
         GenerationsTools.init()
         GenerationsBlockEntities.init()
+        generations.gg.generations.core.generationscore.common.world.raid.den.GenerationsRaidFeatures.init()
         GenerationsEntities.init()
         GenerationsArmorMaterials.init()
 //        GenerationsCreativeTabs.init()

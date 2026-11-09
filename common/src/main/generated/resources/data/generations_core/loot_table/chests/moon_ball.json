@@ -282,10 +282,6 @@
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:wishing_piece"
-        },
-        {
-          "type": "minecraft:item",
           "name": "cobblemon:x_speed"
         },
         {
@@ -311,10 +307,6 @@
         {
           "type": "minecraft:item",
           "name": "minecraft:music_disc_11"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "generations_core:wishing_star"
         },
         {
           "type": "minecraft:item",

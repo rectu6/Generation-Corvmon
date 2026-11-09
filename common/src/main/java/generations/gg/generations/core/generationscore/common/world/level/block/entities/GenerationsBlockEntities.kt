@@ -1,5 +1,6 @@
 package generations.gg.generations.core.generationscore.common.world.level.block.entities
 
+import generations.gg.generations.core.generationscore.common.world.level.block.raid.RaidDenBlockEntity
 import generations.gg.generations.core.generationscore.common.GenerationsCore
 import generations.gg.generations.core.generationscore.common.util.PlatformRegistry
 import generations.gg.generations.core.generationscore.common.world.level.block.*
@@ -110,6 +111,7 @@ object GenerationsBlockEntities: PlatformRegistry<BlockEntityType<*>>(Registries
         GenerationsDecorationBlocks.FRIDGE
     )
     val TRASH_CAN = registerRegular("trash_can", ::TrashCanBlockEntity, GenerationsUtilityBlocks.TRASH_CAN)
+    val RAID_DEN = registerRegular("raid_den", ::RaidDenBlockEntity, GenerationsUtilityBlocks.RAID_DEN)
 
     @JvmField
     val COUCH = registerRegularWithArray("couch", ::CouchBlockEntity,

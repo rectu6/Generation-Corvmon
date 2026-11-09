@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {"item": "generations_core:max_mushrooms"},
+    {"item": "generations_core:max_mushrooms"},
+    {"item": "generations_core:max_mushrooms"},
+    {"item": "minecraft:bowl"}
+  ],
+  "result": {"id": "generations_core:max_soup", "count": 1}
+}

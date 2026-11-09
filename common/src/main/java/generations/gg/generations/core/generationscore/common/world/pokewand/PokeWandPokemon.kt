@@ -2,6 +2,7 @@ package generations.gg.generations.core.generationscore.common.world.pokewand
 
 import com.cobblemon.mod.common.api.pokemon.stats.Stats
 import com.cobblemon.mod.common.pokemon.Pokemon
+import generations.gg.generations.core.generationscore.common.battle.DynamaxLevel
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.FriendlyByteBuf
 
@@ -33,6 +34,9 @@ data class PokeWandPokemon(
     /** Poké Ball id, e.g. cobblemon:poke_ball. */
     val pokeball: String,
     val friendship: Int,
+    /** Dynamax Level, -1 to keep it. */
+    val dynamaxLevel: Int = -1,
+    val gmaxFactor: Boolean = false,
 ) {
     fun encode(buf: FriendlyByteBuf) {
         buf.writeUtf(species)
@@ -50,6 +54,8 @@ data class PokeWandPokemon(
         buf.writeUtf(nickname)
         buf.writeUtf(pokeball)
         buf.writeVarInt(friendship)
+        buf.writeVarInt(dynamaxLevel)
+        buf.writeBoolean(gmaxFactor)
     }
 
     companion object {
@@ -76,6 +82,8 @@ data class PokeWandPokemon(
             nickname = buf.readUtf(),
             pokeball = buf.readUtf(),
             friendship = buf.readVarInt(),
+            dynamaxLevel = buf.readVarInt(),
+            gmaxFactor = buf.readBoolean(),
         )
 
         fun of(pokemon: Pokemon): PokeWandPokemon = PokeWandPokemon(
@@ -94,6 +102,8 @@ data class PokeWandPokemon(
             nickname = pokemon.nickname?.string ?: "",
             pokeball = pokemon.caughtBall.name.toString(),
             friendship = pokemon.friendship,
+            dynamaxLevel = DynamaxLevel.get(pokemon),
+            gmaxFactor = pokemon.gmaxFactor,
         )
     }
 }

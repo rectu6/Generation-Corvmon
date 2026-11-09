@@ -16,6 +16,7 @@ import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import generations.gg.generations.core.generationscore.common.world.level.block.raid.RaidDenBlock
 import net.minecraft.world.level.block.SoundType
 import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 
@@ -38,6 +39,9 @@ object GenerationsUtilityBlocks: BlockPlatformRegistry() {
     val BOX = registerBlockItem("box") { BoxBlock(Properties.ofFullCopy(Blocks.OAK_WOOD)) }
 
     val RKS_MACHINE = registerBlockItem("rks_machine") { RksMachineBlock(Properties.ofFullCopy(Blocks.IRON_BLOCK)) }
+
+    // Dynamax den (raids): stone, glowing while a raid waits in it.
+    val RAID_DEN = registerBlockItem("raid_den") { RaidDenBlock(Properties.ofFullCopy(Blocks.TUFF).noOcclusion().lightLevel(RaidDenBlock::lightLevel)) }
 
     val SCARECROW = registerBlockItem("scarecrow") { ScarecrowBlock(Properties.ofFullCopy(Blocks.OAK_WOOD).dynamicShape().noOcclusion()) }
 

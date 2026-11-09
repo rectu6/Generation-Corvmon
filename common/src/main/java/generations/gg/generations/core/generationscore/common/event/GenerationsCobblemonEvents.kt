@@ -54,6 +54,7 @@ class GenerationsCobblemonEvents {
 //            FORME_CHANGE.subscribe(Priority.NORMAL, {(a, b, c) -> GenerationsInstructionProcessor.processDetailsChange(a, b, c) })
 
             GenerationsFishing.init()
+            generations.gg.generations.core.generationscore.common.world.raid.RaidManager.init()
             CobblemonEvents.TERASTALLIZATION.subscribe(Priority.NORMAL, GenerationsInstructionProcessor::processTerastallization)
             CobblemonEvents.BATTLE_STARTED_PRE.subscribe(Priority.NORMAL, GenerationsInstructionProcessor::preBattleChanges)
 
@@ -146,6 +147,9 @@ class GenerationsCobblemonEvents {
                     if(it.inventory.contains(GenerationsItemTags.TERA_ORBS)) keyItems.add(cobblemonResource("tera_orb"))
                     if(it.inventory.contains(GenerationsItemTags.Z_RINGS)) keyItems.add(cobblemonResource("z_ring"))
                 }
+                // Showdown reads dmaxLevel; the summary bar (DynamaxLevel) is the reference.
+                it.battle.actors.filterIsInstance<PlayerBattleActor>().flatMap { actor -> actor.pokemonList }
+                    .forEach { battlePokemon -> generations.gg.generations.core.generationscore.common.battle.DynamaxLevel.sync(battlePokemon.originalPokemon) }
             }
 
             CobblemonEvents.BATTLE_STARTED_POST.subscribe(Priority.NORMAL) {

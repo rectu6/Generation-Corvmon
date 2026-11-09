@@ -35,6 +35,8 @@ object Pipelines {
     )
     private val ONE = Vector3f(1f, 1f, 1f)
     private val ZERO = Vector3f(0f, 0f, 0f)
+    // Colour multiplier of a Dynamaxed Pokémon.
+    private val DYNAMAX_TINT = Vector3f(1f, 0.42f, 0.48f)
 
 
     @JvmField
@@ -140,10 +142,20 @@ object Pipelines {
             val u = overlay and 0xFFFF
             val v = overlay shr 16 and 0xFFFF
             if (v < 8) it.uniform().upload4f(1f, 0f, 0f, 178f / 255f)
+            else if ((it.instance() as? CobblemonInstance)?.dynamax == true) {
+                // Dynamax: a slowly pulsing pink-red glow over the model (tinted red below).
+                val pulse = (Math.sin(System.currentTimeMillis() / 400.0) * 0.08).toFloat()
+                it.uniform().upload4f(1f, 0.16f, 0.3f, 0.62f + pulse)
+            }
             else it.uniform().upload4f(1f, 1f, 1f, 1f - u / 15f * 0.75f)
         }
 
-        .oncePerInstance("tint") { it.uniform().uploadVec3f(it.instance().instanceOrNull<CobblemonInstance>()?.tint?.takeIf { it != ZERO } ?: ONE) }
+        .oncePerInstance("tint") {
+            val instance = it.instance().instanceOrNull<CobblemonInstance>()
+            // Dynamax: the whole model turns red.
+            if (instance?.dynamax == true) it.uniform().uploadVec3f(DYNAMAX_TINT)
+            else it.uniform().uploadVec3f(instance?.tint?.takeIf { it != ZERO } ?: ONE)
+        }
 
         .oncePerPass("frame") { it.uniform().uploadInt(pingpong(MinecraftClientGameProvider.getTimePassed()).toInt()) }
 

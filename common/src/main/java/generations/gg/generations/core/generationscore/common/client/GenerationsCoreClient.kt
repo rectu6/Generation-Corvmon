@@ -1,5 +1,8 @@
 package generations.gg.generations.core.generationscore.common.client
 
+import generations.gg.generations.core.generationscore.common.client.render.block.entity.RaidDenItemRenderer
+import generations.gg.generations.core.generationscore.common.client.render.block.entity.RaidDenRenderer
+import generations.gg.generations.core.generationscore.common.world.level.block.raid.RaidDenBlockEntity
 import com.cobblemon.mod.common.CobblemonItems
 import com.cobblemon.mod.common.api.Priority
 import com.cobblemon.mod.common.api.spawning.TimeRange
@@ -173,6 +176,7 @@ object GenerationsCoreClient {
             CobblemonBuiltinItemRendererRegistry.register(GenerationsItems.SUICUNE_STATUE.value(), renderer)
             CobblemonBuiltinItemRendererRegistry.register(GenerationsItems.RAIKOU_STATUE.value(), renderer)
             CobblemonBuiltinItemRendererRegistry.register(GenerationsItems.ENTEI_STATUE.value(), renderer)
+            CobblemonBuiltinItemRendererRegistry.register(GenerationsUtilityBlocks.RAID_DEN.value().asItem(), RaidDenItemRenderer())
 
             addWoodType(GenerationsWoodTypes.ULTRA_JUNGLE)
             addWoodType(GenerationsWoodTypes.ULTRA_DARK)
@@ -349,6 +353,7 @@ object GenerationsCoreClient {
      */
     fun registerBlockEntityRenderers(consumer: BlockEntityRendererHandler) {
         consumer.register(GenerationsBlockEntities.POKE_DOLL.asValue<PokeDollBlockEntity>(), ::GeneralUseBlockEntityRenderer)
+        consumer.register(GenerationsBlockEntities.RAID_DEN.asValue<RaidDenBlockEntity>(), ::RaidDenRenderer)
 
         consumer.register(GenerationsBlockEntities.TIMESPACE_ALTAR.asValue<TimeSpaceAltarBlockEntity>(), ::TimeSpaceAltarEntityRenderer)
         consumer.register(GenerationsBlockEntities.ABUNDANT_SHRINE.asValue<AbundantShrineBlockEntity>(), ::GeneralUseBlockEntityRenderer)

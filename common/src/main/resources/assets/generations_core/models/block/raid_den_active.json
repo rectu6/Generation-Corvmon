@@ -1,0 +1,7 @@
+{
+  "parent": "generations_core:block/raid_den",
+  "textures": {
+    "core": "generations_core:block/raid_den/core_active",
+    "crystal": "generations_core:block/raid_den/crystal_active"
+  }
+}

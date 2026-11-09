@@ -17,6 +17,12 @@ public class CobblemonInstance extends AnimatedObjectInstance implements BlockLi
     public int overlay = OverlayTexture.NO_OVERLAY;
     /** Half size of the drawn model in blocks, for the entity's culling box (PokemonEntityMixin). */
     public float modelRadius;
+    /** Height of the model's top, in the coordinates of the pose it was drawn with (camera-relative). */
+    public float modelTopY;
+    /** Half width of the drawn model in blocks. */
+    public float modelHalfWidth;
+    /** Dynamaxed (DynamaxVisuals' aspect): drawn with a red glow, see Pipelines' overlayColor. */
+    public boolean dynamax;
     /** Animation and time matrixTransforms was last posed with (see RareCandyAnimation). */
     public Animation posedAnimation;
     public float posedSeconds;

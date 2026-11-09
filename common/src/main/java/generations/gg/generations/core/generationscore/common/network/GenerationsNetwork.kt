@@ -10,6 +10,7 @@ import generations.gg.generations.core.generationscore.common.GenerationsCore
 import generations.gg.generations.core.generationscore.common.network.packets.*
 import generations.gg.generations.core.generationscore.common.network.packets.shop.*
 import generations.gg.generations.core.generationscore.common.network.packets.pokewand.*
+import generations.gg.generations.core.generationscore.common.network.packets.raid.*
 import generations.gg.generations.core.generationscore.common.network.packets.statue.S2COpenStatueEditorScreenHandler
 import generations.gg.generations.core.generationscore.common.network.packets.statue.S2COpenStatueEditorScreenPacket
 import generations.gg.generations.core.generationscore.common.network.packets.statue.UpdateStatueHandler
@@ -46,6 +47,11 @@ object GenerationsNetwork {
         list.add(PacketRegisterInfo(SpawnStatuePacket.ID, SpawnStatuePacket::decode, SpawnExtraDataEntityHandler()))
         list.add(PacketRegisterInfo(S2CPlaySoundPacket.ID, S2CPlaySoundPacket::decode, S2CPlaySoundHandler))
         list.add(PacketRegisterInfo(S2CPokeWandPartyPacket.ID, S2CPokeWandPartyPacket::decode, S2CPokeWandPartyHandler))
+        list.add(PacketRegisterInfo(S2CRaidLobbyPacket.ID, S2CRaidLobbyPacket::decode, RaidPacketHandlers.Lobby))
+        list.add(PacketRegisterInfo(S2CRaidResultPacket.ID, S2CRaidResultPacket::decode, RaidPacketHandlers.Result))
+        list.add(PacketRegisterInfo(S2CRaidHudPacket.ID, S2CRaidHudPacket::decode, RaidPacketHandlers.Hud))
+        list.add(PacketRegisterInfo(S2CRaidLobbyClosePacket.ID, S2CRaidLobbyClosePacket::decode, RaidPacketHandlers.LobbyClose))
+        list.add(PacketRegisterInfo(S2CRaidCheerPacket.ID, S2CRaidCheerPacket::decode, RaidPacketHandlers.Cheer))
         // TODO: remove TeraTypeUpdatePacket when its registered in Cobblemon's own network
 //        list.add(PacketRegisterInfo(TeraTypeUpdatePacket.ID, TeraTypeUpdatePacket::decode, PokemonUpdatePacketHandler()))
 
@@ -59,6 +65,9 @@ object GenerationsNetwork {
         list.add(PacketRegisterInfo(C2STogglePacket.ID, C2STogglePacket::decode, C2SToggleHandler))
         list.add(PacketRegisterInfo(C2SEditMailPacket.ID, C2SEditMailPacket::decode, C2SEditMailHandler))
         list.add(PacketRegisterInfo(C2SPokeWandActionPacket.ID, C2SPokeWandActionPacket::decode, C2SPokeWandActionHandler))
+        list.add(PacketRegisterInfo(C2SRaidLobbyPacket.ID, C2SRaidLobbyPacket::decode, RaidPacketHandlers.LobbyAction))
+        list.add(PacketRegisterInfo(C2SRaidResultPacket.ID, C2SRaidResultPacket::decode, RaidPacketHandlers.ResultAction))
+        list.add(PacketRegisterInfo(C2SRaidCheerPacket.ID, C2SRaidCheerPacket::decode, RaidPacketHandlers.CheerAction))
         list.add(PacketRegisterInfo(C2SShopItemPacket.ID, C2SShopItemPacket::decode, C2SShopItemHandler))
         list.add(PacketRegisterInfo(HeadPatPacket.ID, ::HeadPatPacket, HeadPatPacketHandler))
 

@@ -30,6 +30,7 @@ public class Config {
     public Legendary legendary = new Legendary();
 
     public Client client = new Client();
+    public Raids raids = new Raids();
 
     public Economy economy = new Economy();
     public Breeding breeding = new Breeding();
@@ -154,6 +155,21 @@ public class Config {
         public boolean darkCrystalShadowPokemon = true;
     }
 
+    /** Dynamax and raid dens (see docs/wiki). */
+    public static class Raids {
+        // Height in blocks of a Pokémon that Dynamaxes in battle, whatever its species.
+        public float dynamaxHeight = 5.0f;
+        // Height in blocks of a raid boss.
+        public float bossHeight = 9.0f;
+        // HP multiplier of the raid boss for 1 to 6 stars: four participants hit it every turn.
+        public float[] bossHealth = {3f, 4f, 5f, 6f, 7f, 8f};
+        // Chance that a Wishing Star summons a 6-star legendary raid instead of a 5-star one.
+        public double legendaryChance = 0.01;
+        // Chance to catch the beaten boss with the single throw (a Master Ball always works).
+        public double catchChance5Stars = 0.7;
+        public double catchChance6Stars = 0.35;
+    }
+
     public static class Client {
         public boolean usePixelmonShading = false;
         public boolean useRenderDoc = false;
@@ -167,6 +183,8 @@ public class Config {
         public boolean shaderSunLighting = true;
         // Logs the Java call stack of the first OpenGL errors (diagnostic, slightly slower).
         public boolean traceOpenGlErrors = false;
+        // Battle interface in the style of Sword and Shield (HD); false for Cobblemon's.
+        public boolean swshBattleUi = true;
     }
 
     public static class Economy {

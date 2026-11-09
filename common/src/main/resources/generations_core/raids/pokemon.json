@@ -1,0 +1,1913 @@
+{
+  "tables": [
+    {
+      "biomes": [
+        "#cobblemon:is_ocean",
+        "#cobblemon:is_deep_ocean"
+      ],
+      "species": [
+        "cobblemon:magikarp",
+        "cobblemon:tentacool",
+        "cobblemon:horsea",
+        "cobblemon:shellder",
+        "cobblemon:krabby",
+        "cobblemon:finneon",
+        "cobblemon:remoraid",
+        "cobblemon:wingull",
+        "cobblemon:clamperl",
+        "cobblemon:wishiwashi"
+      ],
+      "stars": [
+        1
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_ocean",
+        "#cobblemon:is_deep_ocean"
+      ],
+      "species": [
+        "cobblemon:staryu",
+        "cobblemon:chinchou",
+        "cobblemon:corsola",
+        "cobblemon:qwilfish",
+        "cobblemon:luvdisc",
+        "cobblemon:wailmer",
+        "cobblemon:frillish",
+        "cobblemon:clauncher",
+        "cobblemon:skrelp",
+        "cobblemon:mantyke",
+        "cobblemon:carvanha"
+      ],
+      "stars": [
+        2
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_ocean",
+        "#cobblemon:is_deep_ocean"
+      ],
+      "species": [
+        "cobblemon:tentacruel",
+        "cobblemon:seadra",
+        "cobblemon:pelipper",
+        "cobblemon:lanturn",
+        "cobblemon:octillery",
+        "cobblemon:lumineon",
+        "cobblemon:clawitzer",
+        "cobblemon:sharpedo",
+        "cobblemon:huntail",
+        "cobblemon:gorebyss",
+        "cobblemon:bruxish"
+      ],
+      "stars": [
+        3
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_ocean",
+        "#cobblemon:is_deep_ocean"
+      ],
+      "species": [
+        "cobblemon:starmie",
+        "cobblemon:cloyster",
+        "cobblemon:mantine",
+        "cobblemon:wailord",
+        "cobblemon:jellicent",
+        "cobblemon:dragalge",
+        "cobblemon:barraskewda",
+        "cobblemon:relicanth",
+        "cobblemon:toxapex",
+        "cobblemon:dhelmise",
+        "cobblemon:golisopod"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_ocean",
+        "#cobblemon:is_deep_ocean"
+      ],
+      "species": [
+        "cobblemon:kingler"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 4,
+      "gigantamax": true
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_ocean",
+        "#cobblemon:is_deep_ocean"
+      ],
+      "species": [
+        "cobblemon:gyarados",
+        "cobblemon:lapras",
+        "cobblemon:kingdra",
+        "cobblemon:milotic"
+      ],
+      "stars": [
+        5
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_ocean",
+        "#cobblemon:is_deep_ocean"
+      ],
+      "species": [
+        "cobblemon:lapras"
+      ],
+      "stars": [
+        5
+      ],
+      "weight": 4,
+      "gigantamax": true
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_river",
+        "#cobblemon:is_freshwater"
+      ],
+      "species": [
+        "cobblemon:goldeen",
+        "cobblemon:poliwag",
+        "cobblemon:psyduck",
+        "cobblemon:marill",
+        "cobblemon:wooper",
+        "cobblemon:lotad",
+        "cobblemon:buizel",
+        "cobblemon:tympole",
+        "cobblemon:feebas",
+        "cobblemon:surskit",
+        "cobblemon:ducklett",
+        "cobblemon:chewtle"
+      ],
+      "stars": [
+        1
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_river",
+        "#cobblemon:is_freshwater"
+      ],
+      "species": [
+        "cobblemon:seaking",
+        "cobblemon:poliwhirl",
+        "cobblemon:quagsire",
+        "cobblemon:barboach",
+        "cobblemon:basculin",
+        "cobblemon:azumarill",
+        "cobblemon:lombre",
+        "cobblemon:palpitoad",
+        "cobblemon:masquerain"
+      ],
+      "stars": [
+        2
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_river",
+        "#cobblemon:is_freshwater"
+      ],
+      "species": [
+        "cobblemon:golduck",
+        "cobblemon:poliwrath",
+        "cobblemon:whiscash",
+        "cobblemon:floatzel",
+        "cobblemon:swanna",
+        "cobblemon:crawdaunt",
+        "cobblemon:araquanid"
+      ],
+      "stars": [
+        3
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_river",
+        "#cobblemon:is_freshwater"
+      ],
+      "species": [
+        "cobblemon:politoed",
+        "cobblemon:ludicolo",
+        "cobblemon:seismitoad",
+        "cobblemon:slowking"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_river",
+        "#cobblemon:is_freshwater"
+      ],
+      "species": [
+        "cobblemon:drednaw"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 4,
+      "gigantamax": true
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_river",
+        "#cobblemon:is_freshwater"
+      ],
+      "species": [
+        "cobblemon:swampert",
+        "cobblemon:milotic",
+        "cobblemon:gyarados"
+      ],
+      "stars": [
+        5
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_beach",
+        "#cobblemon:is_coast"
+      ],
+      "species": [
+        "cobblemon:krabby",
+        "cobblemon:wingull",
+        "cobblemon:shellos",
+        "cobblemon:corphish",
+        "cobblemon:dwebble",
+        "cobblemon:wimpod",
+        "cobblemon:slowpoke",
+        "cobblemon:sandygast",
+        "cobblemon:mareanie"
+      ],
+      "stars": [
+        1
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_beach",
+        "#cobblemon:is_coast"
+      ],
+      "species": [
+        "cobblemon:staryu",
+        "cobblemon:corsola",
+        "cobblemon:binacle",
+        "cobblemon:pyukumuku"
+      ],
+      "stars": [
+        2
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_beach",
+        "#cobblemon:is_coast"
+      ],
+      "species": [
+        "cobblemon:pelipper",
+        "cobblemon:crawdaunt",
+        "cobblemon:gastrodon",
+        "cobblemon:palossand"
+      ],
+      "stars": [
+        3
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_beach",
+        "#cobblemon:is_coast"
+      ],
+      "species": [
+        "cobblemon:slowbro",
+        "cobblemon:crustle",
+        "cobblemon:barbaracle",
+        "cobblemon:golisopod"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_beach",
+        "#cobblemon:is_coast"
+      ],
+      "species": [
+        "cobblemon:kingler",
+        "cobblemon:drednaw"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 4,
+      "gigantamax": true
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_beach",
+        "#cobblemon:is_coast"
+      ],
+      "species": [
+        "cobblemon:gyarados",
+        "cobblemon:lapras"
+      ],
+      "stars": [
+        5
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_mountain",
+        "#cobblemon:is_peak",
+        "#cobblemon:is_hills",
+        "#cobblemon:is_highlands",
+        "#cobblemon:is_plateau"
+      ],
+      "species": [
+        "cobblemon:geodude",
+        "cobblemon:machop",
+        "cobblemon:roggenrola",
+        "cobblemon:rockruff",
+        "cobblemon:nosepass",
+        "cobblemon:aron",
+        "cobblemon:rolycoly",
+        "cobblemon:nacli"
+      ],
+      "stars": [
+        1
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_mountain",
+        "#cobblemon:is_peak",
+        "#cobblemon:is_hills",
+        "#cobblemon:is_highlands",
+        "#cobblemon:is_plateau"
+      ],
+      "species": [
+        "cobblemon:graveler",
+        "cobblemon:onix",
+        "cobblemon:rhyhorn",
+        "cobblemon:boldore",
+        "cobblemon:lairon",
+        "cobblemon:machoke",
+        "cobblemon:tinkatuff"
+      ],
+      "stars": [
+        2
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_mountain",
+        "#cobblemon:is_peak",
+        "#cobblemon:is_hills",
+        "#cobblemon:is_highlands",
+        "#cobblemon:is_plateau"
+      ],
+      "species": [
+        "cobblemon:skarmory",
+        "cobblemon:carkol",
+        "cobblemon:bisharp",
+        "cobblemon:naclstack",
+        "cobblemon:rhydon",
+        "cobblemon:lycanroc"
+      ],
+      "stars": [
+        3
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_mountain",
+        "#cobblemon:is_peak",
+        "#cobblemon:is_hills",
+        "#cobblemon:is_highlands",
+        "#cobblemon:is_plateau"
+      ],
+      "species": [
+        "cobblemon:golem",
+        "cobblemon:steelix",
+        "cobblemon:aggron",
+        "cobblemon:gigalith",
+        "cobblemon:probopass",
+        "cobblemon:garganacl",
+        "cobblemon:tinkaton"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_mountain",
+        "#cobblemon:is_peak",
+        "#cobblemon:is_hills",
+        "#cobblemon:is_highlands",
+        "#cobblemon:is_plateau"
+      ],
+      "species": [
+        "cobblemon:machamp",
+        "cobblemon:coalossal",
+        "cobblemon:corviknight"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 4,
+      "gigantamax": true
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_mountain",
+        "#cobblemon:is_peak",
+        "#cobblemon:is_hills",
+        "#cobblemon:is_highlands",
+        "#cobblemon:is_plateau"
+      ],
+      "species": [
+        "cobblemon:tyranitar",
+        "cobblemon:metagross",
+        "cobblemon:salamence",
+        "cobblemon:rhyperior",
+        "cobblemon:kingambit"
+      ],
+      "stars": [
+        5
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_forest",
+        "#cobblemon:is_taiga"
+      ],
+      "species": [
+        "cobblemon:caterpie",
+        "cobblemon:weedle",
+        "cobblemon:pidgey",
+        "cobblemon:oddish",
+        "cobblemon:sewaddle",
+        "cobblemon:skwovet",
+        "cobblemon:pikipek",
+        "cobblemon:nickit",
+        "cobblemon:hoothoot",
+        "cobblemon:ledyba",
+        "cobblemon:burmy",
+        "cobblemon:seedot",
+        "cobblemon:blipbug",
+        "cobblemon:combee"
+      ],
+      "stars": [
+        1
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_forest",
+        "#cobblemon:is_taiga"
+      ],
+      "species": [
+        "cobblemon:butterfree",
+        "cobblemon:beedrill",
+        "cobblemon:gloom",
+        "cobblemon:venonat",
+        "cobblemon:pineco",
+        "cobblemon:swadloon",
+        "cobblemon:nuzleaf",
+        "cobblemon:kricketune",
+        "cobblemon:teddiursa",
+        "cobblemon:dottler"
+      ],
+      "stars": [
+        2
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_forest",
+        "#cobblemon:is_taiga"
+      ],
+      "species": [
+        "cobblemon:noctowl",
+        "cobblemon:stantler",
+        "cobblemon:forretress",
+        "cobblemon:vespiquen",
+        "cobblemon:thievul",
+        "cobblemon:venomoth",
+        "cobblemon:ledian"
+      ],
+      "stars": [
+        3
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_forest",
+        "#cobblemon:is_taiga"
+      ],
+      "species": [
+        "cobblemon:vileplume",
+        "cobblemon:scizor",
+        "cobblemon:ursaring",
+        "cobblemon:leavanny",
+        "cobblemon:shiftry"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_forest",
+        "#cobblemon:is_taiga"
+      ],
+      "species": [
+        "cobblemon:butterfree",
+        "cobblemon:orbeetle"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 4,
+      "gigantamax": true
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_forest",
+        "#cobblemon:is_taiga"
+      ],
+      "species": [
+        "cobblemon:ursaluna",
+        "cobblemon:kleavor"
+      ],
+      "stars": [
+        5
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_forest",
+        "#cobblemon:is_taiga"
+      ],
+      "species": [
+        "cobblemon:venusaur",
+        "cobblemon:rillaboom"
+      ],
+      "stars": [
+        5
+      ],
+      "weight": 4,
+      "gigantamax": true
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_jungle",
+        "#cobblemon:is_tropical_island",
+        "#cobblemon:is_bamboo"
+      ],
+      "species": [
+        "cobblemon:paras",
+        "cobblemon:spinarak",
+        "cobblemon:grubbin",
+        "cobblemon:bounsweet",
+        "cobblemon:aipom",
+        "cobblemon:venipede",
+        "cobblemon:pikipek"
+      ],
+      "stars": [
+        1
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_jungle",
+        "#cobblemon:is_tropical_island",
+        "#cobblemon:is_bamboo"
+      ],
+      "species": [
+        "cobblemon:ariados",
+        "cobblemon:charjabug",
+        "cobblemon:whirlipede",
+        "cobblemon:steenee",
+        "cobblemon:trumbeak"
+      ],
+      "stars": [
+        2
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_jungle",
+        "#cobblemon:is_tropical_island",
+        "#cobblemon:is_bamboo"
+      ],
+      "species": [
+        "cobblemon:ambipom",
+        "cobblemon:toucannon",
+        "cobblemon:tropius",
+        "cobblemon:lurantis"
+      ],
+      "stars": [
+        3
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_jungle",
+        "#cobblemon:is_tropical_island",
+        "#cobblemon:is_bamboo"
+      ],
+      "species": [
+        "cobblemon:vikavolt",
+        "cobblemon:tsareena",
+        "cobblemon:scolipede",
+        "cobblemon:oranguru",
+        "cobblemon:passimian"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_jungle",
+        "#cobblemon:is_tropical_island",
+        "#cobblemon:is_bamboo"
+      ],
+      "species": [
+        "cobblemon:tangrowth"
+      ],
+      "stars": [
+        5
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_jungle",
+        "#cobblemon:is_tropical_island",
+        "#cobblemon:is_bamboo"
+      ],
+      "species": [
+        "cobblemon:rillaboom"
+      ],
+      "stars": [
+        5
+      ],
+      "weight": 4,
+      "gigantamax": true
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_desert",
+        "#cobblemon:is_badlands",
+        "#cobblemon:is_arid"
+      ],
+      "species": [
+        "cobblemon:sandshrew",
+        "cobblemon:cacnea",
+        "cobblemon:trapinch",
+        "cobblemon:sandile",
+        "cobblemon:silicobra",
+        "cobblemon:diglett",
+        "cobblemon:helioptile",
+        "cobblemon:numel"
+      ],
+      "stars": [
+        1
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_desert",
+        "#cobblemon:is_badlands",
+        "#cobblemon:is_arid"
+      ],
+      "species": [
+        "cobblemon:dugtrio",
+        "cobblemon:krokorok",
+        "cobblemon:hippopotas",
+        "cobblemon:vibrava",
+        "cobblemon:phanpy"
+      ],
+      "stars": [
+        2
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_desert",
+        "#cobblemon:is_badlands",
+        "#cobblemon:is_arid"
+      ],
+      "species": [
+        "cobblemon:sandslash",
+        "cobblemon:cacturne",
+        "cobblemon:heliolisk",
+        "cobblemon:maractus",
+        "cobblemon:camerupt"
+      ],
+      "stars": [
+        3
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_desert",
+        "#cobblemon:is_badlands",
+        "#cobblemon:is_arid"
+      ],
+      "species": [
+        "cobblemon:flygon",
+        "cobblemon:krookodile",
+        "cobblemon:hippowdon",
+        "cobblemon:donphan",
+        "cobblemon:cofagrigus"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_desert",
+        "#cobblemon:is_badlands",
+        "#cobblemon:is_arid"
+      ],
+      "species": [
+        "cobblemon:sandaconda"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 4,
+      "gigantamax": true
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_desert",
+        "#cobblemon:is_badlands",
+        "#cobblemon:is_arid"
+      ],
+      "species": [
+        "cobblemon:garchomp"
+      ],
+      "stars": [
+        5
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_snowy",
+        "#cobblemon:is_freezing",
+        "#cobblemon:is_tundra",
+        "#cobblemon:is_glacial",
+        "#cobblemon:is_frozen_ocean"
+      ],
+      "species": [
+        "cobblemon:snover",
+        "cobblemon:snorunt",
+        "cobblemon:swinub",
+        "cobblemon:spheal",
+        "cobblemon:cubchoo",
+        "cobblemon:vanillite",
+        "cobblemon:snom",
+        "cobblemon:bergmite",
+        "cobblemon:frigibax"
+      ],
+      "stars": [
+        1
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_snowy",
+        "#cobblemon:is_freezing",
+        "#cobblemon:is_tundra",
+        "#cobblemon:is_glacial",
+        "#cobblemon:is_frozen_ocean"
+      ],
+      "species": [
+        "cobblemon:piloswine",
+        "cobblemon:sealeo",
+        "cobblemon:vanillish",
+        "cobblemon:sneasel",
+        "cobblemon:cetoddle",
+        "cobblemon:arctibax"
+      ],
+      "stars": [
+        2
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_snowy",
+        "#cobblemon:is_freezing",
+        "#cobblemon:is_tundra",
+        "#cobblemon:is_glacial",
+        "#cobblemon:is_frozen_ocean"
+      ],
+      "species": [
+        "cobblemon:glalie",
+        "cobblemon:froslass",
+        "cobblemon:abomasnow",
+        "cobblemon:frosmoth"
+      ],
+      "stars": [
+        3
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_snowy",
+        "#cobblemon:is_freezing",
+        "#cobblemon:is_tundra",
+        "#cobblemon:is_glacial",
+        "#cobblemon:is_frozen_ocean"
+      ],
+      "species": [
+        "cobblemon:walrein",
+        "cobblemon:avalugg",
+        "cobblemon:weavile",
+        "cobblemon:mamoswine",
+        "cobblemon:beartic",
+        "cobblemon:cetitan",
+        "cobblemon:crabominable"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_snowy",
+        "#cobblemon:is_freezing",
+        "#cobblemon:is_tundra",
+        "#cobblemon:is_glacial",
+        "#cobblemon:is_frozen_ocean"
+      ],
+      "species": [
+        "cobblemon:lapras",
+        "cobblemon:baxcalibur",
+        "cobblemon:vanilluxe"
+      ],
+      "stars": [
+        5
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_swamp"
+      ],
+      "species": [
+        "cobblemon:grimer",
+        "cobblemon:ekans",
+        "cobblemon:croagunk",
+        "cobblemon:wooper",
+        "cobblemon:lotad",
+        "cobblemon:tympole",
+        "cobblemon:mareanie",
+        "cobblemon:gulpin"
+      ],
+      "stars": [
+        1
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_swamp"
+      ],
+      "species": [
+        "cobblemon:quagsire",
+        "cobblemon:skrelp",
+        "cobblemon:palpitoad",
+        "cobblemon:koffing",
+        "cobblemon:toedscool"
+      ],
+      "stars": [
+        2
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_swamp"
+      ],
+      "species": [
+        "cobblemon:arbok",
+        "cobblemon:swalot",
+        "cobblemon:stunfisk",
+        "cobblemon:seismitoad"
+      ],
+      "stars": [
+        3
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_swamp"
+      ],
+      "species": [
+        "cobblemon:garbodor"
+      ],
+      "stars": [
+        3
+      ],
+      "weight": 4,
+      "gigantamax": true
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_swamp"
+      ],
+      "species": [
+        "cobblemon:muk",
+        "cobblemon:weezing",
+        "cobblemon:toxapex",
+        "cobblemon:dragalge",
+        "cobblemon:toxicroak",
+        "cobblemon:toedscruel"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_swamp"
+      ],
+      "species": [
+        "cobblemon:goodra",
+        "cobblemon:swampert"
+      ],
+      "stars": [
+        5
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_plains",
+        "#cobblemon:is_grassland",
+        "#cobblemon:is_savanna",
+        "#cobblemon:is_shrubland"
+      ],
+      "species": [
+        "cobblemon:rattata",
+        "cobblemon:pidgey",
+        "cobblemon:bunnelby",
+        "cobblemon:lillipup",
+        "cobblemon:wooloo",
+        "cobblemon:yungoos",
+        "cobblemon:fletchling",
+        "cobblemon:eevee",
+        "cobblemon:sentret",
+        "cobblemon:zigzagoon",
+        "cobblemon:starly",
+        "cobblemon:patrat",
+        "cobblemon:lechonk"
+      ],
+      "stars": [
+        1
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_plains",
+        "#cobblemon:is_grassland",
+        "#cobblemon:is_savanna",
+        "#cobblemon:is_shrubland"
+      ],
+      "species": [
+        "cobblemon:ponyta",
+        "cobblemon:doduo",
+        "cobblemon:herdier",
+        "cobblemon:rufflet",
+        "cobblemon:pidgeotto",
+        "cobblemon:fletchinder",
+        "cobblemon:staravia"
+      ],
+      "stars": [
+        2
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_plains",
+        "#cobblemon:is_grassland",
+        "#cobblemon:is_savanna",
+        "#cobblemon:is_shrubland"
+      ],
+      "species": [
+        "cobblemon:dodrio",
+        "cobblemon:stoutland",
+        "cobblemon:raticate",
+        "cobblemon:girafarig",
+        "cobblemon:dubwool",
+        "cobblemon:pidgeot",
+        "cobblemon:miltank"
+      ],
+      "stars": [
+        3
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_plains",
+        "#cobblemon:is_grassland",
+        "#cobblemon:is_savanna",
+        "#cobblemon:is_shrubland"
+      ],
+      "species": [
+        "cobblemon:rapidash",
+        "cobblemon:staraptor",
+        "cobblemon:braviary",
+        "cobblemon:tauros",
+        "cobblemon:bouffalant",
+        "cobblemon:sawsbuck"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_plains",
+        "#cobblemon:is_grassland",
+        "#cobblemon:is_savanna",
+        "#cobblemon:is_shrubland"
+      ],
+      "species": [
+        "cobblemon:corviknight"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 3,
+      "gigantamax": true
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_plains",
+        "#cobblemon:is_grassland",
+        "#cobblemon:is_savanna",
+        "#cobblemon:is_shrubland"
+      ],
+      "species": [
+        "cobblemon:arcanine",
+        "cobblemon:slaking",
+        "cobblemon:togekiss"
+      ],
+      "stars": [
+        5
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_plains",
+        "#cobblemon:is_grassland",
+        "#cobblemon:is_savanna",
+        "#cobblemon:is_shrubland"
+      ],
+      "species": [
+        "cobblemon:snorlax"
+      ],
+      "stars": [
+        5
+      ],
+      "weight": 4,
+      "gigantamax": true
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_floral",
+        "#cobblemon:is_cherry_blossom",
+        "#cobblemon:is_magical"
+      ],
+      "species": [
+        "cobblemon:flabebe",
+        "cobblemon:cottonee",
+        "cobblemon:budew",
+        "cobblemon:hatenna",
+        "cobblemon:milcery",
+        "cobblemon:petilil",
+        "cobblemon:fomantis",
+        "cobblemon:clefairy"
+      ],
+      "stars": [
+        1
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_floral",
+        "#cobblemon:is_cherry_blossom",
+        "#cobblemon:is_magical"
+      ],
+      "species": [
+        "cobblemon:floette",
+        "cobblemon:roselia",
+        "cobblemon:hattrem",
+        "cobblemon:shiinotic"
+      ],
+      "stars": [
+        2
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_floral",
+        "#cobblemon:is_cherry_blossom",
+        "#cobblemon:is_magical"
+      ],
+      "species": [
+        "cobblemon:whimsicott",
+        "cobblemon:lilligant",
+        "cobblemon:clefable"
+      ],
+      "stars": [
+        3
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_floral",
+        "#cobblemon:is_cherry_blossom",
+        "#cobblemon:is_magical"
+      ],
+      "species": [
+        "cobblemon:roserade",
+        "cobblemon:sylveon",
+        "cobblemon:comfey"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_floral",
+        "#cobblemon:is_cherry_blossom",
+        "#cobblemon:is_magical"
+      ],
+      "species": [
+        "cobblemon:alcremie",
+        "cobblemon:hatterene"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 4,
+      "gigantamax": true
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_floral",
+        "#cobblemon:is_cherry_blossom",
+        "#cobblemon:is_magical"
+      ],
+      "species": [
+        "cobblemon:florges",
+        "cobblemon:togekiss"
+      ],
+      "stars": [
+        5
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_spooky"
+      ],
+      "species": [
+        "cobblemon:gastly",
+        "cobblemon:shuppet",
+        "cobblemon:duskull",
+        "cobblemon:litwick",
+        "cobblemon:phantump",
+        "cobblemon:pumpkaboo",
+        "cobblemon:sinistea",
+        "cobblemon:greavard"
+      ],
+      "stars": [
+        1
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_spooky"
+      ],
+      "species": [
+        "cobblemon:haunter",
+        "cobblemon:misdreavus",
+        "cobblemon:sableye",
+        "cobblemon:lampent"
+      ],
+      "stars": [
+        2
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_spooky"
+      ],
+      "species": [
+        "cobblemon:banette",
+        "cobblemon:dusclops",
+        "cobblemon:trevenant",
+        "cobblemon:gourgeist",
+        "cobblemon:houndstone"
+      ],
+      "stars": [
+        3
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_spooky"
+      ],
+      "species": [
+        "cobblemon:mismagius",
+        "cobblemon:dusknoir",
+        "cobblemon:chandelure",
+        "cobblemon:polteageist",
+        "cobblemon:aegislash"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_spooky"
+      ],
+      "species": [
+        "cobblemon:gengar"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 4,
+      "gigantamax": true
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_spooky"
+      ],
+      "species": [
+        "cobblemon:dragapult",
+        "cobblemon:hydreigon"
+      ],
+      "stars": [
+        5
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_mushroom"
+      ],
+      "species": [
+        "cobblemon:paras",
+        "cobblemon:shroomish",
+        "cobblemon:foongus",
+        "cobblemon:morelull"
+      ],
+      "stars": [
+        1
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_mushroom"
+      ],
+      "species": [
+        "cobblemon:parasect",
+        "cobblemon:shiinotic"
+      ],
+      "stars": [
+        2
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_mushroom"
+      ],
+      "species": [
+        "cobblemon:breloom",
+        "cobblemon:amoonguss"
+      ],
+      "stars": [
+        3
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_mushroom"
+      ],
+      "species": [
+        "cobblemon:breloom",
+        "cobblemon:amoonguss",
+        "cobblemon:parasect"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_mushroom"
+      ],
+      "species": [
+        "cobblemon:blissey"
+      ],
+      "stars": [
+        5
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_volcanic",
+        "#cobblemon:is_thermal"
+      ],
+      "species": [
+        "cobblemon:slugma",
+        "cobblemon:numel",
+        "cobblemon:litleo",
+        "cobblemon:salandit",
+        "cobblemon:houndour",
+        "cobblemon:sizzlipede",
+        "cobblemon:rolycoly"
+      ],
+      "stars": [
+        1
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_volcanic",
+        "#cobblemon:is_thermal"
+      ],
+      "species": [
+        "cobblemon:carkol",
+        "cobblemon:pyroar"
+      ],
+      "stars": [
+        2
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_volcanic",
+        "#cobblemon:is_thermal"
+      ],
+      "species": [
+        "cobblemon:torkoal",
+        "cobblemon:camerupt",
+        "cobblemon:magcargo",
+        "cobblemon:salazzle"
+      ],
+      "stars": [
+        3
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_volcanic",
+        "#cobblemon:is_thermal"
+      ],
+      "species": [
+        "cobblemon:magmar",
+        "cobblemon:houndoom",
+        "cobblemon:turtonator"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_volcanic",
+        "#cobblemon:is_thermal"
+      ],
+      "species": [
+        "cobblemon:centiskorch",
+        "cobblemon:coalossal"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 4,
+      "gigantamax": true
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_volcanic",
+        "#cobblemon:is_thermal"
+      ],
+      "species": [
+        "cobblemon:volcarona",
+        "cobblemon:magmortar",
+        "cobblemon:arcanine"
+      ],
+      "stars": [
+        5
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_cave",
+        "#cobblemon:is_lush",
+        "#cobblemon:is_dripstone",
+        "#cobblemon:is_deep_dark"
+      ],
+      "species": [
+        "cobblemon:zubat",
+        "cobblemon:geodude",
+        "cobblemon:noibat",
+        "cobblemon:dunsparce"
+      ],
+      "stars": [
+        1
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_cave",
+        "#cobblemon:is_lush",
+        "#cobblemon:is_dripstone",
+        "#cobblemon:is_deep_dark"
+      ],
+      "species": [
+        "cobblemon:golbat",
+        "cobblemon:graveler"
+      ],
+      "stars": [
+        2
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_cave",
+        "#cobblemon:is_lush",
+        "#cobblemon:is_dripstone",
+        "#cobblemon:is_deep_dark"
+      ],
+      "species": [
+        "cobblemon:crobat",
+        "cobblemon:noivern"
+      ],
+      "stars": [
+        3
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_cave",
+        "#cobblemon:is_lush",
+        "#cobblemon:is_dripstone",
+        "#cobblemon:is_deep_dark"
+      ],
+      "species": [
+        "cobblemon:excadrill",
+        "cobblemon:steelix"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 10
+    },
+    {
+      "biomes": [
+        "#cobblemon:is_cave",
+        "#cobblemon:is_lush",
+        "#cobblemon:is_dripstone",
+        "#cobblemon:is_deep_dark"
+      ],
+      "species": [
+        "cobblemon:garchomp"
+      ],
+      "stars": [
+        5
+      ],
+      "weight": 10
+    }
+  ],
+  "fallback": [
+    {
+      "species": [
+        "cobblemon:rattata",
+        "cobblemon:pidgey",
+        "cobblemon:bidoof",
+        "cobblemon:zigzagoon",
+        "cobblemon:lechonk",
+        "cobblemon:pikachu",
+        "cobblemon:eevee"
+      ],
+      "stars": [
+        1
+      ],
+      "weight": 10
+    },
+    {
+      "species": [
+        "cobblemon:growlithe",
+        "cobblemon:ponyta",
+        "cobblemon:meowth",
+        "cobblemon:vulpix"
+      ],
+      "stars": [
+        2
+      ],
+      "weight": 10
+    },
+    {
+      "species": [
+        "cobblemon:meowth"
+      ],
+      "stars": [
+        2
+      ],
+      "weight": 3,
+      "gigantamax": true
+    },
+    {
+      "species": [
+        "cobblemon:raichu",
+        "cobblemon:persian",
+        "cobblemon:electabuzz"
+      ],
+      "stars": [
+        3
+      ],
+      "weight": 10
+    },
+    {
+      "species": [
+        "cobblemon:pikachu",
+        "cobblemon:eevee"
+      ],
+      "stars": [
+        3
+      ],
+      "weight": 3,
+      "gigantamax": true
+    },
+    {
+      "species": [
+        "cobblemon:ninetales",
+        "cobblemon:umbreon",
+        "cobblemon:espeon"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 10
+    },
+    {
+      "species": [
+        "cobblemon:venusaur",
+        "cobblemon:charizard",
+        "cobblemon:blastoise"
+      ],
+      "stars": [
+        4
+      ],
+      "weight": 3,
+      "gigantamax": true
+    },
+    {
+      "species": [
+        "cobblemon:dragonite",
+        "cobblemon:snorlax",
+        "cobblemon:togekiss",
+        "cobblemon:garchomp",
+        "cobblemon:tyranitar",
+        "cobblemon:metagross"
+      ],
+      "stars": [
+        5
+      ],
+      "weight": 10
+    }
+  ],
+  "legendaries": [
+    {
+      "species": [
+        "cobblemon:kyogre",
+        "cobblemon:lugia",
+        "cobblemon:latias",
+        "cobblemon:latios",
+        "cobblemon:tapufini"
+      ],
+      "stars": [
+        6
+      ],
+      "weight": 5,
+      "biomes": [
+        "#cobblemon:is_ocean",
+        "#cobblemon:is_deep_ocean"
+      ]
+    },
+    {
+      "species": [
+        "cobblemon:manaphy",
+        "cobblemon:phione"
+      ],
+      "stars": [
+        6
+      ],
+      "weight": 2,
+      "biomes": [
+        "#cobblemon:is_ocean",
+        "#cobblemon:is_deep_ocean"
+      ]
+    },
+    {
+      "species": [
+        "cobblemon:suicune",
+        "cobblemon:uxie",
+        "cobblemon:mesprit",
+        "cobblemon:azelf"
+      ],
+      "stars": [
+        6
+      ],
+      "weight": 5,
+      "biomes": [
+        "#cobblemon:is_river",
+        "#cobblemon:is_freshwater"
+      ]
+    },
+    {
+      "species": [
+        "cobblemon:groudon",
+        "cobblemon:entei",
+        "cobblemon:moltres",
+        "cobblemon:heatran",
+        "cobblemon:regirock"
+      ],
+      "stars": [
+        6
+      ],
+      "weight": 5,
+      "biomes": [
+        "#cobblemon:is_desert",
+        "#cobblemon:is_badlands",
+        "#cobblemon:is_arid",
+        "#cobblemon:is_volcanic",
+        "#cobblemon:is_thermal"
+      ]
+    },
+    {
+      "species": [
+        "cobblemon:rayquaza",
+        "cobblemon:registeel",
+        "cobblemon:hooh",
+        "cobblemon:dialga",
+        "cobblemon:palkia",
+        "cobblemon:regigigas",
+        "cobblemon:cobalion",
+        "cobblemon:terrakion"
+      ],
+      "stars": [
+        6
+      ],
+      "weight": 5,
+      "biomes": [
+        "#cobblemon:is_mountain",
+        "#cobblemon:is_peak",
+        "#cobblemon:is_hills",
+        "#cobblemon:is_highlands",
+        "#cobblemon:is_plateau"
+      ]
+    },
+    {
+      "species": [
+        "cobblemon:articuno",
+        "cobblemon:regice",
+        "cobblemon:kyurem",
+        "cobblemon:glastrier"
+      ],
+      "stars": [
+        6
+      ],
+      "weight": 5,
+      "biomes": [
+        "#cobblemon:is_snowy",
+        "#cobblemon:is_freezing",
+        "#cobblemon:is_tundra",
+        "#cobblemon:is_glacial",
+        "#cobblemon:is_frozen_ocean"
+      ]
+    },
+    {
+      "species": [
+        "cobblemon:zapdos",
+        "cobblemon:raikou",
+        "cobblemon:landorus",
+        "cobblemon:thundurus",
+        "cobblemon:tornadus",
+        "cobblemon:zacian",
+        "cobblemon:zamazenta"
+      ],
+      "stars": [
+        6
+      ],
+      "weight": 5,
+      "biomes": [
+        "#cobblemon:is_plains",
+        "#cobblemon:is_grassland",
+        "#cobblemon:is_savanna",
+        "#cobblemon:is_shrubland"
+      ]
+    },
+    {
+      "species": [
+        "cobblemon:virizion",
+        "cobblemon:xerneas",
+        "cobblemon:tapukoko",
+        "cobblemon:tapulele",
+        "cobblemon:tapubulu"
+      ],
+      "stars": [
+        6
+      ],
+      "weight": 5,
+      "biomes": [
+        "#cobblemon:is_forest",
+        "#cobblemon:is_taiga",
+        "#cobblemon:is_jungle",
+        "#cobblemon:is_tropical_island",
+        "#cobblemon:is_bamboo"
+      ]
+    },
+    {
+      "species": [
+        "cobblemon:celebi",
+        "cobblemon:shaymin",
+        "cobblemon:zarude"
+      ],
+      "stars": [
+        6
+      ],
+      "weight": 2,
+      "biomes": [
+        "#cobblemon:is_forest",
+        "#cobblemon:is_taiga",
+        "#cobblemon:is_jungle",
+        "#cobblemon:is_tropical_island",
+        "#cobblemon:is_bamboo",
+        "#cobblemon:is_floral",
+        "#cobblemon:is_cherry_blossom",
+        "#cobblemon:is_magical"
+      ]
+    },
+    {
+      "species": [
+        "cobblemon:giratina",
+        "cobblemon:yveltal",
+        "cobblemon:spectrier"
+      ],
+      "stars": [
+        6
+      ],
+      "weight": 5,
+      "biomes": [
+        "#cobblemon:is_spooky"
+      ]
+    },
+    {
+      "species": [
+        "cobblemon:darkrai",
+        "cobblemon:marshadow"
+      ],
+      "stars": [
+        6
+      ],
+      "weight": 2,
+      "biomes": [
+        "#cobblemon:is_spooky"
+      ]
+    },
+    {
+      "species": [
+        "cobblemon:cresselia"
+      ],
+      "stars": [
+        6
+      ],
+      "weight": 5,
+      "biomes": [
+        "#cobblemon:is_floral",
+        "#cobblemon:is_cherry_blossom",
+        "#cobblemon:is_magical"
+      ]
+    },
+    {
+      "species": [
+        "cobblemon:jirachi",
+        "cobblemon:mew"
+      ],
+      "stars": [
+        6
+      ],
+      "weight": 2,
+      "biomes": [
+        "#cobblemon:is_floral",
+        "#cobblemon:is_cherry_blossom",
+        "#cobblemon:is_magical"
+      ]
+    },
+    {
+      "species": [
+        "cobblemon:mewtwo"
+      ],
+      "stars": [
+        6
+      ],
+      "weight": 3
+    }
+  ]
+}
