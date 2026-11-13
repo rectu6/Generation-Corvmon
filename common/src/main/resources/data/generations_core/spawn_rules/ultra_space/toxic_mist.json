@@ -1,0 +1,18 @@
+{
+  "displayName": "Ultra Space weather: toxic_mist (ultra_abyss)",
+  "enabled": true,
+  "components": [
+    {
+      "type": "weight",
+      "spawnDetailSelector": "v.spawn_detail.id == 'ultra_abyss/crystal_caverns/glimmet' || v.spawn_detail.id == 'ultra_abyss/fungal_forest/foongus' || v.spawn_detail.id == 'ultra_abyss/fungal_forest/amoonguss' || v.spawn_detail.id == 'ultra_abyss/luminous_caves/zubat' || v.spawn_detail.id == 'ultra_abyss/underground_lakes/tentacool' || v.spawn_detail.id == 'ultra_abyss/underground_lakes/mareanie' || v.spawn_detail.id == 'ultra_abyss/underground_lakes/skrelp'",
+      "spawnablePositionSelector": "v.spawnable_position.world.ultra_weather == 'toxic_mist'",
+      "weight": "v.weight * 3"
+    },
+    {
+      "type": "filter",
+      "spawnDetailSelector": "v.spawn_detail.id == 'ultra_abyss/weather/toxic_mist/glimmora'",
+      "spawnablePositionSelector": "true",
+      "allow": "v.spawnable_position.world.ultra_weather == 'toxic_mist'"
+    }
+  ]
+}

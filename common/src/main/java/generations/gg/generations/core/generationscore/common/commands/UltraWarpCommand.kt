@@ -63,6 +63,12 @@ object UltraWarpCommand {
                 .requires { it.hasPermission(2) }
                 .then(Commands.literal("sessions").executes { sessions(it.source) })
                 .then(Commands.literal("reload").executes { reload(it.source) })
+                .then(UltraWeatherCommands.weather())
+                .then(UltraWeatherCommands.suit())
+                .then(UltraEncounterCommands.encounter())
+                .then(UltraEncounterCommands.spawns())
+                .then(UltraRiftCommands.rift())
+                .then(UltraRiftCommands.home())
                 .then(
                     Commands.literal("worlds")
                         .executes { worlds(it.source) }
@@ -414,6 +420,14 @@ object UltraWarpCommand {
         // The resources of the chunks generated from now on (the others never change).
         generations.gg.generations.core.generationscore.common.world.ultraspace.worlds.gen.UltraResourcesConfig.load()
         generations.gg.generations.core.generationscore.common.world.ultraspace.worlds.gen.UltraStructuresConfig.load()
+        // The suit and the weathers (the events in progress keep their times).
+        generations.gg.generations.core.generationscore.common.world.ultraspace.suit.UltraSuitConfig.load()
+        generations.gg.generations.core.generationscore.common.world.ultraspace.weather.UltraWeatherConfig.load()
+        // The Pokémon of the Ultra worlds (the data, spawn pools and rules, comes with /reload).
+        generations.gg.generations.core.generationscore.common.world.ultraspace.spawning.UltraSpawnsConfig.load()
+        generations.gg.generations.core.generationscore.common.world.ultraspace.encounter.UltraEncountersConfig.load()
+        // The rifts and the wheel's return (phase 6); the open rifts keep their times.
+        generations.gg.generations.core.generationscore.common.world.ultraspace.rift.UltraRiftsConfig.load()
         source.sendSuccess({ Component.translatable("$KEY.reloaded", UltraSpaceConfig.ride.maxSessions) }, true)
         return 1
     }

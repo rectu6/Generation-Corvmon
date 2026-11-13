@@ -1,0 +1,49 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_forest/blade_valley/pawniard",
+      "pokemon": "pawniard",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "25-35",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_forest/blade_valley"
+        ]
+      }
+    },
+    {
+      "id": "ultra_forest/blade_valley/honedge",
+      "pokemon": "honedge",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "28-40",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_forest/blade_valley"
+        ]
+      }
+    },
+    {
+      "id": "ultra_forest/blade_valley/bisharp",
+      "pokemon": "bisharp",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "31-45",
+      "weight": 3.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_forest/blade_valley"
+        ]
+      }
+    }
+  ]
+}

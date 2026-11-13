@@ -1,0 +1,100 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_desert/oasis/buizel",
+      "pokemon": "buizel",
+      "type": "pokemon",
+      "spawnablePositionType": "surface",
+      "bucket": "common",
+      "level": "22-32",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_desert/oasis"
+        ]
+      },
+      "presets": [
+        "water"
+      ]
+    },
+    {
+      "id": "ultra_desert/oasis/wooper",
+      "pokemon": "wooper",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "22-32",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_desert/oasis"
+        ]
+      }
+    },
+    {
+      "id": "ultra_desert/oasis/cherubi",
+      "pokemon": "cherubi",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "25-37",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_desert/oasis"
+        ]
+      }
+    },
+    {
+      "id": "ultra_desert/oasis/maractus",
+      "pokemon": "maractus",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "25-37",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_desert/oasis"
+        ]
+      }
+    },
+    {
+      "id": "ultra_desert/oasis/barboach",
+      "pokemon": "barboach",
+      "type": "pokemon",
+      "spawnablePositionType": "submerged",
+      "bucket": "uncommon",
+      "level": "25-37",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_desert/oasis"
+        ]
+      },
+      "presets": [
+        "water"
+      ]
+    },
+    {
+      "id": "ultra_desert/oasis/whiscash",
+      "pokemon": "whiscash",
+      "type": "pokemon",
+      "spawnablePositionType": "submerged",
+      "bucket": "rare",
+      "level": "28-42",
+      "weight": 3.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_desert/oasis"
+        ]
+      },
+      "presets": [
+        "water"
+      ]
+    }
+  ]
+}

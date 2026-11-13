@@ -1,0 +1,12 @@
+{
+  "displayName": "Ultra Space weather: energy_surge (ultra_central)",
+  "enabled": true,
+  "components": [
+    {
+      "type": "weight",
+      "spawnDetailSelector": "v.spawn_detail.id == 'ultra_central/cable_forest/joltik' || v.spawn_detail.id == 'ultra_central/cable_forest/pichu' || v.spawn_detail.id == 'ultra_central/cable_forest/charjabug' || v.spawn_detail.id == 'ultra_central/cable_forest/vikavolt' || v.spawn_detail.id == 'ultra_central/conductive_plains/electrike' || v.spawn_detail.id == 'ultra_central/conductive_plains/blitzle' || v.spawn_detail.id == 'ultra_central/conductive_plains/pawmi' || v.spawn_detail.id == 'ultra_central/conductive_plains/pawmo' || v.spawn_detail.id == 'ultra_central/conductive_plains/flaaffy' || v.spawn_detail.id == 'ultra_central/crystal_fields/magnemite' || v.spawn_detail.id == 'ultra_central/electric_mountains/shinx' || v.spawn_detail.id == 'ultra_central/electric_mountains/emolga' || v.spawn_detail.id == 'ultra_central/electric_mountains/elekid' || v.spawn_detail.id == 'ultra_central/electric_mountains/luxio' || v.spawn_detail.id == 'ultra_central/magnetic_valley/magnemite' || v.spawn_detail.id == 'ultra_central/magnetic_valley/magneton'",
+      "spawnablePositionSelector": "v.spawnable_position.world.ultra_weather == 'energy_surge'",
+      "weight": "v.weight * 3"
+    }
+  ]
+}

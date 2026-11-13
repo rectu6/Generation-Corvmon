@@ -1,0 +1,103 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_abyss/underground_lakes/tentacool",
+      "pokemon": "tentacool",
+      "type": "pokemon",
+      "spawnablePositionType": "submerged",
+      "bucket": "common",
+      "level": "30-40",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_abyss/underground_lakes"
+        ]
+      },
+      "presets": [
+        "water"
+      ]
+    },
+    {
+      "id": "ultra_abyss/underground_lakes/shellos",
+      "pokemon": "shellos",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "30-40",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_abyss/underground_lakes"
+        ]
+      }
+    },
+    {
+      "id": "ultra_abyss/underground_lakes/tympole",
+      "pokemon": "tympole",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "30-40",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_abyss/underground_lakes"
+        ]
+      }
+    },
+    {
+      "id": "ultra_abyss/underground_lakes/mareanie",
+      "pokemon": "mareanie",
+      "type": "pokemon",
+      "spawnablePositionType": "submerged",
+      "bucket": "uncommon",
+      "level": "33-45",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_abyss/underground_lakes"
+        ]
+      },
+      "presets": [
+        "water"
+      ]
+    },
+    {
+      "id": "ultra_abyss/underground_lakes/skrelp",
+      "pokemon": "skrelp",
+      "type": "pokemon",
+      "spawnablePositionType": "submerged",
+      "bucket": "uncommon",
+      "level": "33-45",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_abyss/underground_lakes"
+        ]
+      },
+      "presets": [
+        "water"
+      ]
+    },
+    {
+      "id": "ultra_abyss/underground_lakes/frillish",
+      "pokemon": "frillish",
+      "type": "pokemon",
+      "spawnablePositionType": "submerged",
+      "bucket": "rare",
+      "level": "36-50",
+      "weight": 3.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_abyss/underground_lakes"
+        ]
+      },
+      "presets": [
+        "water"
+      ]
+    }
+  ]
+}

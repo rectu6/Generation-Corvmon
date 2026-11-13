@@ -1,0 +1,63 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_desert/glass_desert/trapinch",
+      "pokemon": "trapinch",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "22-32",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_desert/glass_desert"
+        ]
+      }
+    },
+    {
+      "id": "ultra_desert/glass_desert/cacnea",
+      "pokemon": "cacnea",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "22-32",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_desert/glass_desert"
+        ]
+      }
+    },
+    {
+      "id": "ultra_desert/glass_desert/helioptile",
+      "pokemon": "helioptile",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "25-37",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_desert/glass_desert"
+        ]
+      }
+    },
+    {
+      "id": "ultra_desert/glass_desert/larvesta",
+      "pokemon": "larvesta",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "28-42",
+      "weight": 3.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_desert/glass_desert"
+        ]
+      }
+    }
+  ]
+}

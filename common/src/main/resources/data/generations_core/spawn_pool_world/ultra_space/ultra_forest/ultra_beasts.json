@@ -1,0 +1,21 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_forest/ultra_beast/kartana",
+      "pokemon": "kartana",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "55-65",
+      "weight": 1.0,
+      "condition": {
+        "biomes": [
+          "#generations_core:ultra_space/ultra_forest"
+        ]
+      }
+    }
+  ]
+}

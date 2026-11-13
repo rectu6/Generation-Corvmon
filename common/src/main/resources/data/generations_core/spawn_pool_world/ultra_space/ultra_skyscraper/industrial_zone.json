@@ -1,0 +1,77 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_skyscraper/industrial_zone/grimer",
+      "pokemon": "grimer",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "30-40",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_skyscraper/industrial_zone"
+        ]
+      }
+    },
+    {
+      "id": "ultra_skyscraper/industrial_zone/koffing",
+      "pokemon": "koffing",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "30-40",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_skyscraper/industrial_zone"
+        ]
+      }
+    },
+    {
+      "id": "ultra_skyscraper/industrial_zone/magnemite",
+      "pokemon": "magnemite",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "30-40",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_skyscraper/industrial_zone"
+        ]
+      }
+    },
+    {
+      "id": "ultra_skyscraper/industrial_zone/varoom",
+      "pokemon": "varoom",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "33-45",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_skyscraper/industrial_zone"
+        ]
+      }
+    },
+    {
+      "id": "ultra_skyscraper/industrial_zone/klink",
+      "pokemon": "klink",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "33-45",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_skyscraper/industrial_zone"
+        ]
+      }
+    }
+  ]
+}

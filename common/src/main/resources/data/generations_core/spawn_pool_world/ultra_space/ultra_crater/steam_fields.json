@@ -1,0 +1,77 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_crater/steam_fields/numel",
+      "pokemon": "numel",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "28-38",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_crater/steam_fields"
+        ]
+      }
+    },
+    {
+      "id": "ultra_crater/steam_fields/slugma",
+      "pokemon": "slugma",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "28-38",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_crater/steam_fields"
+        ]
+      }
+    },
+    {
+      "id": "ultra_crater/steam_fields/torkoal",
+      "pokemon": "torkoal",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "28-38",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_crater/steam_fields"
+        ]
+      }
+    },
+    {
+      "id": "ultra_crater/steam_fields/magby",
+      "pokemon": "magby",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "31-43",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_crater/steam_fields"
+        ]
+      }
+    },
+    {
+      "id": "ultra_crater/steam_fields/turtonator",
+      "pokemon": "turtonator",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "34-48",
+      "weight": 3.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_crater/steam_fields"
+        ]
+      }
+    }
+  ]
+}

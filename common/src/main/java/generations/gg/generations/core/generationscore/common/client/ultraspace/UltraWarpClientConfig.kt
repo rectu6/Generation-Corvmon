@@ -107,6 +107,11 @@ object UltraWarpClientConfig {
         var streakColor: String = "#E8F4FF"
         var endColor: String = "#B8FFE0"
         var fogColor: String = "#08051A"
+        /**
+         * With a shader pack: the journey drawn over the pack's final image, as without a
+         * pack (its fog, night, block light and sky never reach the tunnel).
+         */
+        var drawOverShaders: Boolean = true
 
         fun validate() {
             viewDistance = viewDistance.coerceIn(32f, 512f)

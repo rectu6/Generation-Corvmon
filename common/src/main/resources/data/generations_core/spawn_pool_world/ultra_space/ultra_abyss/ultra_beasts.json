@@ -1,0 +1,35 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_abyss/ultra_beast/nihilego",
+      "pokemon": "nihilego",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "55-65",
+      "weight": 1.0,
+      "condition": {
+        "biomes": [
+          "#generations_core:ultra_space/ultra_abyss"
+        ]
+      }
+    },
+    {
+      "id": "ultra_abyss/ultra_beast/poipole",
+      "pokemon": "poipole",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "55-65",
+      "weight": 0.85,
+      "condition": {
+        "biomes": [
+          "#generations_core:ultra_space/ultra_abyss"
+        ]
+      }
+    }
+  ]
+}

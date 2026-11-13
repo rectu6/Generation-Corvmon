@@ -1,0 +1,24 @@
+{
+  "displayName": "Ultra Space weather: thermal_eruption (ultra_crater)",
+  "enabled": true,
+  "components": [
+    {
+      "type": "weight",
+      "spawnDetailSelector": "v.spawn_detail.id == 'ultra_crater/steam_fields/magby' || v.spawn_detail.id == 'ultra_crater/steam_fields/turtonator'",
+      "spawnablePositionSelector": "v.spawnable_position.world.ultra_weather == 'thermal_eruption'",
+      "weight": "v.weight * 3"
+    },
+    {
+      "type": "weight",
+      "spawnDetailSelector": "v.spawn_detail.id == 'ultra_crater/crater_plains/clefairy'",
+      "spawnablePositionSelector": "v.spawnable_position.world.ultra_weather == 'thermal_eruption'",
+      "weight": "v.weight * 0.4"
+    },
+    {
+      "type": "filter",
+      "spawnDetailSelector": "v.spawn_detail.id == 'ultra_crater/weather/thermal_eruption/heatmor'",
+      "spawnablePositionSelector": "true",
+      "allow": "v.spawnable_position.world.ultra_weather == 'thermal_eruption'"
+    }
+  ]
+}

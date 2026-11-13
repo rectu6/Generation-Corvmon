@@ -1,0 +1,35 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_jungle/weather/extreme_heat/salandit",
+      "pokemon": "salandit",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "31-45",
+      "weight": 4.0,
+      "condition": {
+        "biomes": [
+          "#generations_core:ultra_space/ultra_jungle"
+        ]
+      }
+    },
+    {
+      "id": "ultra_jungle/weather/extreme_heat/volcarona",
+      "pokemon": "volcarona",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "31-45",
+      "weight": 1.5,
+      "condition": {
+        "biomes": [
+          "#generations_core:ultra_space/ultra_jungle"
+        ]
+      }
+    }
+  ]
+}

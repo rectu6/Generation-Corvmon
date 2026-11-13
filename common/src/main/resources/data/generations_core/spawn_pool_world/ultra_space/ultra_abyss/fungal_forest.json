@@ -1,0 +1,77 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_abyss/fungal_forest/foongus",
+      "pokemon": "foongus",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "30-40",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_abyss/fungal_forest"
+        ]
+      }
+    },
+    {
+      "id": "ultra_abyss/fungal_forest/shroomish",
+      "pokemon": "shroomish",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "30-40",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_abyss/fungal_forest"
+        ]
+      }
+    },
+    {
+      "id": "ultra_abyss/fungal_forest/paras",
+      "pokemon": "paras",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "30-40",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_abyss/fungal_forest"
+        ]
+      }
+    },
+    {
+      "id": "ultra_abyss/fungal_forest/morelull",
+      "pokemon": "morelull",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "33-45",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_abyss/fungal_forest"
+        ]
+      }
+    },
+    {
+      "id": "ultra_abyss/fungal_forest/amoonguss",
+      "pokemon": "amoonguss",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "36-50",
+      "weight": 3.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_abyss/fungal_forest"
+        ]
+      }
+    }
+  ]
+}

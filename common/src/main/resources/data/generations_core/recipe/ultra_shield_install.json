@@ -1,0 +1,12 @@
+{
+  "type": "generations_core:ultra_shield_smithing",
+  "template": {
+    "tag": "generations_core:ultra_shields"
+  },
+  "base": {
+    "tag": "generations_core:ultra_suit"
+  },
+  "addition": {
+    "item": "generations_core:z_ingot"
+  }
+}

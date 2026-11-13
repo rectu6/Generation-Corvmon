@@ -1,0 +1,35 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_crater/ultra_beast/celesteela",
+      "pokemon": "celesteela",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "55-65",
+      "weight": 1.0,
+      "condition": {
+        "biomes": [
+          "#generations_core:ultra_space/ultra_crater"
+        ]
+      }
+    },
+    {
+      "id": "ultra_crater/ultra_beast/blacephalon",
+      "pokemon": "blacephalon",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "55-65",
+      "weight": 0.85,
+      "condition": {
+        "biomes": [
+          "#generations_core:ultra_space/ultra_crater"
+        ]
+      }
+    }
+  ]
+}

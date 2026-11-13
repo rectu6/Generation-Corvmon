@@ -41,6 +41,21 @@ class GenerationsCoreJeiCompat : IModPlugin {
         val craftingRecipes: Pair<List<RecipeHolder<RksRecipe>>, List<RecipeHolder<RksRecipe>>> = ingredientManager.rksRecipes()
         registration.addRecipes(RksRecipeCategory.RKS_MACHINE, craftingRecipes.first)
         registration.addRecipes(RksRecipeCategory.RKS_MACHINE, craftingRecipes.second)
+
+        // The Ultra Suit's shields: what they protect against and how they are installed.
+        registration.addItemStackInfo(
+            generations.gg.generations.core.generationscore.common.world.ultraspace.suit.UltraShield.entries.map {
+                net.minecraft.world.item.ItemStack(net.minecraft.core.registries.BuiltInRegistries.ITEM.get(generations.gg.generations.core.generationscore.common.GenerationsCore.id(it.itemName)))
+            },
+            net.minecraft.network.chat.Component.translatable("generations_core.ultra_shield.jei"),
+        )
+    }
+
+    override fun registerVanillaCategoryExtensions(registration: IVanillaCategoryExtensionRegistration) {
+        registration.smithingCategory.addExtension(
+            generations.gg.generations.core.generationscore.common.world.ultraspace.suit.UltraShieldSmithingRecipe::class.java,
+            UltraShieldSmithingExtension,
+        )
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {

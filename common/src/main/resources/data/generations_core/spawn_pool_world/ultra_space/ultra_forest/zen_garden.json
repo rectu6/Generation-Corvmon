@@ -1,0 +1,66 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_forest/zen_garden/lotad",
+      "pokemon": "lotad",
+      "type": "pokemon",
+      "spawnablePositionType": "surface",
+      "bucket": "common",
+      "level": "25-35",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_forest/zen_garden"
+        ]
+      },
+      "presets": [
+        "water"
+      ]
+    },
+    {
+      "id": "ultra_forest/zen_garden/hoppip",
+      "pokemon": "hoppip",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "25-35",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_forest/zen_garden"
+        ]
+      }
+    },
+    {
+      "id": "ultra_forest/zen_garden/spinda",
+      "pokemon": "spinda",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "28-40",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_forest/zen_garden"
+        ]
+      }
+    },
+    {
+      "id": "ultra_forest/zen_garden/ferrothorn",
+      "pokemon": "ferrothorn",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "31-45",
+      "weight": 3.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_forest/zen_garden"
+        ]
+      }
+    }
+  ]
+}

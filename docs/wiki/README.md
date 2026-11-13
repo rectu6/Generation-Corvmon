@@ -11,6 +11,9 @@ rapport au Generations d'origine.
 | [Raids Dynamax](raids-dynamax.md) | Antres naturels, multijoueur, boucliers, ondes de choc, capture, récompenses |
 | [Ultra Warp Ride](ultra-warp-ride.md) | Le voyage vers l'Ultra-Espace depuis l'autel céleste : tunnel, énergie, portails |
 | [Ultra-Mondes](ultra-mondes.md) | Les sept mondes où mènent les portails, l'arrivée, le retour |
+| [Météos et Ultra-Combinaison](meteos-ultra-combinaison.md) | Les quatorze météos, les abris, la respiration, les sept boucliers |
+| [Pokémon des Ultra-Mondes](pokemon-ultra-mondes.md) | Populations, météos et spawns, Ultra-Chimères, rencontre à l'arrivée |
+| [Fissures et retour](fissures-ultra-mondes.md) | Fissures entre les Ultra-Mondes sur Solgaleo/Lunala, retour à l'Overworld par la roue |
 | [Dynamax](dynamax.md) | Dynamaxer ses Pokémon en combat, effet visuel |
 | [Interface de combat](interface-combat.md) | Interface de combat HD façon Épée et Bouclier, météo |
 | [Méga-évolution](mega-evolution.md) | Animation en combat et hors combat |

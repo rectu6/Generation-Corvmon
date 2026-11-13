@@ -43,4 +43,22 @@ public abstract class FogRendererMixin {
         RenderSystem.setShaderFogEnd(UltraWarpRideClient.fogEnd());
         RenderSystem.setShaderFogShape(FogShape.SPHERE);
     }
+
+    /** The Ultra weathers' fog colour (phase 4.4), outside the ride, the water and the blindness. */
+    @Inject(method = "setupColor", at = @At("RETURN"))
+    private static void generations$ultraWeatherColour(Camera camera, float partialTick, ClientLevel level, int renderDistance, float darkenWorldAmount, CallbackInfo ci) {
+        float blend = generations.gg.generations.core.generationscore.common.client.ultraspace.weather.UltraWeatherClient.fogColourBlend(camera, partialTick);
+        if (blend <= 0.0F) return;
+        int colour = generations.gg.generations.core.generationscore.common.client.ultraspace.weather.UltraWeatherClient.fogColour();
+        fogRed = net.minecraft.util.Mth.lerp(blend, fogRed, ((colour >> 16) & 0xFF) / 255.0F);
+        fogGreen = net.minecraft.util.Mth.lerp(blend, fogGreen, ((colour >> 8) & 0xFF) / 255.0F);
+        fogBlue = net.minecraft.util.Mth.lerp(blend, fogBlue, (colour & 0xFF) / 255.0F);
+        RenderSystem.clearColor(fogRed, fogGreen, fogBlue, 0.0F);
+    }
+
+    /** The Ultra weathers' fog distance (phase 4.4): mist, sandstorm and darkness close in, the intense sun clears the air. */
+    @Inject(method = "setupFog", at = @At("RETURN"))
+    private static void generations$ultraWeatherFog(Camera camera, FogRenderer.FogMode mode, float renderDistance, boolean thickFog, float partialTick, CallbackInfo ci) {
+        generations.gg.generations.core.generationscore.common.client.ultraspace.weather.UltraWeatherClient.adjustFog(camera, partialTick);
+    }
 }

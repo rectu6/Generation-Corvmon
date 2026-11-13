@@ -48,10 +48,16 @@ class UltraWarpTravellers : SavedData() {
         }
     }
 
+    /** A passage through a rift not finished yet (phase 6): the world it leads to, near this x/z. */
+    class PendingRift(val world: String, val x: Int, val z: Int)
+
     class Traveller {
         var home: Place? = null
         var pending: UltraWarpOutcome? = null
         var stay: UltraWarpOutcome? = null
+        /** Phase 6: a passage through a rift, a return, cut by a disconnection or a stop. */
+        var pendingRift: PendingRift? = null
+        var pendingReturn: Boolean = false
     }
 
     private val travellers = HashMap<UUID, Traveller>()
@@ -64,6 +70,8 @@ class UltraWarpTravellers : SavedData() {
                     traveller.home?.let { put("home", it.save()) }
                     traveller.pending?.let { put("pending", it.save()) }
                     traveller.stay?.let { put("stay", it.save()) }
+                    traveller.pendingRift?.let { put("pendingRift", CompoundTag().apply { putString("world", it.world); putInt("x", it.x); putInt("z", it.z) }) }
+                    if (traveller.pendingReturn) putBoolean("pendingReturn", true)
                 })
             }
         })
@@ -84,6 +92,8 @@ class UltraWarpTravellers : SavedData() {
                         if (compound.contains("home")) home = Place.load(compound.getCompound("home"))
                         if (compound.contains("pending")) pending = UltraWarpOutcome.load(compound.getCompound("pending"))
                         if (compound.contains("stay")) stay = UltraWarpOutcome.load(compound.getCompound("stay"))
+                        if (compound.contains("pendingRift")) compound.getCompound("pendingRift").let { pendingRift = PendingRift(it.getString("world"), it.getInt("x"), it.getInt("z")) }
+                        pendingReturn = compound.getBoolean("pendingReturn")
                     }
                 }
             }

@@ -1,0 +1,24 @@
+{
+  "displayName": "Ultra Space weather: extreme_heat (ultra_jungle)",
+  "enabled": true,
+  "components": [
+    {
+      "type": "weight",
+      "spawnDetailSelector": "v.spawn_detail.id == 'ultra_jungle/giant_jungle/caterpie' || v.spawn_detail.id == 'ultra_jungle/giant_jungle/metapod' || v.spawn_detail.id == 'ultra_jungle/giant_jungle/scyther' || v.spawn_detail.id == 'ultra_jungle/giant_jungle/heracross' || v.spawn_detail.id == 'ultra_jungle/giant_jungle/pinsir' || v.spawn_detail.id == 'ultra_jungle/glowing_jungle/volbeat' || v.spawn_detail.id == 'ultra_jungle/glowing_jungle/illumise' || v.spawn_detail.id == 'ultra_jungle/glowing_jungle/joltik' || v.spawn_detail.id == 'ultra_jungle/overgrown_jungle/grubbin'",
+      "spawnablePositionSelector": "v.spawnable_position.world.ultra_weather == 'extreme_heat'",
+      "weight": "v.weight * 3"
+    },
+    {
+      "type": "weight",
+      "spawnDetailSelector": "v.spawn_detail.id == 'ultra_jungle/swamp_jungle/lotad' || v.spawn_detail.id == 'ultra_jungle/swamp_jungle/wooper' || v.spawn_detail.id == 'ultra_jungle/swamp_jungle/surskit'",
+      "spawnablePositionSelector": "v.spawnable_position.world.ultra_weather == 'extreme_heat'",
+      "weight": "v.weight * 0.4"
+    },
+    {
+      "type": "filter",
+      "spawnDetailSelector": "v.spawn_detail.id == 'ultra_jungle/weather/extreme_heat/salandit' || v.spawn_detail.id == 'ultra_jungle/weather/extreme_heat/volcarona'",
+      "spawnablePositionSelector": "true",
+      "allow": "v.spawnable_position.world.ultra_weather == 'extreme_heat'"
+    }
+  ]
+}

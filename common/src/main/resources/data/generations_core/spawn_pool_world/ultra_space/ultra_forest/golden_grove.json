@@ -1,0 +1,49 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_forest/golden_grove/cottonee",
+      "pokemon": "cottonee",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "25-35",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_forest/golden_grove"
+        ]
+      }
+    },
+    {
+      "id": "ultra_forest/golden_grove/petilil",
+      "pokemon": "petilil",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "25-35",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_forest/golden_grove"
+        ]
+      }
+    },
+    {
+      "id": "ultra_forest/golden_grove/oricorio",
+      "pokemon": "oricorio",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "28-40",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_forest/golden_grove"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_crater/giant_craters/aron",
+      "pokemon": "aron",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "28-38",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_crater/giant_craters"
+        ]
+      }
+    },
+    {
+      "id": "ultra_crater/giant_craters/baltoy",
+      "pokemon": "baltoy",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "28-38",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_crater/giant_craters"
+        ]
+      }
+    },
+    {
+      "id": "ultra_crater/giant_craters/lairon",
+      "pokemon": "lairon",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "31-43",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_crater/giant_craters"
+        ]
+      }
+    },
+    {
+      "id": "ultra_crater/giant_craters/bronzor",
+      "pokemon": "bronzor",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "31-43",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_crater/giant_craters"
+        ]
+      }
+    },
+    {
+      "id": "ultra_crater/giant_craters/minior",
+      "pokemon": "minior",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "34-48",
+      "weight": 3.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_crater/giant_craters"
+        ]
+      }
+    }
+  ]
+}

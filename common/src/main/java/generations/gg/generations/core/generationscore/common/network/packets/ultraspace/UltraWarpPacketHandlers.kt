@@ -64,4 +64,32 @@ object UltraWarpPacketHandlers {
             server.execute { UltraWarpRide.onAction(player, packet) }
         }
     }
+
+    /** The weather of the player's Ultra world (phase 4.4). */
+    object Weather : ClientNetworkPacketHandler<S2CUltraWeatherPacket> {
+        override fun handle(packet: S2CUltraWeatherPacket, client: Minecraft) {
+            client.execute { generations.gg.generations.core.generationscore.common.client.ultraspace.weather.UltraWeatherClient.onWeather(packet) }
+        }
+    }
+
+    /** The player's exposure to their world's dangerous weather (the indicator). */
+    object Hazard : ClientNetworkPacketHandler<S2CUltraHazardPacket> {
+        override fun handle(packet: S2CUltraHazardPacket, client: Minecraft) {
+            client.execute { generations.gg.generations.core.generationscore.common.client.ultraspace.weather.UltraWeatherClient.onHazard(packet) }
+        }
+    }
+
+    /** The rifts of the player's world (phase 6). */
+    object Rift : ClientNetworkPacketHandler<S2CUltraRiftPacket> {
+        override fun handle(packet: S2CUltraRiftPacket, client: Minecraft) {
+            client.execute { generations.gg.generations.core.generationscore.common.client.ultraspace.rift.UltraRiftClient.onPacket(packet) }
+        }
+    }
+
+    /** "Back to the Overworld" on a Solgaleo's or Lunala's wheel (phase 6). */
+    object Return : ServerNetworkPacketHandler<C2SUltraReturnPacket> {
+        override fun handle(packet: C2SUltraReturnPacket, server: MinecraftServer, player: ServerPlayer) {
+            server.execute { generations.gg.generations.core.generationscore.common.world.ultraspace.rift.UltraReturn.request(player, packet.entity) }
+        }
+    }
 }

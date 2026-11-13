@@ -1,0 +1,18 @@
+{
+  "displayName": "Ultra Space weather: electric_storm (ultra_central)",
+  "enabled": true,
+  "components": [
+    {
+      "type": "weight",
+      "spawnDetailSelector": "v.spawn_detail.id == 'ultra_central/cable_forest/vikavolt' || v.spawn_detail.id == 'ultra_central/electric_mountains/elekid' || v.spawn_detail.id == 'ultra_central/electric_mountains/luxio'",
+      "spawnablePositionSelector": "v.spawnable_position.world.ultra_weather == 'electric_storm'",
+      "weight": "v.weight * 3"
+    },
+    {
+      "type": "filter",
+      "spawnDetailSelector": "v.spawn_detail.id == 'ultra_central/weather/electric_storm/rotom'",
+      "spawnablePositionSelector": "true",
+      "allow": "v.spawnable_position.world.ultra_weather == 'electric_storm'"
+    }
+  ]
+}

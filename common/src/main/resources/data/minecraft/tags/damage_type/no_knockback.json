@@ -1,6 +1,14 @@
 {
   "replace": false,
   "values": [
-    "generations_core:ultra_warp"
+    "generations_core:ultra_warp",
+    "generations_core:ultra_suffocation",
+    "generations_core:ultra_extreme_heat",
+    "generations_core:ultra_sandstorm",
+    "generations_core:ultra_electric_storm",
+    "generations_core:ultra_thermal_eruption",
+    "generations_core:ultra_cutting_winds",
+    "generations_core:ultra_toxic_mist",
+    "generations_core:ultra_acid_rain"
   ]
 }

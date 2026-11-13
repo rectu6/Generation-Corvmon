@@ -28,5 +28,7 @@ public class GuiMixin {
     @Inject(method = "render", at = @At("HEAD"))
     public void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
         Overlays.render(guiGraphics, deltaTracker);
+        // The Ultra weathers' veil and the indicator of their dangers (phase 4.4).
+        generations.gg.generations.core.generationscore.common.client.ultraspace.weather.UltraWeatherClient.renderOverlay(guiGraphics, deltaTracker);
     }
 }

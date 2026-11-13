@@ -3,6 +3,7 @@ package generations.gg.generations.core.generationscore.common.client.model
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies
 import com.cobblemon.mod.common.client.render.VaryingRenderableResolver
 import com.cobblemon.mod.common.client.render.models.blockbench.LocatorAccess.Companion.PREFIX
+import generations.gg.generations.core.generationscore.common.client.ultraspace.rift.UltraRiftClientConfig
 import com.cobblemon.mod.common.client.render.models.blockbench.pose.Bone
 import com.cobblemon.mod.common.client.render.models.blockbench.repository.RenderContext
 import com.cobblemon.mod.common.client.render.models.blockbench.repository.VaryingModelRepository
@@ -38,12 +39,19 @@ private val RenderContext.form: FormData?
 private val RenderContext.species: Species?
     get() = this.request(RenderContext.SPECIES)?.let { PokemonSpecies.getByIdentifier(it) }
 
-class RareCandyBone /*Remove when cobblemon doesn't have parts of code that assumes Bone will always be a ModelPart */(
-    location: ResourceLocation): ModelPart(mutableListOf(), MAP), Supplier<Bone>, Bone {
+class RareCandyBone /*Remove when cobblemon doesn't have parts of code that assumes Bone will always be a ModelPart */ private constructor(
+    location: ResourceLocation, private val parts: Map<String, ModelPart>): ModelPart(mutableListOf(), parts), Supplier<Bone>, Bone {
+    constructor(location: ResourceLocation) : this(location, partsFor(location))
+
     private val objectSupplier: () -> CompiledModel? = { ModelRegistry[location] }
+    /** Phase 6: a model with its own seat height (ultra_rifts_client.json "seats": Solgaleo, Lunala). */
+    private val seatKey: String? = seatKey(location)
 
     override fun getChildren(): Map<String, Bone> {
-        return MAP as Map<String, Bone>
+        seatKey?.let { key ->
+            UltraRiftClientConfig.settings.seats[key]?.let { height -> parts[PREFIX + "seat_1"]?.y = -height * 16f }
+        }
+        return parts as Map<String, Bone>
     }
 
     override fun render(
@@ -146,6 +154,27 @@ class RareCandyBone /*Remove when cobblemon doesn't have parts of code that assu
                 it.setPos(0f, -35f, 0f)
             }
         )
+
+        /** The model's file name (solgaleo.pk -> solgaleo) when the client config gives it its own seat. */
+        private fun seatKey(location: ResourceLocation): String? {
+            val name = location.path.substringAfterLast('/').substringBefore('.')
+            return UltraRiftClientConfig.settings.seats.keys.firstOrNull { name == it || name.startsWith("${it}_") || name.startsWith("$it-") }
+        }
+
+        /**
+         * Its own seat for such a model, at the config's height from the start (Cobblemon
+         * reads the locators when the model is built, and resets parts to their initial
+         * pose), else the common one.
+         */
+        private fun partsFor(location: ResourceLocation): Map<String, ModelPart> {
+            val key = seatKey(location) ?: return MAP
+            val y = -(UltraRiftClientConfig.settings.seats[key] ?: (35f / 16f)) * 16f
+            return mapOf(PREFIX + "seat_1" to ModelPart(mutableListOf(), mapOf()).also {
+                it.setPos(0f, y, 0f)
+                it.setInitialPose(net.minecraft.client.model.geom.PartPose.offset(0f, y, 0f))
+            })
+        }
+
         private val ROTATION_CORRECTION = Axis.YP.rotationDegrees(180f)
         private val SCALE = Vector3f()
         private val TOP = Vector3f()

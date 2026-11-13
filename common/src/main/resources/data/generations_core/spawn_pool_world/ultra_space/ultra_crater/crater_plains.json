@@ -1,0 +1,77 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_crater/crater_plains/clefairy",
+      "pokemon": "clefairy",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "28-38",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_crater/crater_plains"
+        ]
+      }
+    },
+    {
+      "id": "ultra_crater/crater_plains/lunatone",
+      "pokemon": "lunatone",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "28-38",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_crater/crater_plains"
+        ]
+      }
+    },
+    {
+      "id": "ultra_crater/crater_plains/solrock",
+      "pokemon": "solrock",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "28-38",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_crater/crater_plains"
+        ]
+      }
+    },
+    {
+      "id": "ultra_crater/crater_plains/elgyem",
+      "pokemon": "elgyem",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "31-43",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_crater/crater_plains"
+        ]
+      }
+    },
+    {
+      "id": "ultra_crater/crater_plains/beldum",
+      "pokemon": "beldum",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "34-48",
+      "weight": 3.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_crater/crater_plains"
+        ]
+      }
+    }
+  ]
+}

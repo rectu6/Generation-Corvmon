@@ -521,6 +521,15 @@ object GenerationsItems: ItemPlatformRegistry() {
     * Vanilla Like Materials
     */
     val Z_INGOT = register("z_ingot", ::Item, PLAYER_ITEMS)
+
+    // The Ultra Suit's environmental shields (phase 4.5), one per Ultra world.
+    val THERMAL_SHIELD = registerUltraShield(generations.gg.generations.core.generationscore.common.world.ultraspace.suit.UltraShield.THERMAL)
+    val SAND_SHIELD = registerUltraShield(generations.gg.generations.core.generationscore.common.world.ultraspace.suit.UltraShield.SAND)
+    val INSULATING_SHIELD = registerUltraShield(generations.gg.generations.core.generationscore.common.world.ultraspace.suit.UltraShield.INSULATING)
+    val VOLCANIC_SHIELD = registerUltraShield(generations.gg.generations.core.generationscore.common.world.ultraspace.suit.UltraShield.VOLCANIC)
+    val AERODYNAMIC_SHIELD = registerUltraShield(generations.gg.generations.core.generationscore.common.world.ultraspace.suit.UltraShield.AERODYNAMIC)
+    val FILTRATION_SHIELD = registerUltraShield(generations.gg.generations.core.generationscore.common.world.ultraspace.suit.UltraShield.FILTRATION)
+    val ANTICORROSION_SHIELD = registerUltraShield(generations.gg.generations.core.generationscore.common.world.ultraspace.suit.UltraShield.ANTICORROSION)
     val ULTRITE_INGOT = register("ultrite_ingot", ::Item, PLAYER_ITEMS)
     val ULTRITE_REMNANT = register("ultrite_remnant", ::Item, PLAYER_ITEMS)
     val DYNITE_ORE = register("dynite_ore", ::Item, PLAYER_ITEMS)
@@ -1367,6 +1376,12 @@ object GenerationsItems: ItemPlatformRegistry() {
         name,
         { function.invoke(it).also { CobblemonHeldItemManager.registerRemap(it, name.replace("_", "")) } },
         HELD_ITEMS
+    )
+
+    private fun registerUltraShield(shield: generations.gg.generations.core.generationscore.common.world.ultraspace.suit.UltraShield): Holder<Item> = register(
+        shield.itemName,
+        { generations.gg.generations.core.generationscore.common.world.ultraspace.suit.UltraShieldItem(shield, it.stacksTo(16).rarity(net.minecraft.world.item.Rarity.UNCOMMON)) },
+        PLAYER_ITEMS,
     )
 
     fun of(): Item.Properties = Item.Properties()

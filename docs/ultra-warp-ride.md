@@ -932,9 +932,10 @@ région de génération) :
 plus bas (dans l'autre ordre, la première prenait tout et les suivantes n'apparaissaient
 jamais) ; des bandes (min, max) servent aux sentiers.
 
-**Anciens biomes** de ces trois mondes : restent enregistrés (sans features, non
-générés, hors tags) pour les chunks déjà sauvegardés ; leur nom s'affiche avec
-« (ancien) ».
+**Anciens biomes** de ces trois mondes, et biome unique de chaque monde de la phase 4.1 :
+supprimés le 2026-11-13 (aucun chunk sauvegardé ne les utilisait). Seuls les 35 biomes
+générés existent ; `tools/ultra_worlds.py` retire des fichiers de langue les noms des
+biomes Ultra qui n'existent plus.
 
 ### Arrivées
 

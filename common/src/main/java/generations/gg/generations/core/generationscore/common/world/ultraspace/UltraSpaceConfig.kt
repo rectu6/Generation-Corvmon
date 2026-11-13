@@ -539,10 +539,7 @@ object UltraSpaceConfig {
      * ordinary Pokémon's 90 % shiny says nothing of an Ultra Beast's.
      */
     class Encounters {
-        var ultraBeast: MutableList<ChanceTier> = mutableListOf(
-            ChanceTier(0f, mutableListOf(0.05f, 0.1f, 0.2f, 0.35f)),
-            ChanceTier(4000f, mutableListOf(0.1f, 0.2f, 0.35f, 0.6f)),
-        )
+        var ultraBeast: MutableList<ChanceTier> = defaultUltraBeast()
         var ordinaryShiny: MutableList<ChanceTier> = mutableListOf(
             ChanceTier(0f, mutableListOf(1f / 4096, 1f / 2048, 1f / 512, 1f / 64)),
             ChanceTier(2500f, mutableListOf(1f / 1024, 1f / 256, 1f / 32, 0.1f)),
@@ -568,6 +565,17 @@ object UltraSpaceConfig {
     }
 
     class ChanceTier(var fromLightYears: Float = 0f, var byLevel: MutableList<Float> = mutableListOf(0f, 0f, 0f, 0f))
+
+    /**
+     * Phase 5: the chance that the arrival's Pokémon is an Ultra Beast grows with the
+     * light-years and the portal's level, up to 25 % from 8 000 ly through an
+     * exceptional portal (version 4; the phase 3 values went up to 60 %).
+     */
+    fun defaultUltraBeast(): MutableList<ChanceTier> = mutableListOf(
+        ChanceTier(0f, mutableListOf(0.01f, 0.02f, 0.04f, 0.08f)),
+        ChanceTier(4000f, mutableListOf(0.02f, 0.04f, 0.08f, 0.15f)),
+        ChanceTier(8000f, mutableListOf(0.03f, 0.06f, 0.12f, 0.25f)),
+    )
 
     class Defeat {
         /** Seconds of the defeat (the player has lost control) before the end. */
@@ -611,7 +619,7 @@ object UltraSpaceConfig {
     private val compact: Gson = GsonBuilder().disableHtmlEscaping().create()
     private val file get() = Paths.get("config", "generations", "core", "ultra_space", "ultra_warp_ride.json")
 
-    private const val VERSION = 3
+    private const val VERSION = 4
 
     var ride = Ride().also { it.version = VERSION }; private set
 
@@ -643,6 +651,12 @@ object UltraSpaceConfig {
             if (ride.version < 3) {
                 ride.riders.sun = RiderSize(ride.riders.sun.hitRadius, 1.77f, 2.74f, 5.36f, 0f)
                 ride.riders.moon = RiderSize(ride.riders.moon.hitRadius, 6.63f, 3.79f, 0.72f, 1f)
+            }
+            // Version 4 (phase 5): the Ultra Beast chance of the arrival's encounter, lower; a
+            // table left at the phase 3 values takes the new one.
+            val former = listOf(0f to listOf(0.05f, 0.1f, 0.2f, 0.35f), 4000f to listOf(0.1f, 0.2f, 0.35f, 0.6f))
+            if (ride.version < 4 && ride.encounters.ultraBeast.map { it.fromLightYears to it.byLevel.toList() } == former) {
+                ride.encounters.ultraBeast = defaultUltraBeast()
             }
             ride.version = VERSION
             GenerationsCore.LOGGER.info("Ultra Warp Ride: {} brought up to date (version {})", file, VERSION)

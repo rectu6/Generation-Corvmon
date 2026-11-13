@@ -1,0 +1,63 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_central/cable_forest/joltik",
+      "pokemon": "joltik",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "25-35",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_central/cable_forest"
+        ]
+      }
+    },
+    {
+      "id": "ultra_central/cable_forest/pichu",
+      "pokemon": "pichu",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "25-35",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_central/cable_forest"
+        ]
+      }
+    },
+    {
+      "id": "ultra_central/cable_forest/charjabug",
+      "pokemon": "charjabug",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "28-40",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_central/cable_forest"
+        ]
+      }
+    },
+    {
+      "id": "ultra_central/cable_forest/vikavolt",
+      "pokemon": "vikavolt",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "31-45",
+      "weight": 3.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_central/cable_forest"
+        ]
+      }
+    }
+  ]
+}

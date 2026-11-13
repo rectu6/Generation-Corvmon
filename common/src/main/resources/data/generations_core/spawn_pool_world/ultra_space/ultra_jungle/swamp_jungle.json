@@ -1,0 +1,97 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_jungle/swamp_jungle/lotad",
+      "pokemon": "lotad",
+      "type": "pokemon",
+      "spawnablePositionType": "surface",
+      "bucket": "common",
+      "level": "20-30",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_jungle/swamp_jungle"
+        ]
+      },
+      "presets": [
+        "water"
+      ]
+    },
+    {
+      "id": "ultra_jungle/swamp_jungle/wooper",
+      "pokemon": "wooper",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "20-30",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_jungle/swamp_jungle"
+        ]
+      }
+    },
+    {
+      "id": "ultra_jungle/swamp_jungle/croagunk",
+      "pokemon": "croagunk",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "20-30",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_jungle/swamp_jungle"
+        ]
+      }
+    },
+    {
+      "id": "ultra_jungle/swamp_jungle/surskit",
+      "pokemon": "surskit",
+      "type": "pokemon",
+      "spawnablePositionType": "surface",
+      "bucket": "uncommon",
+      "level": "23-35",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_jungle/swamp_jungle"
+        ]
+      },
+      "presets": [
+        "water"
+      ]
+    },
+    {
+      "id": "ultra_jungle/swamp_jungle/poliwhirl",
+      "pokemon": "poliwhirl",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "23-35",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_jungle/swamp_jungle"
+        ]
+      }
+    },
+    {
+      "id": "ultra_jungle/swamp_jungle/goomy",
+      "pokemon": "goomy",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "26-40",
+      "weight": 3.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_jungle/swamp_jungle"
+        ]
+      }
+    }
+  ]
+}

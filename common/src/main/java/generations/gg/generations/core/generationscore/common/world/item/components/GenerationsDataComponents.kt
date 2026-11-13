@@ -64,6 +64,9 @@ object GenerationsDataComponents: PlatformRegistry<DataComponentType<*>>(Registr
     val FISHED_SHARDS = register("fished_shards", RubyRodItem.FishedShards.CODEC)
     val INVENTORY_SIZE = register("inventory_size", InventorySize.CODEC, InventorySize.STREAM_CODEC)
 
+    /** The environmental shields installed on a piece of the Ultra Suit (phase 4.5). */
+    val ULTRA_SHIELDS = register("ultra_shields", generations.gg.generations.core.generationscore.common.world.ultraspace.suit.UltraShield.LIST_CODEC, generations.gg.generations.core.generationscore.common.world.ultraspace.suit.UltraShield.LIST_STREAM_CODEC)
+
     private fun <T> register(
         name: String,
         codec: Codec<T>,

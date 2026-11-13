@@ -1,0 +1,12 @@
+{
+  "displayName": "Ultra Space weather: dimensional_mist (ultra_forest)",
+  "enabled": true,
+  "components": [
+    {
+      "type": "weight",
+      "spawnDetailSelector": "v.spawn_detail.id == 'ultra_forest/blade_valley/honedge' || v.spawn_detail.id == 'ultra_forest/misty_forest/phantump' || v.spawn_detail.id == 'ultra_forest/misty_forest/natu' || v.spawn_detail.id == 'ultra_forest/misty_forest/ralts' || v.spawn_detail.id == 'ultra_forest/misty_forest/mimikyu'",
+      "spawnablePositionSelector": "v.spawnable_position.world.ultra_weather == 'dimensional_mist'",
+      "weight": "v.weight * 3"
+    }
+  ]
+}

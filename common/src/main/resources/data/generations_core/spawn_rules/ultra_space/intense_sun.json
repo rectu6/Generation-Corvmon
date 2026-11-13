@@ -1,0 +1,12 @@
+{
+  "displayName": "Ultra Space weather: intense_sun (ultra_desert)",
+  "enabled": true,
+  "components": [
+    {
+      "type": "weight",
+      "spawnDetailSelector": "v.spawn_detail.id == 'ultra_desert/glass_desert/helioptile' || v.spawn_detail.id == 'ultra_desert/oasis/cherubi' || v.spawn_detail.id == 'ultra_desert/oasis/maractus'",
+      "spawnablePositionSelector": "v.spawnable_position.world.ultra_weather == 'intense_sun'",
+      "weight": "v.weight * 3"
+    }
+  ]
+}

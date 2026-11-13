@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "Z": {
+      "item": "generations_core:z_ingot"
+    },
+    "M": {
+      "item": "generations_core:ultra_dark_log"
+    },
+    "S": {
+      "item": "cobblemon:shiny_stone"
+    }
+  },
+  "pattern": [
+    "ZMZ",
+    "MSM",
+    "ZMZ"
+  ],
+  "result": {
+    "count": 1,
+    "id": "generations_core:aerodynamic_shield"
+  }
+}

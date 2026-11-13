@@ -1,0 +1,63 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_forest/misty_forest/phantump",
+      "pokemon": "phantump",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "25-35",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_forest/misty_forest"
+        ]
+      }
+    },
+    {
+      "id": "ultra_forest/misty_forest/natu",
+      "pokemon": "natu",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "25-35",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_forest/misty_forest"
+        ]
+      }
+    },
+    {
+      "id": "ultra_forest/misty_forest/ralts",
+      "pokemon": "ralts",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "28-40",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_forest/misty_forest"
+        ]
+      }
+    },
+    {
+      "id": "ultra_forest/misty_forest/mimikyu",
+      "pokemon": "mimikyu",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "31-45",
+      "weight": 3.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_forest/misty_forest"
+        ]
+      }
+    }
+  ]
+}

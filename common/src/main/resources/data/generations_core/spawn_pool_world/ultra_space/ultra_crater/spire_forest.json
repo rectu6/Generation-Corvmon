@@ -1,0 +1,49 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_crater/spire_forest/skarmory",
+      "pokemon": "skarmory",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "28-38",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_crater/spire_forest"
+        ]
+      }
+    },
+    {
+      "id": "ultra_crater/spire_forest/corvisquire",
+      "pokemon": "corvisquire",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "31-43",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_crater/spire_forest"
+        ]
+      }
+    },
+    {
+      "id": "ultra_crater/spire_forest/corviknight",
+      "pokemon": "corviknight",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "34-48",
+      "weight": 3.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_crater/spire_forest"
+        ]
+      }
+    }
+  ]
+}

@@ -113,6 +113,19 @@ class GenerationsArmorItem(
         })
     }
 
+    /** The Ultra Suit's pieces tell how they let one breathe in the Ultra worlds, and their shields (phase 4.5). */
+    override fun appendHoverText(
+        stack: ItemStack,
+        context: TooltipContext,
+        lines: MutableList<net.minecraft.network.chat.Component>,
+        flag: net.minecraft.world.item.TooltipFlag,
+    ) {
+        super.appendHoverText(stack, context, lines, flag)
+        if (generations.gg.generations.core.generationscore.common.world.ultraspace.suit.UltraSuit.isPieceItem(this)) {
+            generations.gg.generations.core.generationscore.common.world.ultraspace.suit.UltraSuit.appendPieceTooltip(stack, lines)
+        }
+    }
+
     override fun getDefaultAttributeModifiers(): ItemAttributeModifiers? {
         return attributeModifiers.get();
     }

@@ -12,6 +12,7 @@ import generations.gg.generations.core.generationscore.common.network.packets.ul
 import generations.gg.generations.core.generationscore.common.GenerationsCore
 import generations.gg.generations.core.generationscore.common.world.ultraspace.ride.UltraWarpDifficulty
 import generations.gg.generations.core.generationscore.common.world.ultraspace.worlds.UltraWarpTransfers
+import generations.gg.generations.core.generationscore.common.world.ultraspace.worlds.UltraWarpTravellers
 import generations.gg.generations.core.generationscore.common.world.ultraspace.worlds.UltraWorlds
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
@@ -55,6 +56,14 @@ object UltraWarpRide {
     fun init() {
         // The moves between the worlds (phase 4.1): arrivals through the portals, the return.
         UltraWarpTransfers.init()
+        // Breathing in the Ultra worlds and their weathers (phases 4.4, 4.5).
+        generations.gg.generations.core.generationscore.common.world.ultraspace.suit.UltraBreathing.init()
+        generations.gg.generations.core.generationscore.common.world.ultraspace.weather.UltraWeather.init()
+        // The Pokémon of the Ultra worlds and the arrival's encounter (phase 5).
+        generations.gg.generations.core.generationscore.common.world.ultraspace.spawning.UltraSpawns.init()
+        generations.gg.generations.core.generationscore.common.world.ultraspace.encounter.UltraEncounters.init()
+        // The rifts between the Ultra worlds (phase 6).
+        generations.gg.generations.core.generationscore.common.world.ultraspace.rift.UltraRifts.init()
         PlatformEvents.SERVER_STARTED.subscribe(Priority.NORMAL) {
             server = it.server
             UltraSpaceConfig.load()
@@ -141,6 +150,12 @@ object UltraWarpRide {
         if (variant != seen) return send(player, pos, variant, Result.VARIANT_CHANGED)
         if (!hasRequired(player, variant)) return send(player, pos, variant, Result.MISSING_POKEMON)
         val session = UltraWarpSessions.create(player, variant, pos, UltraWarpSession.Source.ALTAR) ?: return send(player, pos, variant, Result.NO_SLOT)
+        // The point of return (phase 6): where the real journey starts, from a normal world
+        // only; neither a rift nor a move between Ultra worlds ever replaces it.
+        if (!UltraWorlds.isUltra(player.level().dimension())) {
+            val home = UltraWarpTravellers.Place.of(player)
+            UltraWarpTravellers.edit(player.server, player.uuid) { it.home = home }
+        }
         beginRide(player, session, null)
     }
 

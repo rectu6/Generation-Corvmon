@@ -1,0 +1,12 @@
+{
+  "displayName": "Ultra Space weather: ash_rain (ultra_crater)",
+  "enabled": true,
+  "components": [
+    {
+      "type": "weight",
+      "spawnDetailSelector": "v.spawn_detail.id == 'ultra_crater/crater_plains/lunatone' || v.spawn_detail.id == 'ultra_crater/crater_plains/solrock' || v.spawn_detail.id == 'ultra_crater/giant_craters/aron' || v.spawn_detail.id == 'ultra_crater/giant_craters/lairon' || v.spawn_detail.id == 'ultra_crater/giant_craters/minior' || v.spawn_detail.id == 'ultra_crater/steam_fields/numel' || v.spawn_detail.id == 'ultra_crater/steam_fields/slugma' || v.spawn_detail.id == 'ultra_crater/steam_fields/torkoal' || v.spawn_detail.id == 'ultra_crater/steam_fields/magby' || v.spawn_detail.id == 'ultra_crater/steam_fields/turtonator' || v.spawn_detail.id == 'ultra_crater/yellow_plateaus/rolycoly' || v.spawn_detail.id == 'ultra_crater/yellow_plateaus/geodude' || v.spawn_detail.id == 'ultra_crater/yellow_plateaus/carkol' || v.spawn_detail.id == 'ultra_crater/yellow_plateaus/larvitar'",
+      "spawnablePositionSelector": "v.spawnable_position.world.ultra_weather == 'ash_rain'",
+      "weight": "v.weight * 3"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_desert/ivory_canyon/sandshrew",
+      "pokemon": "sandshrew",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "22-32",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_desert/ivory_canyon"
+        ]
+      }
+    },
+    {
+      "id": "ultra_desert/ivory_canyon/rhyhorn",
+      "pokemon": "rhyhorn",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "22-32",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_desert/ivory_canyon"
+        ]
+      }
+    },
+    {
+      "id": "ultra_desert/ivory_canyon/hippopotas",
+      "pokemon": "hippopotas",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "25-37",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_desert/ivory_canyon"
+        ]
+      }
+    },
+    {
+      "id": "ultra_desert/ivory_canyon/gible",
+      "pokemon": "gible",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "28-42",
+      "weight": 3.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_desert/ivory_canyon"
+        ]
+      }
+    }
+  ]
+}

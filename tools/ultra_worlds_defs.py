@@ -311,13 +311,6 @@ def crater(u, g):
                 {'local_modifications': [f_craters], 'vegetal_decoration': [f_spires, f_arches, f_vents_few, f_boulders, f_grass]},
                 relief=[('noise', 5, 1.0)], flatten=(6, 0.3), tags=['arid']),
     ]
-    grey = ('#A8B4C4', '#C8D0DC', '#8090A8', '#202838', None, None)
-    w.legacy = [
-        ('ash_mountains', 'Montagnes de cendres', 'Ash mountains', ('#8A8A90', '#6A6A70', '#606870', '#202020', None, None)),
-        ('volcanic_fields', 'Champs volcaniques', 'Volcanic fields', ('#5A3A30', '#7A4030', '#A04020', '#301008', None, None)),
-        ('meteor_valleys', 'Vallées météoritiques', 'Meteor valleys', grey),
-        ('lunar_plains', 'Plaines lunaires', 'Lunar plains', grey),
-    ]
     return w
 
 
@@ -406,11 +399,6 @@ def forest(u, g):
                                                                 patches=[(0.5, 'moss_block', 'minecraft:surface'), (0.25, 'podzol', 'minecraft:surface')]),
                 {'lakes': [f_lake], 'fluid_springs': [f_springs], 'vegetal_decoration': [f_mossy_spires, f_emerald, f_bamboo_light, f_large_ferns, f_ferns, f_moss]},
                 relief=[('noise', 6, 1.0)], particle=('spore_blossom_air', 0.008), tags=['forested']),
-    ]
-    old_sky, old_fog = '#D8C8FF', '#EDE6FF'
-    w.legacy = [
-        ('celestial_bamboo', 'Bambouseraie céleste', 'Celestial bamboo grove', (old_sky, old_fog, '#5FB8E8', '#302050', '#8AD27A', '#7FCF6A')),
-        ('cherry_forest', 'Forêt de cerisiers', 'Cherry forest', (old_sky, old_fog, '#8FA8FF', '#302050', '#A8D88A', '#E8A0C8')),
     ]
     return w
 
@@ -624,13 +612,5 @@ def skyscraper(u, g):
                 col(), surface,
                 {'surface_structures': [f_downtown], 'vegetal_decoration': [f_vines, f_grass, f_moss]},
                 flatten=(8, 0.9), tags=['urban', 'has_ruins']),
-    ]
-    dark = ('#200608', '#501018', '#602028', '#200408', '#6A6A40', '#5A6A30')
-    w.legacy = [
-        ('toxic_marsh', 'Marais toxiques', 'Toxic marsh', ('#1A2008', '#2A3020', '#3A4A1A', '#101808', '#4A5A20', '#3A4A18')),
-        ('dead_industry', 'Zones industrielles mortes', 'Dead industrial zones', dark),
-        ('rubble_fields', 'Champs de gravats', 'Rubble fields', dark),
-        ('urban_wasteland', 'Friches urbaines', 'Urban wasteland', dark),
-        ('devastated_lands', 'Terres dévastées', 'Devastated lands', dark),
     ]
     return w

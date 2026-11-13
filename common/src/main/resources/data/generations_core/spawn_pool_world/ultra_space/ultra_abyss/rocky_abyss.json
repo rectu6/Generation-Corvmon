@@ -1,0 +1,77 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_abyss/rocky_abyss/sableye",
+      "pokemon": "sableye",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "30-40",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_abyss/rocky_abyss"
+        ]
+      }
+    },
+    {
+      "id": "ultra_abyss/rocky_abyss/nosepass",
+      "pokemon": "nosepass",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "30-40",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_abyss/rocky_abyss"
+        ]
+      }
+    },
+    {
+      "id": "ultra_abyss/rocky_abyss/dwebble",
+      "pokemon": "dwebble",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "30-40",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_abyss/rocky_abyss"
+        ]
+      }
+    },
+    {
+      "id": "ultra_abyss/rocky_abyss/onix",
+      "pokemon": "onix",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "33-45",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_abyss/rocky_abyss"
+        ]
+      }
+    },
+    {
+      "id": "ultra_abyss/rocky_abyss/larvitar",
+      "pokemon": "larvitar",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "36-50",
+      "weight": 3.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_abyss/rocky_abyss"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_skyscraper/ultra_beast/guzzlord",
+      "pokemon": "guzzlord",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "55-65",
+      "weight": 1.0,
+      "condition": {
+        "biomes": [
+          "#generations_core:ultra_space/ultra_skyscraper"
+        ]
+      }
+    },
+    {
+      "id": "ultra_skyscraper/ultra_beast/stakataka",
+      "pokemon": "stakataka",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "ultra-rare",
+      "level": "55-65",
+      "weight": 0.85,
+      "condition": {
+        "biomes": [
+          "#generations_core:ultra_space/ultra_skyscraper"
+        ]
+      }
+    }
+  ]
+}

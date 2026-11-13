@@ -1,0 +1,24 @@
+{
+  "displayName": "Ultra Space weather: cutting_winds (ultra_forest)",
+  "enabled": true,
+  "components": [
+    {
+      "type": "weight",
+      "spawnDetailSelector": "v.spawn_detail.id == 'ultra_forest/blade_valley/pawniard' || v.spawn_detail.id == 'ultra_forest/blade_valley/honedge'",
+      "spawnablePositionSelector": "v.spawnable_position.world.ultra_weather == 'cutting_winds'",
+      "weight": "v.weight * 3"
+    },
+    {
+      "type": "weight",
+      "spawnDetailSelector": "v.spawn_detail.id == 'ultra_forest/golden_grove/cottonee' || v.spawn_detail.id == 'ultra_forest/zen_garden/hoppip'",
+      "spawnablePositionSelector": "v.spawnable_position.world.ultra_weather == 'cutting_winds'",
+      "weight": "v.weight * 0.4"
+    },
+    {
+      "type": "filter",
+      "spawnDetailSelector": "v.spawn_detail.id == 'ultra_forest/weather/cutting_winds/kleavor'",
+      "spawnablePositionSelector": "true",
+      "allow": "v.spawnable_position.world.ultra_weather == 'cutting_winds'"
+    }
+  ]
+}

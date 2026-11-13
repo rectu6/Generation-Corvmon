@@ -1,0 +1,12 @@
+{
+  "displayName": "Ultra Space weather: tropical_rain (ultra_jungle)",
+  "enabled": true,
+  "components": [
+    {
+      "type": "weight",
+      "spawnDetailSelector": "v.spawn_detail.id == 'ultra_jungle/giant_jungle/tropius' || v.spawn_detail.id == 'ultra_jungle/glowing_jungle/morelull' || v.spawn_detail.id == 'ultra_jungle/glowing_jungle/lanturn' || v.spawn_detail.id == 'ultra_jungle/overgrown_jungle/sewaddle' || v.spawn_detail.id == 'ultra_jungle/overgrown_jungle/bounsweet' || v.spawn_detail.id == 'ultra_jungle/overgrown_jungle/tangela' || v.spawn_detail.id == 'ultra_jungle/swamp_jungle/lotad' || v.spawn_detail.id == 'ultra_jungle/swamp_jungle/wooper' || v.spawn_detail.id == 'ultra_jungle/swamp_jungle/surskit' || v.spawn_detail.id == 'ultra_jungle/swamp_jungle/poliwhirl' || v.spawn_detail.id == 'ultra_jungle/swamp_jungle/goomy'",
+      "spawnablePositionSelector": "v.spawnable_position.world.ultra_weather == 'tropical_rain'",
+      "weight": "v.weight * 3"
+    }
+  ]
+}

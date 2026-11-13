@@ -1,0 +1,24 @@
+{
+  "displayName": "Ultra Space weather: sandstorm (ultra_desert)",
+  "enabled": true,
+  "components": [
+    {
+      "type": "weight",
+      "spawnDetailSelector": "v.spawn_detail.id == 'ultra_desert/ivory_canyon/hippopotas' || v.spawn_detail.id == 'ultra_desert/ivory_canyon/gible' || v.spawn_detail.id == 'ultra_desert/white_dunes/sandile'",
+      "spawnablePositionSelector": "v.spawnable_position.world.ultra_weather == 'sandstorm'",
+      "weight": "v.weight * 3"
+    },
+    {
+      "type": "weight",
+      "spawnDetailSelector": "v.spawn_detail.id == 'ultra_desert/glass_desert/helioptile' || v.spawn_detail.id == 'ultra_desert/oasis/cherubi'",
+      "spawnablePositionSelector": "v.spawnable_position.world.ultra_weather == 'sandstorm'",
+      "weight": "v.weight * 0.4"
+    },
+    {
+      "type": "filter",
+      "spawnDetailSelector": "v.spawn_detail.id == 'ultra_desert/weather/sandstorm/larvitar'",
+      "spawnablePositionSelector": "true",
+      "allow": "v.spawnable_position.world.ultra_weather == 'sandstorm'"
+    }
+  ]
+}

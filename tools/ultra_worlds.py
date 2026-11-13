@@ -24,9 +24,9 @@ Per world (ids fixed forever: saves name them):
                                      density function craters), and the world's
                                      ultra_resources (its ores, from the server's config)
 - tags/worldgen/biome/...            for the future Cobblemon spawns and weather
-- the 4.1 single biomes (worldgen/biome/<world>.json) and the biomes a world had
-  before (World.legacy) are kept, unused by the generation, so that chunks saved with
-  them stay valid.
+- only the biomes the worlds generate: the former ones (the 4.1 single biomes, the
+  biomes dropped since) were removed on 2026-11-13 (no saved chunk used them), and
+  the language files lose the names of the Ultra biomes that no longer exist.
 - tags/block/ultra_arrival_built[/<world>]: what arrivals take for a player's build.
 
 The feature order of a world is one total order per step (no "feature order cycle").
@@ -41,6 +41,7 @@ then: python tools/ultra_worlds.py <gen>/data/minecraft
 import copy
 import json
 import os
+import re
 import shutil
 import sys
 
@@ -509,7 +510,6 @@ class World:
         self.configured = {}            # name -> json
         self.placed = {}                # name -> json
         self.final_terms = []           # caves worlds: (kind, args) applied to the final density
-        self.legacy = []                # (path, fr, en, colours): former biomes, kept for saved chunks, not generated
 
     # ids
     def bid(self, biome):
@@ -776,27 +776,6 @@ def biome_json(w, b, order):
     }
 
 
-def legacy_biome(w):
-    """The 4.1 single biome: kept for chunks saved with it, not generated any more."""
-    first = w.biomes[0]
-    sky, fog, water, water_fog, grass, foliage = first.colours
-    effects = {'fog_color': rgb(fog), 'sky_color': rgb(sky), 'water_color': rgb(water), 'water_fog_color': rgb(water_fog)}
-    return {'carvers': {}, 'downfall': 0.0, 'effects': effects, 'features': [], 'has_precipitation': False,
-            'spawn_costs': {}, 'spawners': {}, 'temperature': 0.8}
-
-
-def former_biome(colours):
-    """A biome the world made before: kept for chunks saved with it, not generated any more."""
-    sky, fog, water, water_fog, grass, foliage = colours
-    effects = {'fog_color': rgb(fog), 'sky_color': rgb(sky), 'water_color': rgb(water), 'water_fog_color': rgb(water_fog)}
-    if grass:
-        effects['grass_color'] = rgb(grass)
-    if foliage:
-        effects['foliage_color'] = rgb(foliage)
-    return {'carvers': {}, 'downfall': 0.4, 'effects': effects, 'features': [], 'has_precipitation': False,
-            'spawn_costs': {}, 'spawners': {}, 'temperature': 0.8}
-
-
 def feature_order(w):
     order = {}
     for b in w.biomes:
@@ -824,9 +803,6 @@ def write_world(w):
     order = feature_order(w)
     for b in w.biomes:
         write(f'worldgen/biome/{w.id}/{b.path}.json', biome_json(w, b, order))
-    write(f'worldgen/biome/{w.id}.json', legacy_biome(w))
-    for path, fr, en, colours in w.legacy:
-        write(f'worldgen/biome/{w.id}/{path}.json', former_biome(colours))
     write(f'worldgen/noise_settings/{w.id}.json', noise_settings(w))
     write(f'dimension_type/{w.id}.json', dimension_type(w))
     write(f'dimension/{w.id}.json', {
@@ -898,10 +874,10 @@ def write_lang(worlds):
             for b in w.biomes:
                 key = f'biome.{NS}.{w.id}/{b.path}'
                 new[key] = f"{getattr(w, attr)} : {getattr(b, attr)}" if attr == 'fr' else f"{getattr(w, attr)}: {getattr(b, attr)}"
-            for path, fr, en, _ in w.legacy:
-                key = f'biome.{NS}.{w.id}/{path}'
-                new[key] = f"{w.fr} : {fr} (ancien)" if attr == 'fr' else f"{w.en}: {en} (old)"
-        lines = [l for l in text.rstrip().rstrip('}').rstrip().split('\n')]
+        # The names of Ultra biomes that no longer exist go away.
+        gone = re.compile(r'^\s*"biome\.%s\.ultra_[^"]*"' % NS)
+        lines = [l for l in text.rstrip().rstrip('}').rstrip().split('\n')
+                 if not (gone.match(l) and l.strip().split('"')[1] not in new)]
         # Replace existing keys, add the others before the closing brace.
         body = '\n'.join(lines)
         for key, value in new.items():
@@ -933,7 +909,7 @@ def main():
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import ultra_worlds_defs
     worlds = ultra_worlds_defs.worlds(sys.modules[__name__])
-    # Fresh folders for what this tool owns (the 4.1 single biomes are rewritten too).
+    # Fresh folders for what this tool owns.
     for sub in ('worldgen/density_function', 'worldgen/configured_feature', 'worldgen/placed_feature'):
         for w in worlds:
             shutil.rmtree(os.path.join(DATA, sub, w.id), ignore_errors=True)

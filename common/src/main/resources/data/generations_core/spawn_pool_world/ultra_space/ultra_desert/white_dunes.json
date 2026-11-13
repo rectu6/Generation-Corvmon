@@ -1,0 +1,63 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_desert/white_dunes/sandile",
+      "pokemon": "sandile",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "22-32",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_desert/white_dunes"
+        ]
+      }
+    },
+    {
+      "id": "ultra_desert/white_dunes/silicobra",
+      "pokemon": "silicobra",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "22-32",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_desert/white_dunes"
+        ]
+      }
+    },
+    {
+      "id": "ultra_desert/white_dunes/skorupi",
+      "pokemon": "skorupi",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "22-32",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_desert/white_dunes"
+        ]
+      }
+    },
+    {
+      "id": "ultra_desert/white_dunes/dwebble",
+      "pokemon": "dwebble",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "25-37",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_desert/white_dunes"
+        ]
+      }
+    }
+  ]
+}

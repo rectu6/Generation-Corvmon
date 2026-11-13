@@ -1,0 +1,21 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_skyscraper/weather/acid_rain/toxtricity",
+      "pokemon": "toxtricity",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "41-55",
+      "weight": 4.0,
+      "condition": {
+        "biomes": [
+          "#generations_core:ultra_space/ultra_skyscraper"
+        ]
+      }
+    }
+  ]
+}

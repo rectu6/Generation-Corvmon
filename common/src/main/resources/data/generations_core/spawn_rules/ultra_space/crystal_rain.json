@@ -1,0 +1,12 @@
+{
+  "displayName": "Ultra Space weather: crystal_rain (ultra_abyss)",
+  "enabled": true,
+  "components": [
+    {
+      "type": "weight",
+      "spawnDetailSelector": "v.spawn_detail.id == 'ultra_abyss/crystal_caverns/roggenrola' || v.spawn_detail.id == 'ultra_abyss/crystal_caverns/carbink' || v.spawn_detail.id == 'ultra_abyss/crystal_caverns/glimmet' || v.spawn_detail.id == 'ultra_abyss/crystal_caverns/boldore'",
+      "spawnablePositionSelector": "v.spawnable_position.world.ultra_weather == 'crystal_rain'",
+      "weight": "v.weight * 3"
+    }
+  ]
+}

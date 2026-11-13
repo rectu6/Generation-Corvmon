@@ -22,6 +22,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.core.BlockPos
 import net.minecraft.world.phys.Vec3
 import org.joml.Matrix3f
+import org.joml.Matrix4f
 import org.joml.Quaternionf
 import org.joml.Vector3d
 import org.joml.Vector3f
@@ -481,6 +482,153 @@ object UltraWarpRideClient {
         // Leaving the world or the server: back to normal, whatever happened.
         PlatformEvents.CLIENT_PLAYER_LOGOUT.subscribe(Priority.NORMAL) { stopLocally() }
         UltraWarpTransferClient.init()
+        // The looks and sounds of the Ultra worlds' weathers (phase 4.4).
+        generations.gg.generations.core.generationscore.common.client.ultraspace.weather.UltraWeatherClient.init()
+        // The rifts between the Ultra worlds (phase 6).
+        generations.gg.generations.core.generationscore.common.client.ultraspace.rift.UltraRiftClient.init()
+    }
+
+    private var frustumMatrix: Matrix4f? = null
+    private var projectionMatrix: Matrix4f? = null
+
+    /**
+     * With a shader pack, the journey is drawn after the pack's final pass (renderAfterShaders),
+     * not in the world's passes: the pack's fog, night, block light, sky and clouds made
+     * the tunnel hard to see. Its own look is then the same as without a pack.
+     */
+    @JvmStatic
+    fun drawsAfterShaders(): Boolean =
+        ride?.config?.visual?.drawOverShaders == true && generations.gg.generations.core.generationscore.common.client.render.rarecandy.IrisFramebufferCompat.isShaderPackActive()
+
+    /** The world pass's camera rotation and projection, kept for renderAfterShaders. */
+    @JvmStatic
+    fun keepMatrices(frustum: Matrix4f, projection: Matrix4f) {
+        frustumMatrix = Matrix4f(frustum)
+        projectionMatrix = Matrix4f(projection)
+        deferred = true
+    }
+
+    /**
+     * After the shader pack's final pass, every texture unit and sampler emptied. Iris binds
+     * some of its own textures (the shadow maps, with depth comparison) straight through
+     * OpenGL, which Minecraft's state does not know, and leaves them there: RareCandy then
+     * read them for the textures it does not bind itself (emission, masks), which made black
+     * blotches on the Pokémon. Minecraft's own tracking is kept in step.
+     */
+    private val irisUnlockDepthColor: java.lang.reflect.Method? by lazy {
+        runCatching { Class.forName("net.irisshaders.iris.gl.blending.DepthColorStorage").getMethod("unlockDepthColor") }.getOrNull()
+    }
+
+    /**
+     * After the shader pack's final pass: depth and colour written again. Iris's final pass
+     * turns depth writing off (RenderSystem.depthMask(false)) and leaves it so: the clear
+     * of the depth then did nothing, the pack's depth stayed (with the Pokémon RareCandy
+     * keeps from frame to frame, drawn by Iris in its last pose), and the new Pokémon was
+     * hidden wherever that old copy stood in front: dark blotches, the tunnel seen through.
+     * Toggled so that OpenGL is told whatever Minecraft believed.
+     */
+    @JvmStatic
+    fun restoreWriteMasks() {
+        runCatching { irisUnlockDepthColor?.invoke(null) }
+        com.mojang.blaze3d.systems.RenderSystem.depthMask(false)
+        com.mojang.blaze3d.systems.RenderSystem.depthMask(true)
+        com.mojang.blaze3d.systems.RenderSystem.colorMask(false, false, false, false)
+        com.mojang.blaze3d.systems.RenderSystem.colorMask(true, true, true, true)
+    }
+
+    @JvmStatic
+    fun clearTextureUnits() {
+        val units = org.lwjgl.opengl.GL11.glGetInteger(org.lwjgl.opengl.GL20.GL_MAX_TEXTURE_IMAGE_UNITS).coerceIn(1, 32)
+        // Minecraft tracks the first 12 units: told they are empty (it binds 0 where it thought otherwise).
+        for (i in 0 until minOf(units, 12)) {
+            com.mojang.blaze3d.platform.GlStateManager._activeTexture(org.lwjgl.opengl.GL13.GL_TEXTURE0 + i)
+            com.mojang.blaze3d.platform.GlStateManager._bindTexture(0)
+        }
+        // Then OpenGL itself, every unit, whatever Minecraft thought.
+        for (i in 0 until units) {
+            org.lwjgl.opengl.GL13.glActiveTexture(org.lwjgl.opengl.GL13.GL_TEXTURE0 + i)
+            org.lwjgl.opengl.GL11.glBindTexture(org.lwjgl.opengl.GL11.GL_TEXTURE_2D, 0)
+            org.lwjgl.opengl.GL33.glBindSampler(i, 0)
+        }
+        org.lwjgl.opengl.GL13.glActiveTexture(org.lwjgl.opengl.GL13.GL_TEXTURE0)
+        com.mojang.blaze3d.platform.GlStateManager._activeTexture(org.lwjgl.opengl.GL13.GL_TEXTURE0)
+    }
+
+    /**
+     * This frame's journey was left out of the world's passes: it is drawn after them.
+     * Decided during the world's render, the only moment Iris shows its shaders
+     * (isShaderPackActive is false once the world is drawn).
+     */
+    private var deferred = false
+
+    /**
+     * Once the shader pack has written its final image (GameRendererMixin, right after the
+     * world's render): the tunnel's own background (its fog colour) over it, then the
+     * journey with Minecraft's own shaders, as without a pack. RareCandy draws its Pokémon
+     * into the main framebuffer then (Iris no longer overrides anything at this point).
+     */
+    @JvmStatic
+    fun renderAfterShaders(camera: net.minecraft.client.Camera, partialTick: Float) {
+        if (!deferred) return
+        deferred = false
+        if (ride == null) return
+        val frustum = frustumMatrix ?: return
+        val projection = projectionMatrix ?: return
+        val minecraft = Minecraft.getInstance()
+        val stack = com.mojang.blaze3d.systems.RenderSystem.getModelViewStack()
+        val previousProjection = Matrix4f(com.mojang.blaze3d.systems.RenderSystem.getProjectionMatrix())
+        val previousSorting = com.mojang.blaze3d.systems.RenderSystem.getVertexSorting()
+        stack.pushMatrix()
+        try {
+            minecraft.mainRenderTarget.bindWrite(true)
+            restoreWriteMasks()
+            clearTextureUnits()
+            val fog = fogColor()
+            com.mojang.blaze3d.systems.RenderSystem.clearColor(((fog shr 16) and 0xFF) / 255f, ((fog shr 8) and 0xFF) / 255f, (fog and 0xFF) / 255f, 1f)
+            com.mojang.blaze3d.systems.RenderSystem.clear(org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT or org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT, Minecraft.ON_OSX)
+            com.mojang.blaze3d.systems.RenderSystem.setProjectionMatrix(projection, com.mojang.blaze3d.vertex.VertexSorting.DISTANCE_TO_ORIGIN)
+            stack.identity()
+            stack.mul(frustum)
+            com.mojang.blaze3d.systems.RenderSystem.applyModelViewMatrix()
+            // The tunnel's fog (FogRendererMixin gives its colour and distances) and light.
+            net.minecraft.client.renderer.FogRenderer.setupColor(camera, partialTick, minecraft.level!!, minecraft.options.effectiveRenderDistance, 0f)
+            net.minecraft.client.renderer.FogRenderer.levelFogColor()
+            net.minecraft.client.renderer.FogRenderer.setupFog(camera, net.minecraft.client.renderer.FogRenderer.FogMode.FOG_TERRAIN, maxOf(minecraft.gameRenderer.renderDistance, 32f), false, partialTick)
+            com.mojang.blaze3d.platform.Lighting.setupLevel()
+            com.mojang.blaze3d.systems.RenderSystem.enableDepthTest()
+            // RareCandy: Minecraft's lighting, this view's matrices.
+            generations.gg.generations.core.generationscore.common.client.render.rarecandy.RareCandyLighting.strength = 0f
+            generations.gg.generations.core.generationscore.common.client.MatrixCache.projectionMatrix = com.mojang.blaze3d.systems.RenderSystem.getProjectionMatrix()
+            generations.gg.generations.core.generationscore.common.client.MatrixCache.viewMatrix = com.mojang.blaze3d.systems.RenderSystem.getModelViewMatrix()
+            renderOpaque()
+            // The Pokémon's pose: RareCandy animates the models queued when the world's pass
+            // begins, and these were queued after it (the same time: nothing else moves).
+            generations.gg.generations.core.generationscore.common.client.render.rarecandy.ModelRegistry.worldRareCandy.update(
+                generations.gg.generations.core.generationscore.common.client.render.rarecandy.MinecraftClientGameProvider.getTimePassed()
+            )
+            val core = generations.gg.generations.core.generationscore.common.client.GenerationsCoreClient
+            val states = generations.gg.generations.core.generationscore.common.client.render.RenderStateRecord
+            states.push()
+            try {
+                core.renderRareCandySolid()
+            } finally {
+                states.pop()
+            }
+            renderTranslucent()
+            states.push()
+            try {
+                core.renderRareCandyTransparent()
+            } finally {
+                states.pop()
+            }
+            generations.gg.generations.core.generationscore.common.client.render.rarecandy.ModelRegistry.worldRareCandy.end()
+        } catch (e: Exception) {
+            fail(e)
+        } finally {
+            stack.popMatrix()
+            com.mojang.blaze3d.systems.RenderSystem.applyModelViewMatrix()
+            com.mojang.blaze3d.systems.RenderSystem.setProjectionMatrix(previousProjection, previousSorting)
+        }
     }
 
     fun start(packet: S2CUltraWarpRideStartPacket) {

@@ -1,0 +1,11 @@
+{
+  "values": [
+    "generations_core:thermal_shield",
+    "generations_core:sand_shield",
+    "generations_core:insulating_shield",
+    "generations_core:volcanic_shield",
+    "generations_core:aerodynamic_shield",
+    "generations_core:filtration_shield",
+    "generations_core:anticorrosion_shield"
+  ]
+}

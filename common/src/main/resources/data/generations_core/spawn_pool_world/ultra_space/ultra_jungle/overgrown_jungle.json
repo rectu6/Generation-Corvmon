@@ -1,0 +1,91 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_jungle/overgrown_jungle/sewaddle",
+      "pokemon": "sewaddle",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "20-30",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_jungle/overgrown_jungle"
+        ]
+      }
+    },
+    {
+      "id": "ultra_jungle/overgrown_jungle/grubbin",
+      "pokemon": "grubbin",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "20-30",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_jungle/overgrown_jungle"
+        ]
+      }
+    },
+    {
+      "id": "ultra_jungle/overgrown_jungle/bounsweet",
+      "pokemon": "bounsweet",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "20-30",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_jungle/overgrown_jungle"
+        ]
+      }
+    },
+    {
+      "id": "ultra_jungle/overgrown_jungle/aipom",
+      "pokemon": "aipom",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "23-35",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_jungle/overgrown_jungle"
+        ]
+      }
+    },
+    {
+      "id": "ultra_jungle/overgrown_jungle/oranguru",
+      "pokemon": "oranguru",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "23-35",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_jungle/overgrown_jungle"
+        ]
+      }
+    },
+    {
+      "id": "ultra_jungle/overgrown_jungle/tangela",
+      "pokemon": "tangela",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "26-40",
+      "weight": 3.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_jungle/overgrown_jungle"
+        ]
+      }
+    }
+  ]
+}

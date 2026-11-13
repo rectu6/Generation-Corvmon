@@ -198,6 +198,27 @@ class GenerationsCobblemonEvents {
 
             }
 
+            // Phase 6: "Back to the Overworld" on the wheel of a Solgaleo or Lunala, in an Ultra
+            // world only (shown here, everything checked again by the server: UltraReturn).
+            CobblemonEvents.POKEMON_INTERACTION_GUI_CREATION.subscribe { event ->
+                val level = Minecraft.getInstance().level ?: return@subscribe
+                if (!generations.gg.generations.core.generationscore.common.world.ultraspace.worlds.UltraWorlds.isUltra(level.dimension())) return@subscribe
+                val entity = level.entitiesForRendering().firstOrNull { it.uuid == event.pokemonID }
+                    as? com.cobblemon.mod.common.entity.pokemon.PokemonEntity ?: return@subscribe
+                val species = entity.pokemon.species.resourceIdentifier.toString()
+                if (species != "cobblemon:solgaleo" && species != "cobblemon:lunala") return@subscribe
+                event.addFillingOption(
+                    InteractWheelOption(
+                        iconResource = GenerationsCore.id("textures/ui/interact/ultra_return.png"),
+                        tooltipText = "generations_core.ui.interact.ultra_return",
+                        colour = { null },
+                        onPress = {
+                            generations.gg.generations.core.generationscore.common.network.GenerationsNetwork.sendToServer(generations.gg.generations.core.generationscore.common.network.packets.ultraspace.C2SUltraReturnPacket(event.pokemonID))
+                            Minecraft.getInstance().screen = null
+                        })
+                )
+            }
+
             CobblemonEvents.POKEMON_RECALL_PRE.subscribe {
                 it.pokemon.removeCosmeticFeature()
             }

@@ -1,0 +1,63 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_abyss/crystal_caverns/roggenrola",
+      "pokemon": "roggenrola",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "30-40",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_abyss/crystal_caverns"
+        ]
+      }
+    },
+    {
+      "id": "ultra_abyss/crystal_caverns/carbink",
+      "pokemon": "carbink",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "30-40",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_abyss/crystal_caverns"
+        ]
+      }
+    },
+    {
+      "id": "ultra_abyss/crystal_caverns/glimmet",
+      "pokemon": "glimmet",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "33-45",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_abyss/crystal_caverns"
+        ]
+      }
+    },
+    {
+      "id": "ultra_abyss/crystal_caverns/boldore",
+      "pokemon": "boldore",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "36-50",
+      "weight": 3.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_abyss/crystal_caverns"
+        ]
+      }
+    }
+  ]
+}

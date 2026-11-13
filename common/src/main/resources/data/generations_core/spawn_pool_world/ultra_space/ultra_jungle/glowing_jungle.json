@@ -1,0 +1,94 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_jungle/glowing_jungle/morelull",
+      "pokemon": "morelull",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "20-30",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_jungle/glowing_jungle"
+        ]
+      }
+    },
+    {
+      "id": "ultra_jungle/glowing_jungle/volbeat",
+      "pokemon": "volbeat",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "20-30",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_jungle/glowing_jungle"
+        ]
+      }
+    },
+    {
+      "id": "ultra_jungle/glowing_jungle/illumise",
+      "pokemon": "illumise",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "common",
+      "level": "20-30",
+      "weight": 10.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_jungle/glowing_jungle"
+        ]
+      }
+    },
+    {
+      "id": "ultra_jungle/glowing_jungle/shinx",
+      "pokemon": "shinx",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "23-35",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_jungle/glowing_jungle"
+        ]
+      }
+    },
+    {
+      "id": "ultra_jungle/glowing_jungle/joltik",
+      "pokemon": "joltik",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "uncommon",
+      "level": "23-35",
+      "weight": 6.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_jungle/glowing_jungle"
+        ]
+      }
+    },
+    {
+      "id": "ultra_jungle/glowing_jungle/lanturn",
+      "pokemon": "lanturn",
+      "type": "pokemon",
+      "spawnablePositionType": "submerged",
+      "bucket": "rare",
+      "level": "26-40",
+      "weight": 3.0,
+      "condition": {
+        "biomes": [
+          "generations_core:ultra_jungle/glowing_jungle"
+        ]
+      },
+      "presets": [
+        "water"
+      ]
+    }
+  ]
+}

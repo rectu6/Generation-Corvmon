@@ -15,6 +15,13 @@ object GenerationsCoreRecipeSerializers: PlatformRegistry<RecipeSerializer<*>>(R
     var SHAPED_RKS = register("shaped_rks", ShapedRksRecipe.CODEC, ShapedRksRecipe.STREAM_CODEC)
     var SHAPELESS_RKS = register("shapeless_rks", ShapelessRksRecipe.CODEC, ShapelessRksRecipe.STREAM_CODEC)
 
+    /** Installing an environmental shield on a piece of the Ultra Suit (smithing table, phase 4.5). */
+    val ULTRA_SHIELD_SMITHING = register(
+        "ultra_shield_smithing",
+        generations.gg.generations.core.generationscore.common.world.ultraspace.suit.UltraShieldSmithingRecipe.CODEC,
+        generations.gg.generations.core.generationscore.common.world.ultraspace.suit.UltraShieldSmithingRecipe.STREAM_CODEC,
+    )
+
     fun <T : Recipe<*>> register(
         name: String,
         codec: MapCodec<T>,

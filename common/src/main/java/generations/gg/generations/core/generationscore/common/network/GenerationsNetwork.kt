@@ -60,6 +60,9 @@ object GenerationsNetwork {
         list.add(PacketRegisterInfo(S2CUltraWarpRideEventPacket.ID, S2CUltraWarpRideEventPacket::decode, UltraWarpPacketHandlers.RideEvent))
         list.add(PacketRegisterInfo(S2CUltraWarpPortalPacket.ID, S2CUltraWarpPortalPacket::decode, UltraWarpPacketHandlers.Portal))
         list.add(PacketRegisterInfo(S2CUltraWarpTransferPacket.ID, S2CUltraWarpTransferPacket::decode, UltraWarpPacketHandlers.Transfer))
+        list.add(PacketRegisterInfo(S2CUltraWeatherPacket.ID, S2CUltraWeatherPacket::decode, UltraWarpPacketHandlers.Weather))
+        list.add(PacketRegisterInfo(S2CUltraHazardPacket.ID, S2CUltraHazardPacket::decode, UltraWarpPacketHandlers.Hazard))
+        list.add(PacketRegisterInfo(S2CUltraRiftPacket.ID, S2CUltraRiftPacket::decode, UltraWarpPacketHandlers.Rift))
         // TODO: remove TeraTypeUpdatePacket when its registered in Cobblemon's own network
 //        list.add(PacketRegisterInfo(TeraTypeUpdatePacket.ID, TeraTypeUpdatePacket::decode, PokemonUpdatePacketHandler()))
 
@@ -78,6 +81,7 @@ object GenerationsNetwork {
         list.add(PacketRegisterInfo(C2SRaidCheerPacket.ID, C2SRaidCheerPacket::decode, RaidPacketHandlers.CheerAction))
         list.add(PacketRegisterInfo(C2SUltraWarpActionPacket.ID, C2SUltraWarpActionPacket::decode, UltraWarpPacketHandlers.Action))
         list.add(PacketRegisterInfo(C2SUltraWarpRideStatePacket.ID, C2SUltraWarpRideStatePacket::decode, UltraWarpPacketHandlers.RideState))
+        list.add(PacketRegisterInfo(C2SUltraReturnPacket.ID, C2SUltraReturnPacket::decode, UltraWarpPacketHandlers.Return))
         list.add(PacketRegisterInfo(C2SShopItemPacket.ID, C2SShopItemPacket::decode, C2SShopItemHandler))
         list.add(PacketRegisterInfo(HeadPatPacket.ID, ::HeadPatPacket, HeadPatPacketHandler))
 

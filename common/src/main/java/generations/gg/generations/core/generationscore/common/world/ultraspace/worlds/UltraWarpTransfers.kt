@@ -36,7 +36,12 @@ import kotlin.math.sin
  *   gives the chunks time to load), done once the journey has ended (released);
  * - TEST: /ultrawarp test arrive, the same without a journey;
  * - RETURN: /ultrawarp test return, back where the player stood before leaving;
- * - PREPARE: /ultrawarp worlds prepare, every arrival point looked at, no player.
+ * - PREPARE: /ultrawarp worlds prepare, every arrival point looked at, no player;
+ * - RIFT (phase 6): through a rift, from an Ultra world to another. Never a journey: no
+ *   outcome, so none of its rewards (encounter, shiny, Ultra Beast, light-years, portal
+ *   level), and the home is never replaced. RETURN is also the wheel's "Back to the
+ *   Overworld". Both wait a moment (the client's passage) before arriving, and are kept
+ *   as pending when cut by a disconnection, finished at the next login.
  *
  * The player only moves once the place is loaded and checked (UltraArrivalSearch): they
  * wait where they are, unharmed, behind the client's white screen, and arrive standing
@@ -46,7 +51,7 @@ import kotlin.math.sin
  * (UltraWarpTravellers) and finished at the next login, once (the journey's id).
  */
 object UltraWarpTransfers {
-    enum class Kind { ARRIVAL, TEST, RETURN, PREPARE }
+    enum class Kind { ARRIVAL, TEST, RETURN, PREPARE, RIFT }
 
     /** A place tried: its chunks are loaded (a ticket), then a safe spot is looked for around it. */
     private class Candidate(
@@ -85,6 +90,8 @@ object UltraWarpTransfers {
         /** A place to try before the arrival points (/ultrawarp test biome). */
         var first: Pair<Int, Int>? = null
         var notBefore = 0
+        /** No arrival before this tick (the client's passage, phase 6). */
+        var holdUntil = 0
         val queue = ArrayDeque<() -> Candidate?>()
         var current: Candidate? = null
         var loadStart = 0
@@ -188,12 +195,46 @@ object UltraWarpTransfers {
         return true
     }
 
-    /** /ultrawarp test return: back where the player stood before leaving. False when they are busy. */
-    fun returnHome(player: ServerPlayer): Boolean {
+    /**
+     * Back where the player stood before leaving (/ultrawarp test return, the wheel's
+     * "Back to the Overworld"), not before holdTicks (the passage). False when they are busy.
+     */
+    fun returnHome(player: ServerPlayer, holdTicks: Int = 0): Boolean {
         if (busy(player.uuid)) return false
-        begin(player.server, Transfer(player.uuid, Kind.RETURN, null, UUID.randomUUID(), null, player.server.tickCount, null), player)
+        val server = player.server
+        val transfer = Transfer(player.uuid, Kind.RETURN, null, UUID.randomUUID(), null, server.tickCount, null).also {
+            it.holdUntil = server.tickCount + holdTicks
+        }
+        UltraWarpTravellers.edit(server, player.uuid) { it.pendingReturn = true }
+        begin(server, transfer, player)
         S2CUltraWarpTransferPacket(S2CUltraWarpTransferPacket.State.STARTED, Kind.RETURN, "", 0xFFFFFF, null).sendToPlayer(player)
         return true
+    }
+
+    /**
+     * Through a rift (phase 6), into another Ultra world: first near the rift's x/z there
+     * (the "coordinates" arrival), then the world's arrival points, then the fallback;
+     * not before holdTicks (the passage). False when the player is busy or the world closed.
+     */
+    fun rift(player: ServerPlayer, world: String, x: Double, z: Double, holdTicks: Int): Boolean {
+        val server = player.server
+        val key = UltraWorlds.key(world) ?: return false
+        if (busy(player.uuid) || UltraWorlds.level(server, key) == null) return false
+        val bx = floor(x).toInt()
+        val bz = floor(z).toInt()
+        UltraWarpTravellers.edit(server, player.uuid) { it.pendingRift = UltraWarpTravellers.PendingRift(world, bx, bz) }
+        startRift(server, player, world, key, bx, bz, holdTicks)
+        return true
+    }
+
+    private fun startRift(server: MinecraftServer, player: ServerPlayer, world: String, key: ResourceKey<Level>, x: Int, z: Int, holdTicks: Int, notBefore: Int = 0) {
+        val transfer = Transfer(player.uuid, Kind.RIFT, key, UUID.randomUUID(), null, server.tickCount, null).also {
+            if (generations.gg.generations.core.generationscore.common.world.ultraspace.rift.UltraRiftsConfig.rifts.arrival == "coordinates") it.first = x to z
+            it.holdUntil = server.tickCount + holdTicks
+            it.notBefore = notBefore
+        }
+        begin(server, transfer, player)
+        S2CUltraWarpTransferPacket(S2CUltraWarpTransferPacket.State.STARTED, Kind.RIFT, world, colour(world), null).sendToPlayer(player)
     }
 
     /** /ultrawarp worlds prepare: every arrival point of a world looked at; the summary told at the end. */
@@ -217,8 +258,29 @@ object UltraWarpTransfers {
     /** A pending arrival (cut by a disconnection or a server stop): finished now, once. */
     private fun onLogin(player: ServerPlayer) {
         val server = player.server
-        val pending = UltraWarpTravellers.get(server, player.uuid)?.pending ?: return
+        val traveller = UltraWarpTravellers.get(server, player.uuid) ?: return
         if (busy(player.uuid)) return
+        // A passage through a rift or a return cut the same way (phase 6): done now, protected meanwhile.
+        traveller.pendingRift?.let { pending ->
+            val key = UltraWorlds.key(pending.world)
+            if (key == null || UltraWorlds.level(server, key) == null) {
+                UltraWarpTravellers.edit(server, player.uuid) { it.pendingRift = null }
+                protectedUntil[player.uuid] = server.tickCount + (UltraWorldsConfig.settings.protection.seconds * 20).toInt()
+                player.sendSystemMessage(Component.translatable("generations_core.ultra_warp.world.unavailable", worldName(pending.world)))
+            } else {
+                GenerationsCore.LOGGER.info("Ultra Space: {} logged in during a passage through a rift to {}, finishing it", player.gameProfile.name, pending.world)
+                startRift(server, player, pending.world, key, pending.x, pending.z, 0, server.tickCount + 40)
+            }
+            return
+        }
+        if (traveller.pendingReturn) {
+            GenerationsCore.LOGGER.info("Ultra Space: {} logged in during a return, finishing it", player.gameProfile.name)
+            val transfer = Transfer(player.uuid, Kind.RETURN, null, UUID.randomUUID(), null, server.tickCount, null).also { it.notBefore = server.tickCount + 40 }
+            begin(server, transfer, player)
+            S2CUltraWarpTransferPacket(S2CUltraWarpTransferPacket.State.STARTED, Kind.RETURN, "", 0xFFFFFF, null).sendToPlayer(player)
+            return
+        }
+        val pending = traveller.pending ?: return
         val key = UltraWorlds.forDestination(pending.destination)
         if (UltraWorlds.level(server, key) == null) {
             pending.arrival = UltraWarpOutcome.Arrival.UNAVAILABLE
@@ -248,7 +310,7 @@ object UltraWarpTransfers {
     private fun plan(server: MinecraftServer, transfer: Transfer, player: ServerPlayer?) {
         val arrival = UltraWorldsConfig.settings.arrival
         when (transfer.kind) {
-            Kind.ARRIVAL, Kind.TEST, Kind.PREPARE -> {
+            Kind.ARRIVAL, Kind.TEST, Kind.PREPARE, Kind.RIFT -> {
                 val level = transfer.target?.let { server.getLevel(it) } ?: return
                 val points = UltraArrivalPoints.of(level)
                 val context = UltraArrivalSearch.Context.arrival(transfer.player)
@@ -285,7 +347,10 @@ object UltraWarpTransfers {
             }
             Kind.RETURN -> {
                 val uuid = transfer.player ?: return
+                val overworldOnly = generations.gg.generations.core.generationscore.common.world.ultraspace.rift.UltraRiftsConfig.wheelReturn.overworldOnly
+                // Never back into an Ultra world; by the config, only into the Overworld.
                 val home = UltraWarpTravellers.get(server, uuid)?.home
+                    ?.takeIf { !UltraWorlds.isUltra(it.dimension) && (!overworldOnly || it.dimension == Level.OVERWORLD) }
                 val context = UltraArrivalSearch.Context.home(uuid)
                 if (home != null) server.getLevel(home.dimension)?.let { level ->
                     transfer.queue.add {
@@ -295,6 +360,7 @@ object UltraWarpTransfers {
                 }
                 val respawn = player?.respawnPosition
                 val respawnLevel = player?.let { server.getLevel(it.respawnDimension) }
+                    ?.takeIf { !UltraWorlds.isUltra(it.dimension()) && (!overworldOnly || it.dimension() == Level.OVERWORLD) }
                 if (respawn != null && respawnLevel != null) {
                     transfer.queue.add { Candidate(respawnLevel, respawn.x, respawn.z, 8, 1, context, null, "respawn point", exact = Vec3.atBottomCenterOf(respawn.above())) }
                 }
@@ -365,6 +431,8 @@ object UltraWarpTransfers {
         }
         // An arrival waits for the end of its journey's cinematic, its place ready.
         if (!transfer.released || player == null) return
+        // A passage (rift, return) lasts at least its transition, for the client's fade.
+        if (now < transfer.holdUntil) return
         val spot = transfer.spot ?: return
         // Checked again just before: the place may have changed while waiting.
         if (!candidate.platform && !(candidate.exact != null && BlockPos.containing(candidate.exact) == spot)) {
@@ -505,8 +573,10 @@ object UltraWarpTransfers {
         // Out of any mount, the party's Pokémon back in their balls (Cobblemon also does it on a change of dimension).
         player.stopRiding()
         player.party().forEach { pokemon -> pokemon.entity?.recallWithAnimation() }
-        // Where they stood, for the return: not replaced when coming from another Ultra Space world.
-        if (transfer.kind != Kind.RETURN && !UltraWorlds.isUltra(player.level().dimension())) {
+        // Where they stood, for the return: not replaced when coming from another Ultra Space
+        // world, nor by a rift. A real journey records it at its start (UltraWarpRide.beginRide);
+        // this is for the test arrivals and the saves made before.
+        if (transfer.kind != Kind.RETURN && transfer.kind != Kind.RIFT && !UltraWorlds.isUltra(player.level().dimension())) {
             val home = UltraWarpTravellers.Place.of(player)
             UltraWarpTravellers.edit(server, player.uuid) { it.home = home }
         }
@@ -541,14 +611,22 @@ object UltraWarpTransfers {
                     it.pending = null
                     it.stay = outcome
                 }
+                // Phase 5: the journey's Pokémon, drawn now, appearing near the player.
+                generations.gg.generations.core.generationscore.common.world.ultraspace.encounter.UltraEncounters.onArrival(server, player, outcome, level, spot)
             }
-            Kind.RETURN -> UltraWarpTravellers.edit(server, player.uuid) { it.stay = null }
+            Kind.RETURN -> UltraWarpTravellers.edit(server, player.uuid) {
+                it.stay = null
+                it.pendingReturn = false
+            }
+            // A rift: nothing else (no outcome, no encounter, no record).
+            Kind.RIFT -> UltraWarpTravellers.edit(server, player.uuid) { it.pendingRift = null }
             else -> {}
         }
         val name = world?.let { worldName(it) } ?: Component.literal(level.dimension().location().toString())
         player.sendSystemMessage(
             when {
                 transfer.kind == Kind.RETURN -> Component.translatable("generations_core.ultra_warp.world.returned")
+                transfer.kind == Kind.RIFT -> Component.translatable("generations_core.ultra_rift.arrived", name)
                 candidate.platform -> Component.translatable("generations_core.ultra_warp.world.platform", name)
                 else -> Component.translatable("generations_core.ultra_warp.world.arrived", name)
             }
@@ -573,11 +651,20 @@ object UltraWarpTransfers {
             UltraWarpRecords.updateOutcome(server, outcome)
             UltraWarpTravellers.edit(server, outcome.player) { it.pending = null }
         }
+        // A passage that failed is over: never resumed at the next login.
+        if (transfer.player != null && (transfer.kind == Kind.RIFT || transfer.kind == Kind.RETURN)) {
+            UltraWarpTravellers.edit(server, transfer.player) {
+                if (transfer.kind == Kind.RIFT) it.pendingRift = null else it.pendingReturn = false
+            }
+        }
         if (player != null) {
             val world = transfer.target?.let { UltraWorlds.idOf(it) } ?: ""
             player.sendSystemMessage(
-                if (transfer.kind == Kind.RETURN) Component.translatable("generations_core.ultra_warp.world.return_failed")
-                else Component.translatable("generations_core.ultra_warp.world.failed", worldName(world))
+                when (transfer.kind) {
+                    Kind.RETURN -> Component.translatable("generations_core.ultra_warp.world.return_failed")
+                    Kind.RIFT -> Component.translatable("generations_core.ultra_rift.failed", worldName(world))
+                    else -> Component.translatable("generations_core.ultra_warp.world.failed", worldName(world))
+                }
             )
             S2CUltraWarpTransferPacket(S2CUltraWarpTransferPacket.State.FAILED, transfer.kind, world, colour(world), outcome).sendToPlayer(player)
         }

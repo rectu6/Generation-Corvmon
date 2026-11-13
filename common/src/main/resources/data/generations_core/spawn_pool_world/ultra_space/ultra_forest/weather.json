@@ -1,0 +1,21 @@
+{
+  "enabled": true,
+  "neededInstalledMods": [],
+  "neededUninstalledMods": [],
+  "spawns": [
+    {
+      "id": "ultra_forest/weather/cutting_winds/kleavor",
+      "pokemon": "kleavor",
+      "type": "pokemon",
+      "spawnablePositionType": "grounded",
+      "bucket": "rare",
+      "level": "36-50",
+      "weight": 3.0,
+      "condition": {
+        "biomes": [
+          "#generations_core:ultra_space/ultra_forest"
+        ]
+      }
+    }
+  ]
+}
