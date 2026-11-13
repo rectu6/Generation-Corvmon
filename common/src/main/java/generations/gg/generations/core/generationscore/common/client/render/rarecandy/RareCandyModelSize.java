@@ -10,4 +10,7 @@ public interface RareCandyModelSize {
 
     /** Half width of the drawn model in blocks, 0 when not drawn yet. */
     float generations$modelHalfWidth();
+
+    /** Height of the drawn model in blocks, 0 when not drawn yet. */
+    float generations$modelHeight();
 }

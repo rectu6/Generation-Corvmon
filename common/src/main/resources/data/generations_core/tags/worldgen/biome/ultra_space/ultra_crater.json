@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "generations_core:ultra_crater/yellow_plateaus",
+    "generations_core:ultra_crater/steam_fields",
+    "generations_core:ultra_crater/giant_craters",
+    "generations_core:ultra_crater/spire_forest",
+    "generations_core:ultra_crater/crater_plains"
+  ]
+}

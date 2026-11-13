@@ -1,0 +1,43 @@
+{
+  "carvers": {},
+  "downfall": 0.4,
+  "effects": {
+    "fog_color": 12240060,
+    "sky_color": 11123138,
+    "water_color": 4881002,
+    "water_fog_color": 1716264,
+    "grass_color": 6990400,
+    "foliage_color": 5937712,
+    "mood_sound": {
+      "block_search_extent": 8,
+      "offset": 2.0,
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000
+    }
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [
+      "generations_core:ultra_skyscraper/city_downtown"
+    ],
+    [],
+    [
+      "generations_core:ultra_skyscraper/resources"
+    ],
+    [],
+    [],
+    [
+      "generations_core:ultra_skyscraper/grass",
+      "generations_core:ultra_skyscraper/moss_carpets",
+      "minecraft:vines"
+    ],
+    []
+  ],
+  "has_precipitation": false,
+  "spawn_costs": {},
+  "spawners": {},
+  "temperature": 0.8
+}

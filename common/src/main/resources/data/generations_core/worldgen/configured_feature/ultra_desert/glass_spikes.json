@@ -1,0 +1,57 @@
+{
+  "type": "generations_core:crystal_spike",
+  "config": {
+    "block": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "minecraft:glass"
+          },
+          "weight": 3
+        },
+        {
+          "data": {
+            "Name": "minecraft:tinted_glass"
+          },
+          "weight": 1
+        },
+        {
+          "data": {
+            "Name": "minecraft:white_stained_glass"
+          },
+          "weight": 1
+        },
+        {
+          "data": {
+            "Name": "minecraft:light_blue_stained_glass"
+          },
+          "weight": 1
+        }
+      ]
+    },
+    "core": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:smooth_quartz"
+      }
+    },
+    "height": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 4,
+      "max_inclusive": 12
+    },
+    "radius": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 0,
+      "max_inclusive": 1
+    },
+    "count": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 1,
+      "max_inclusive": 3
+    },
+    "tilt": 0.25,
+    "hanging": false
+  }
+}

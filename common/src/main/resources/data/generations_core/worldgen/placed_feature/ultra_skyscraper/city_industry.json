@@ -1,0 +1,8 @@
+{
+  "feature": "generations_core:ultra_skyscraper/city_industry",
+  "placement": [
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

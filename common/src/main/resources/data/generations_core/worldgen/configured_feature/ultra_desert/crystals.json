@@ -1,0 +1,80 @@
+{
+  "type": "generations_core:crystal_spike",
+  "config": {
+    "block": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "minecraft:glass"
+          },
+          "weight": 3
+        },
+        {
+          "data": {
+            "Name": "minecraft:white_stained_glass"
+          },
+          "weight": 2
+        },
+        {
+          "data": {
+            "Name": "minecraft:light_blue_stained_glass"
+          },
+          "weight": 2
+        },
+        {
+          "data": {
+            "Name": "minecraft:magenta_stained_glass"
+          },
+          "weight": 1
+        },
+        {
+          "data": {
+            "Name": "generations_core:mirror_glass"
+          },
+          "weight": 1
+        },
+        {
+          "data": {
+            "Name": "generations_core:crystal_light"
+          },
+          "weight": 1
+        }
+      ]
+    },
+    "core": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "minecraft:white_stained_glass"
+          },
+          "weight": 4
+        },
+        {
+          "data": {
+            "Name": "generations_core:crystal_light"
+          },
+          "weight": 1
+        }
+      ]
+    },
+    "height": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 3,
+      "max_inclusive": 10
+    },
+    "radius": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 0,
+      "max_inclusive": 2
+    },
+    "count": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 1,
+      "max_inclusive": 4
+    },
+    "tilt": 0.4,
+    "hanging": false
+  }
+}

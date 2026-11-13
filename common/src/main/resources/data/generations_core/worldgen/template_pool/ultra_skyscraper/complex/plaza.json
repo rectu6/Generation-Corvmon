@@ -1,0 +1,23 @@
+{
+  "fallback": "generations_core:ultra_skyscraper/complex/door_caps",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "generations_core:ultra_skyscraper/complex/plaza_fountain",
+        "projection": "rigid",
+        "processors": "minecraft:empty"
+      }
+    },
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "generations_core:ultra_skyscraper/complex/plaza_wild",
+        "projection": "rigid",
+        "processors": "minecraft:empty"
+      }
+    }
+  ]
+}

@@ -8,6 +8,8 @@
     "AbstractCauldronBlockMixin",
     "AbstractFurnaceBlockEntityMixin",
     "BestSpawnConfigMixin",
+    "ChunkMapMixin",
+    "CommandsMixin",
     "EntityMixin",
     "FishingHookMixin",
     "GivePokemonMixin",
@@ -22,6 +24,7 @@
     "PokemonItemMixin",
     "ServerPlayerMixin",
     "ShowdownSpeciesMixin",
+    "WorldDimensionsMixin",
     "datafix.ChunkStorageMixin",
     "datafix.EntityStorageMixin",
     "datafix.ItemStackComponentizationFixMixin",
@@ -42,6 +45,9 @@
     "showdown.battleconditions.WeatherInstructionMixin"
   ],
   "client": [
+    "client.CameraMixin",
+    "client.FogRendererMixin",
+    "client.GameRendererMixin",
     "client.BattleGimmickButtonMixin",
     "client.BattleGUIMixin",
     "client.BattleMessagePaneMixin",

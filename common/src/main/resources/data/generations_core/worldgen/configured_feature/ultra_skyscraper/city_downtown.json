@@ -1,0 +1,584 @@
+{
+  "type": "generations_core:city_block",
+  "config": {
+    "streets": {
+      "road": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": {
+              "Name": "minecraft:gray_concrete"
+            },
+            "weight": 12
+          },
+          {
+            "data": {
+              "Name": "minecraft:gray_concrete_powder"
+            },
+            "weight": 2
+          },
+          {
+            "data": {
+              "Name": "minecraft:cobbled_deepslate"
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "Name": "minecraft:gravel"
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "Name": "minecraft:moss_block"
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "Name": "minecraft:coarse_dirt"
+            },
+            "weight": 1
+          }
+        ]
+      },
+      "line": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": {
+              "Name": "minecraft:white_concrete"
+            },
+            "weight": 4
+          },
+          {
+            "data": {
+              "Name": "minecraft:light_gray_concrete"
+            },
+            "weight": 1
+          }
+        ]
+      },
+      "sidewalk": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": {
+              "Name": "minecraft:smooth_stone"
+            },
+            "weight": 4
+          },
+          {
+            "data": {
+              "Name": "minecraft:polished_andesite"
+            },
+            "weight": 3
+          },
+          {
+            "data": {
+              "Name": "minecraft:stone_bricks"
+            },
+            "weight": 2
+          },
+          {
+            "data": {
+              "Name": "minecraft:cracked_stone_bricks"
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "Name": "minecraft:mossy_stone_bricks"
+            },
+            "weight": 1
+          }
+        ]
+      },
+      "fire_chance": 0.0
+    },
+    "palettes": [
+      {
+        "wall": {
+          "type": "minecraft:weighted_state_provider",
+          "entries": [
+            {
+              "data": {
+                "Name": "minecraft:white_concrete"
+              },
+              "weight": 10
+            },
+            {
+              "data": {
+                "Name": "minecraft:moss_block"
+              },
+              "weight": 1
+            }
+          ]
+        },
+        "accent": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "minecraft:light_gray_concrete"
+          }
+        },
+        "window": {
+          "type": "minecraft:weighted_state_provider",
+          "entries": [
+            {
+              "data": {
+                "Name": "minecraft:glass"
+              },
+              "weight": 3
+            },
+            {
+              "data": {
+                "Name": "minecraft:light_blue_stained_glass"
+              },
+              "weight": 2
+            },
+            {
+              "data": {
+                "Name": "minecraft:cyan_stained_glass"
+              },
+              "weight": 1
+            }
+          ]
+        },
+        "floor": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "minecraft:smooth_stone"
+          }
+        }
+      },
+      {
+        "wall": {
+          "type": "minecraft:weighted_state_provider",
+          "entries": [
+            {
+              "data": {
+                "Name": "minecraft:light_gray_concrete"
+              },
+              "weight": 10
+            },
+            {
+              "data": {
+                "Name": "minecraft:moss_block"
+              },
+              "weight": 1
+            }
+          ]
+        },
+        "accent": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "minecraft:gray_concrete"
+          }
+        },
+        "window": {
+          "type": "minecraft:weighted_state_provider",
+          "entries": [
+            {
+              "data": {
+                "Name": "minecraft:gray_stained_glass"
+              },
+              "weight": 2
+            },
+            {
+              "data": {
+                "Name": "minecraft:glass"
+              },
+              "weight": 1
+            },
+            {
+              "data": {
+                "Name": "minecraft:light_gray_stained_glass"
+              },
+              "weight": 1
+            }
+          ]
+        },
+        "floor": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "minecraft:polished_andesite"
+          }
+        }
+      },
+      {
+        "wall": {
+          "type": "minecraft:weighted_state_provider",
+          "entries": [
+            {
+              "data": {
+                "Name": "minecraft:smooth_quartz"
+              },
+              "weight": 10
+            },
+            {
+              "data": {
+                "Name": "minecraft:moss_block"
+              },
+              "weight": 1
+            }
+          ]
+        },
+        "accent": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "minecraft:light_gray_concrete"
+          }
+        },
+        "window": {
+          "type": "minecraft:weighted_state_provider",
+          "entries": [
+            {
+              "data": {
+                "Name": "minecraft:glass"
+              },
+              "weight": 3
+            },
+            {
+              "data": {
+                "Name": "minecraft:light_blue_stained_glass"
+              },
+              "weight": 2
+            },
+            {
+              "data": {
+                "Name": "minecraft:cyan_stained_glass"
+              },
+              "weight": 1
+            }
+          ]
+        },
+        "floor": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "minecraft:smooth_stone"
+          }
+        }
+      },
+      {
+        "wall": {
+          "type": "minecraft:weighted_state_provider",
+          "entries": [
+            {
+              "data": {
+                "Name": "minecraft:deepslate_tiles"
+              },
+              "weight": 10
+            },
+            {
+              "data": {
+                "Name": "minecraft:moss_block"
+              },
+              "weight": 1
+            }
+          ]
+        },
+        "accent": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "minecraft:polished_deepslate"
+          }
+        },
+        "window": {
+          "type": "minecraft:weighted_state_provider",
+          "entries": [
+            {
+              "data": {
+                "Name": "minecraft:gray_stained_glass"
+              },
+              "weight": 2
+            },
+            {
+              "data": {
+                "Name": "minecraft:glass"
+              },
+              "weight": 1
+            },
+            {
+              "data": {
+                "Name": "minecraft:light_gray_stained_glass"
+              },
+              "weight": 1
+            }
+          ]
+        },
+        "floor": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "minecraft:deepslate_tiles"
+          }
+        }
+      },
+      {
+        "wall": {
+          "type": "minecraft:weighted_state_provider",
+          "entries": [
+            {
+              "data": {
+                "Name": "generations_core:ultra_light_gray"
+              },
+              "weight": 10
+            },
+            {
+              "data": {
+                "Name": "minecraft:moss_block"
+              },
+              "weight": 1
+            }
+          ]
+        },
+        "accent": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "generations_core:ultra_gray"
+          }
+        },
+        "window": {
+          "type": "minecraft:weighted_state_provider",
+          "entries": [
+            {
+              "data": {
+                "Name": "minecraft:glass"
+              },
+              "weight": 3
+            },
+            {
+              "data": {
+                "Name": "minecraft:light_blue_stained_glass"
+              },
+              "weight": 2
+            },
+            {
+              "data": {
+                "Name": "minecraft:cyan_stained_glass"
+              },
+              "weight": 1
+            }
+          ]
+        },
+        "floor": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "minecraft:smooth_stone"
+          }
+        }
+      },
+      {
+        "wall": {
+          "type": "minecraft:weighted_state_provider",
+          "entries": [
+            {
+              "data": {
+                "Name": "minecraft:cyan_terracotta"
+              },
+              "weight": 10
+            },
+            {
+              "data": {
+                "Name": "minecraft:moss_block"
+              },
+              "weight": 1
+            }
+          ]
+        },
+        "accent": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "minecraft:white_concrete"
+          }
+        },
+        "window": {
+          "type": "minecraft:weighted_state_provider",
+          "entries": [
+            {
+              "data": {
+                "Name": "minecraft:glass"
+              },
+              "weight": 3
+            },
+            {
+              "data": {
+                "Name": "minecraft:light_blue_stained_glass"
+              },
+              "weight": 2
+            },
+            {
+              "data": {
+                "Name": "minecraft:cyan_stained_glass"
+              },
+              "weight": 1
+            }
+          ]
+        },
+        "floor": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "minecraft:smooth_stone"
+          }
+        }
+      },
+      {
+        "wall": {
+          "type": "minecraft:weighted_state_provider",
+          "entries": [
+            {
+              "data": {
+                "Name": "minecraft:glass"
+              },
+              "weight": 3
+            },
+            {
+              "data": {
+                "Name": "minecraft:light_blue_stained_glass"
+              },
+              "weight": 2
+            },
+            {
+              "data": {
+                "Name": "minecraft:cyan_stained_glass"
+              },
+              "weight": 1
+            }
+          ]
+        },
+        "accent": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "minecraft:gray_concrete"
+          }
+        },
+        "window": {
+          "type": "minecraft:weighted_state_provider",
+          "entries": [
+            {
+              "data": {
+                "Name": "minecraft:glass"
+              },
+              "weight": 3
+            },
+            {
+              "data": {
+                "Name": "minecraft:light_blue_stained_glass"
+              },
+              "weight": 2
+            },
+            {
+              "data": {
+                "Name": "minecraft:cyan_stained_glass"
+              },
+              "weight": 1
+            }
+          ]
+        },
+        "floor": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "minecraft:smooth_stone"
+          }
+        }
+      }
+    ],
+    "height": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 24,
+      "max_inclusive": 84
+    },
+    "building_chance": 0.85,
+    "ground": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "minecraft:grass_block"
+          },
+          "weight": 6
+        },
+        {
+          "data": {
+            "Name": "minecraft:moss_block"
+          },
+          "weight": 1
+        },
+        {
+          "data": {
+            "Name": "minecraft:coarse_dirt"
+          },
+          "weight": 1
+        }
+      ]
+    },
+    "roof": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "minecraft:gravel"
+          },
+          "weight": 2
+        },
+        {
+          "data": {
+            "Name": "minecraft:smooth_stone"
+          },
+          "weight": 2
+        },
+        {
+          "data": {
+            "Name": "minecraft:moss_block"
+          },
+          "weight": 1
+        }
+      ]
+    },
+    "roof_garden": 0.45,
+    "vines": 0.12,
+    "chimney": 0.05,
+    "pond": 0.2,
+    "ruin": {
+      "broken_windows": 0.15,
+      "holes": 0.03,
+      "collapse": 0.08,
+      "rubble": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": {
+              "Name": "minecraft:cobbled_deepslate"
+            },
+            "weight": 2
+          },
+          {
+            "data": {
+              "Name": "minecraft:gravel"
+            },
+            "weight": 2
+          },
+          {
+            "data": {
+              "Name": "minecraft:cracked_stone_bricks"
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "Name": "minecraft:andesite"
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "Name": "minecraft:cobblestone"
+            },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    "vegetation": "generations_core:ultra_skyscraper/city_trees"
+  }
+}

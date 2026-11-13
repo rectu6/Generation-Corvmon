@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:ore",
+  "config": {
+    "discard_chance_on_air_exposure": 0.0,
+    "size": 12,
+    "targets": [
+      {
+        "state": {
+          "Name": "generations_core:glowing_charge_cobblestone"
+        },
+        "target": {
+          "predicate_type": "minecraft:block_match",
+          "block": "generations_core:charge_stone"
+        }
+      },
+      {
+        "state": {
+          "Name": "generations_core:glowing_charge_cobblestone"
+        },
+        "target": {
+          "predicate_type": "minecraft:block_match",
+          "block": "generations_core:charge_cobblestone"
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "structures": [
+    {
+      "structure": "generations_core:ultra_central/plant",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "generations_core:ultra_spread",
+    "config": "ultra_central/landmark",
+    "salt": 1503348271,
+    "spacing": 36,
+    "separation": 14
+  }
+}

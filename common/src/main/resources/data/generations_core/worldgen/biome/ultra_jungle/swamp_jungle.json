@@ -1,0 +1,45 @@
+{
+  "carvers": {},
+  "downfall": 0.4,
+  "effects": {
+    "fog_color": 9431232,
+    "sky_color": 5232288,
+    "water_color": 4165466,
+    "water_fog_color": 736554,
+    "grass_color": 3913052,
+    "foliage_color": 2989930,
+    "mood_sound": {
+      "block_search_extent": 8,
+      "offset": 2.0,
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000
+    }
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "generations_core:ultra_jungle/resources",
+      "minecraft:disk_clay"
+    ],
+    [],
+    [],
+    [
+      "minecraft:patch_grass_jungle",
+      "minecraft:vines",
+      "generations_core:ultra_jungle/ultra_flowers",
+      "generations_core:ultra_jungle/swamp_tree",
+      "minecraft:patch_waterlily",
+      "minecraft:seagrass_swamp"
+    ],
+    []
+  ],
+  "has_precipitation": false,
+  "spawn_costs": {},
+  "spawners": {},
+  "temperature": 0.8
+}

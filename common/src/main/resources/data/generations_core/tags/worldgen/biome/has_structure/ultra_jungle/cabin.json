@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "generations_core:ultra_jungle/giant_jungle",
+    "generations_core:ultra_jungle/overgrown_jungle",
+    "generations_core:ultra_jungle/glowing_jungle",
+    "generations_core:ultra_jungle/mountain_jungle",
+    "generations_core:ultra_jungle/swamp_jungle"
+  ]
+}

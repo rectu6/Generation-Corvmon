@@ -55,6 +55,7 @@ class GenerationsCobblemonEvents {
 
             GenerationsFishing.init()
             generations.gg.generations.core.generationscore.common.world.raid.RaidManager.init()
+            generations.gg.generations.core.generationscore.common.world.ultraspace.UltraWarpRide.init()
             CobblemonEvents.TERASTALLIZATION.subscribe(Priority.NORMAL, GenerationsInstructionProcessor::processTerastallization)
             CobblemonEvents.BATTLE_STARTED_PRE.subscribe(Priority.NORMAL, GenerationsInstructionProcessor::preBattleChanges)
 

@@ -1,0 +1,31 @@
+{
+  "structures": [
+    {
+      "structure": "generations_core:ultra_skyscraper/station",
+      "weight": 3
+    },
+    {
+      "structure": "generations_core:ultra_skyscraper/fallen",
+      "weight": 3
+    },
+    {
+      "structure": "generations_core:ultra_skyscraper/post",
+      "weight": 2
+    },
+    {
+      "structure": "generations_core:ultra_skyscraper/warehouse",
+      "weight": 3
+    }
+  ],
+  "placement": {
+    "type": "generations_core:ultra_spread",
+    "config": "ultra_skyscraper/sites",
+    "salt": 478123391,
+    "spacing": 11,
+    "separation": 5,
+    "exclusion_zone": {
+      "other_set": "generations_core:ultra_skyscraper/landmark",
+      "chunk_count": 8
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "generations_core:ultra_jungle/mountain_jungle",
+    "generations_core:ultra_desert/ivory_canyon",
+    "generations_core:ultra_central/electric_mountains",
+    "generations_core:ultra_crater/yellow_plateaus",
+    "generations_core:ultra_crater/spire_forest"
+  ]
+}

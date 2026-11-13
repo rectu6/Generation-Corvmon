@@ -1,0 +1,31 @@
+{
+  "structures": [
+    {
+      "structure": "generations_core:ultra_jungle/camp",
+      "weight": 3
+    },
+    {
+      "structure": "generations_core:ultra_jungle/treehouse",
+      "weight": 3
+    },
+    {
+      "structure": "generations_core:ultra_jungle/ruins",
+      "weight": 3
+    },
+    {
+      "structure": "generations_core:ultra_jungle/cabin",
+      "weight": 2
+    }
+  ],
+  "placement": {
+    "type": "generations_core:ultra_spread",
+    "config": "ultra_jungle/sites",
+    "salt": 2061938455,
+    "spacing": 11,
+    "separation": 5,
+    "exclusion_zone": {
+      "other_set": "generations_core:ultra_jungle/landmark",
+      "chunk_count": 8
+    }
+  }
+}

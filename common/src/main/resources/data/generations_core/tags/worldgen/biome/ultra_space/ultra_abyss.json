@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "generations_core:ultra_abyss/underground_lakes",
+    "generations_core:ultra_abyss/luminous_caves",
+    "generations_core:ultra_abyss/fungal_forest",
+    "generations_core:ultra_abyss/rocky_abyss",
+    "generations_core:ultra_abyss/crystal_caverns"
+  ]
+}

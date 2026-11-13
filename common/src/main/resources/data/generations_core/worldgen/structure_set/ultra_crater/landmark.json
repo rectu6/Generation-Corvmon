@@ -1,0 +1,15 @@
+{
+  "structures": [
+    {
+      "structure": "generations_core:ultra_crater/lunar_base",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "generations_core:ultra_spread",
+    "config": "ultra_crater/landmark",
+    "salt": 746120931,
+    "spacing": 36,
+    "separation": 14
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "carvers": {},
+  "downfall": 0.4,
+  "effects": {
+    "fog_color": 1722970,
+    "sky_color": 663104,
+    "water_color": 3197152,
+    "water_fog_color": 204842,
+    "particle": {
+      "options": {
+        "type": "minecraft:glow"
+      },
+      "probability": 0.004
+    },
+    "mood_sound": {
+      "block_search_extent": 8,
+      "offset": 2.0,
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000
+    }
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "generations_core:ultra_abyss/resources",
+      "generations_core:ultra_abyss/glowing_veins",
+      "generations_core:ultra_abyss/shroomlight_veins",
+      "generations_core:ultra_abyss/light_veins"
+    ],
+    [],
+    [],
+    [
+      "minecraft:glow_lichen",
+      "generations_core:ultra_abyss/glow_spikes",
+      "minecraft:cave_vines",
+      "generations_core:ultra_abyss/ballonlea"
+    ],
+    [
+      "generations_core:ultra_abyss/cavern_light"
+    ]
+  ],
+  "has_precipitation": false,
+  "spawn_costs": {},
+  "spawners": {},
+  "temperature": 0.8
+}

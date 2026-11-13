@@ -192,6 +192,7 @@ object GenerationsCore {
         GenerationsTools.init()
         GenerationsBlockEntities.init()
         generations.gg.generations.core.generationscore.common.world.raid.den.GenerationsRaidFeatures.init()
+        generations.gg.generations.core.generationscore.common.world.ultraspace.worlds.gen.UltraWorldgen.init()
         GenerationsEntities.init()
         GenerationsArmorMaterials.init()
 //        GenerationsCreativeTabs.init()

@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "generations_core:ultra_skyscraper/industrial_zone",
+    "generations_core:ultra_skyscraper/downtown",
+    "generations_core:ultra_skyscraper/urban_park"
+  ]
+}

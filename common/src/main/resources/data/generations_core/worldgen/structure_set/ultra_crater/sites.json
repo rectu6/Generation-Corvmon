@@ -1,0 +1,31 @@
+{
+  "structures": [
+    {
+      "structure": "generations_core:ultra_crater/station",
+      "weight": 3
+    },
+    {
+      "structure": "generations_core:ultra_crater/hangar",
+      "weight": 2
+    },
+    {
+      "structure": "generations_core:ultra_crater/post",
+      "weight": 3
+    },
+    {
+      "structure": "generations_core:ultra_crater/shelter",
+      "weight": 3
+    }
+  ],
+  "placement": {
+    "type": "generations_core:ultra_spread",
+    "config": "ultra_crater/sites",
+    "salt": 1930461187,
+    "spacing": 11,
+    "separation": 5,
+    "exclusion_zone": {
+      "other_set": "generations_core:ultra_crater/landmark",
+      "chunk_count": 8
+    }
+  }
+}

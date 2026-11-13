@@ -21,6 +21,8 @@ public class CobblemonInstance extends AnimatedObjectInstance implements BlockLi
     public float modelTopY;
     /** Half width of the drawn model in blocks. */
     public float modelHalfWidth;
+    /** Height of the drawn model in blocks (all scales included). */
+    public float modelHeight;
     /** Dynamaxed (DynamaxVisuals' aspect): drawn with a red glow, see Pipelines' overlayColor. */
     public boolean dynamax;
     /** Animation and time matrixTransforms was last posed with (see RareCandyAnimation). */

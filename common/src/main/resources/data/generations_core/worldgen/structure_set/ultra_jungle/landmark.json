@@ -1,0 +1,15 @@
+{
+  "structures": [
+    {
+      "structure": "generations_core:ultra_jungle/temple",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "generations_core:ultra_spread",
+    "config": "ultra_jungle/landmark",
+    "salt": 518204377,
+    "spacing": 36,
+    "separation": 14
+  }
+}

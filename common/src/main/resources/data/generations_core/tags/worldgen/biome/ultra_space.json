@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "#generations_core:ultra_space/ultra_jungle",
+    "#generations_core:ultra_space/ultra_desert",
+    "#generations_core:ultra_space/ultra_central",
+    "#generations_core:ultra_space/ultra_crater",
+    "#generations_core:ultra_space/ultra_forest",
+    "#generations_core:ultra_space/ultra_abyss",
+    "#generations_core:ultra_space/ultra_skyscraper"
+  ]
+}

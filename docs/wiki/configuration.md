@@ -26,6 +26,28 @@ dans `config/generations/core/raids/` : voir
 `bossHealth`, `legendaryChance`, `catchChance5Stars` et `catchChance6Stars` ne
 servent plus qu'à initialiser ces fichiers.
 
+## Ultra Warp Ride
+
+`config/generations/core/ultra_space/ultra_warp_ride.json` : `maxSessions` (défaut
+`6`, `0` désactive). Voir [Ultra Warp Ride](ultra-warp-ride.md).
+
+## Ressources des Ultra-Mondes
+
+`config/generations/core/ultra_space/ultra_resources.json` : les minerais des sept
+Ultra-Mondes (vanilla, gemmes de Generations, pierres évolutives, Ultrite). Pour chaque
+ressource : `enabled`, les blocs, la taille des veines, les tentatives par chunk, la bande
+d'altitude, un facteur par monde et par biome. `/ultrawarp reload` relit le fichier ; un
+changement ne vaut que pour les chunks générés ensuite. Voir
+[Ultra-Mondes](ultra-mondes.md) et `docs/ultra-warp-ride.md` (phase 4.3.2).
+
+## Structures des Ultra-Mondes
+
+`config/generations/core/ultra_space/ultra_structures.json` : pour chaque ensemble de
+structures (`ultra_crater/landmark` : la grande structure du monde, `ultra_crater/sites` :
+ses petites), `enabled`, `spacing` (un essai par carré de ce nombre de chunks) et
+`separation`. `/ultrawarp reload` relit le fichier ; un changement ne vaut que pour les
+chunks générés ensuite.
+
 ## Fichiers de données
 
 | Fichier | Contenu |

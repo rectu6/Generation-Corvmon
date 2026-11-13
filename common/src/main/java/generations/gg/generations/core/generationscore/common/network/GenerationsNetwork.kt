@@ -11,6 +11,7 @@ import generations.gg.generations.core.generationscore.common.network.packets.*
 import generations.gg.generations.core.generationscore.common.network.packets.shop.*
 import generations.gg.generations.core.generationscore.common.network.packets.pokewand.*
 import generations.gg.generations.core.generationscore.common.network.packets.raid.*
+import generations.gg.generations.core.generationscore.common.network.packets.ultraspace.*
 import generations.gg.generations.core.generationscore.common.network.packets.statue.S2COpenStatueEditorScreenHandler
 import generations.gg.generations.core.generationscore.common.network.packets.statue.S2COpenStatueEditorScreenPacket
 import generations.gg.generations.core.generationscore.common.network.packets.statue.UpdateStatueHandler
@@ -52,6 +53,13 @@ object GenerationsNetwork {
         list.add(PacketRegisterInfo(S2CRaidHudPacket.ID, S2CRaidHudPacket::decode, RaidPacketHandlers.Hud))
         list.add(PacketRegisterInfo(S2CRaidLobbyClosePacket.ID, S2CRaidLobbyClosePacket::decode, RaidPacketHandlers.LobbyClose))
         list.add(PacketRegisterInfo(S2CRaidCheerPacket.ID, S2CRaidCheerPacket::decode, RaidPacketHandlers.Cheer))
+        list.add(PacketRegisterInfo(S2CUltraWarpPacket.ID, S2CUltraWarpPacket::decode, UltraWarpPacketHandlers.Menu))
+        list.add(PacketRegisterInfo(S2CUltraWarpRideStartPacket.ID, S2CUltraWarpRideStartPacket::decode, UltraWarpPacketHandlers.RideStart))
+        list.add(PacketRegisterInfo(S2CUltraWarpRideStopPacket.ID, S2CUltraWarpRideStopPacket::decode, UltraWarpPacketHandlers.RideStop))
+        list.add(PacketRegisterInfo(S2CUltraWarpRideUpdatePacket.ID, S2CUltraWarpRideUpdatePacket::decode, UltraWarpPacketHandlers.RideUpdate))
+        list.add(PacketRegisterInfo(S2CUltraWarpRideEventPacket.ID, S2CUltraWarpRideEventPacket::decode, UltraWarpPacketHandlers.RideEvent))
+        list.add(PacketRegisterInfo(S2CUltraWarpPortalPacket.ID, S2CUltraWarpPortalPacket::decode, UltraWarpPacketHandlers.Portal))
+        list.add(PacketRegisterInfo(S2CUltraWarpTransferPacket.ID, S2CUltraWarpTransferPacket::decode, UltraWarpPacketHandlers.Transfer))
         // TODO: remove TeraTypeUpdatePacket when its registered in Cobblemon's own network
 //        list.add(PacketRegisterInfo(TeraTypeUpdatePacket.ID, TeraTypeUpdatePacket::decode, PokemonUpdatePacketHandler()))
 
@@ -68,6 +76,8 @@ object GenerationsNetwork {
         list.add(PacketRegisterInfo(C2SRaidLobbyPacket.ID, C2SRaidLobbyPacket::decode, RaidPacketHandlers.LobbyAction))
         list.add(PacketRegisterInfo(C2SRaidResultPacket.ID, C2SRaidResultPacket::decode, RaidPacketHandlers.ResultAction))
         list.add(PacketRegisterInfo(C2SRaidCheerPacket.ID, C2SRaidCheerPacket::decode, RaidPacketHandlers.CheerAction))
+        list.add(PacketRegisterInfo(C2SUltraWarpActionPacket.ID, C2SUltraWarpActionPacket::decode, UltraWarpPacketHandlers.Action))
+        list.add(PacketRegisterInfo(C2SUltraWarpRideStatePacket.ID, C2SUltraWarpRideStatePacket::decode, UltraWarpPacketHandlers.RideState))
         list.add(PacketRegisterInfo(C2SShopItemPacket.ID, C2SShopItemPacket::decode, C2SShopItemHandler))
         list.add(PacketRegisterInfo(HeadPatPacket.ID, ::HeadPatPacket, HeadPatPacketHandler))
 

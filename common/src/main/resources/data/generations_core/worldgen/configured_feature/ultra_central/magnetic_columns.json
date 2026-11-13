@@ -1,0 +1,29 @@
+{
+  "type": "generations_core:twisted_column",
+  "config": {
+    "block": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:polished_basalt"
+      }
+    },
+    "accent": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "generations_core:glowing_charge_cobblestone"
+      }
+    },
+    "height": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 10,
+      "max_inclusive": 24
+    },
+    "strands": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 1,
+      "max_inclusive": 2
+    },
+    "turns": 0.7,
+    "arch_chance": 0.15
+  }
+}

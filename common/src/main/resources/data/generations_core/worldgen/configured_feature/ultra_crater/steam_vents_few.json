@@ -1,0 +1,56 @@
+{
+  "type": "generations_core:steam_vent",
+  "config": {
+    "rim": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "minecraft:granite"
+          },
+          "weight": 2
+        },
+        {
+          "data": {
+            "Name": "minecraft:brown_terracotta"
+          },
+          "weight": 1
+        },
+        {
+          "data": {
+            "Name": "minecraft:tuff"
+          },
+          "weight": 1
+        }
+      ]
+    },
+    "ground": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "minecraft:coarse_dirt"
+          },
+          "weight": 2
+        },
+        {
+          "data": {
+            "Name": "minecraft:packed_mud"
+          },
+          "weight": 1
+        },
+        {
+          "data": {
+            "Name": "minecraft:brown_terracotta"
+          },
+          "weight": 1
+        }
+      ]
+    },
+    "radius": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 1,
+      "max_inclusive": 3
+    }
+  }
+}

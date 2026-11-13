@@ -1,0 +1,226 @@
+{
+  "type": "generations_core:city_block",
+  "config": {
+    "streets": {
+      "road": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": {
+              "Name": "minecraft:gray_concrete"
+            },
+            "weight": 12
+          },
+          {
+            "data": {
+              "Name": "minecraft:gray_concrete_powder"
+            },
+            "weight": 2
+          },
+          {
+            "data": {
+              "Name": "minecraft:cobbled_deepslate"
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "Name": "minecraft:gravel"
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "Name": "minecraft:moss_block"
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "Name": "minecraft:coarse_dirt"
+            },
+            "weight": 1
+          }
+        ]
+      },
+      "line": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": {
+              "Name": "minecraft:white_concrete"
+            },
+            "weight": 4
+          },
+          {
+            "data": {
+              "Name": "minecraft:light_gray_concrete"
+            },
+            "weight": 1
+          }
+        ]
+      },
+      "sidewalk": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": {
+              "Name": "minecraft:smooth_stone"
+            },
+            "weight": 4
+          },
+          {
+            "data": {
+              "Name": "minecraft:polished_andesite"
+            },
+            "weight": 3
+          },
+          {
+            "data": {
+              "Name": "minecraft:stone_bricks"
+            },
+            "weight": 2
+          },
+          {
+            "data": {
+              "Name": "minecraft:cracked_stone_bricks"
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "Name": "minecraft:mossy_stone_bricks"
+            },
+            "weight": 1
+          }
+        ]
+      },
+      "fire_chance": 0.0
+    },
+    "palettes": [
+      {
+        "wall": {
+          "type": "minecraft:weighted_state_provider",
+          "entries": [
+            {
+              "data": {
+                "Name": "minecraft:mossy_stone_bricks"
+              },
+              "weight": 3
+            },
+            {
+              "data": {
+                "Name": "minecraft:stone_bricks"
+              },
+              "weight": 2
+            },
+            {
+              "data": {
+                "Name": "minecraft:cracked_stone_bricks"
+              },
+              "weight": 1
+            }
+          ]
+        },
+        "accent": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "minecraft:chiseled_stone_bricks"
+          }
+        },
+        "window": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "minecraft:air"
+          }
+        },
+        "floor": {
+          "type": "minecraft:simple_state_provider",
+          "state": {
+            "Name": "minecraft:smooth_stone"
+          }
+        }
+      }
+    ],
+    "height": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 4,
+      "max_inclusive": 6
+    },
+    "building_chance": 0.12,
+    "ground": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "minecraft:grass_block"
+          },
+          "weight": 6
+        },
+        {
+          "data": {
+            "Name": "minecraft:moss_block"
+          },
+          "weight": 1
+        },
+        {
+          "data": {
+            "Name": "minecraft:coarse_dirt"
+          },
+          "weight": 1
+        }
+      ]
+    },
+    "roof": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:moss_block"
+      }
+    },
+    "roof_garden": 0.6,
+    "vines": 0.25,
+    "chimney": 0.0,
+    "pond": 0.45,
+    "ruin": {
+      "broken_windows": 0.5,
+      "holes": 0.25,
+      "collapse": 0.3,
+      "rubble": {
+        "type": "minecraft:weighted_state_provider",
+        "entries": [
+          {
+            "data": {
+              "Name": "minecraft:cobbled_deepslate"
+            },
+            "weight": 2
+          },
+          {
+            "data": {
+              "Name": "minecraft:gravel"
+            },
+            "weight": 2
+          },
+          {
+            "data": {
+              "Name": "minecraft:cracked_stone_bricks"
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "Name": "minecraft:andesite"
+            },
+            "weight": 1
+          },
+          {
+            "data": {
+              "Name": "minecraft:cobblestone"
+            },
+            "weight": 1
+          }
+        ]
+      }
+    },
+    "vegetation": "generations_core:ultra_skyscraper/city_trees"
+  }
+}

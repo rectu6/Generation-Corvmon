@@ -1,0 +1,402 @@
+{
+  "type": "generations_core:ultra_forest",
+  "generator": {
+    "type": "minecraft:noise",
+    "settings": "generations_core:ultra_forest",
+    "biome_source": {
+      "type": "minecraft:multi_noise",
+      "biomes": [
+        {
+          "biome": "generations_core:ultra_forest/blade_valley",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              2.0
+            ],
+            "humidity": [
+              -2.0,
+              2.0
+            ],
+            "continentalness": [
+              -2.0,
+              2.0
+            ],
+            "erosion": [
+              -2.0,
+              0.1
+            ],
+            "weirdness": [
+              -0.07,
+              0.07
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_forest/zen_garden",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              2.0
+            ],
+            "humidity": [
+              0.2,
+              2.0
+            ],
+            "continentalness": [
+              -2.0,
+              2.0
+            ],
+            "erosion": [
+              0.1,
+              2.0
+            ],
+            "weirdness": [
+              -2.0,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_forest/zen_garden",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              2.0
+            ],
+            "humidity": [
+              0.2,
+              2.0
+            ],
+            "continentalness": [
+              -2.0,
+              2.0
+            ],
+            "erosion": [
+              -2.0,
+              0.1
+            ],
+            "weirdness": [
+              -2.0,
+              -0.07
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_forest/zen_garden",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              2.0
+            ],
+            "humidity": [
+              0.2,
+              2.0
+            ],
+            "continentalness": [
+              -2.0,
+              2.0
+            ],
+            "erosion": [
+              -2.0,
+              0.1
+            ],
+            "weirdness": [
+              0.07,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_forest/golden_grove",
+          "parameters": {
+            "temperature": [
+              0.15,
+              2.0
+            ],
+            "humidity": [
+              -2.0,
+              0.2
+            ],
+            "continentalness": [
+              -2.0,
+              2.0
+            ],
+            "erosion": [
+              0.1,
+              2.0
+            ],
+            "weirdness": [
+              -2.0,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_forest/golden_grove",
+          "parameters": {
+            "temperature": [
+              0.15,
+              2.0
+            ],
+            "humidity": [
+              -2.0,
+              0.2
+            ],
+            "continentalness": [
+              -2.0,
+              2.0
+            ],
+            "erosion": [
+              -2.0,
+              0.1
+            ],
+            "weirdness": [
+              -2.0,
+              -0.07
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_forest/golden_grove",
+          "parameters": {
+            "temperature": [
+              0.15,
+              2.0
+            ],
+            "humidity": [
+              -2.0,
+              0.2
+            ],
+            "continentalness": [
+              -2.0,
+              2.0
+            ],
+            "erosion": [
+              -2.0,
+              0.1
+            ],
+            "weirdness": [
+              0.07,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_forest/origami_forest",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              -0.25
+            ],
+            "humidity": [
+              -2.0,
+              0.2
+            ],
+            "continentalness": [
+              -2.0,
+              2.0
+            ],
+            "erosion": [
+              0.1,
+              2.0
+            ],
+            "weirdness": [
+              -2.0,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_forest/origami_forest",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              -0.25
+            ],
+            "humidity": [
+              -2.0,
+              0.2
+            ],
+            "continentalness": [
+              -2.0,
+              2.0
+            ],
+            "erosion": [
+              -2.0,
+              0.1
+            ],
+            "weirdness": [
+              -2.0,
+              -0.07
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_forest/origami_forest",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              -0.25
+            ],
+            "humidity": [
+              -2.0,
+              0.2
+            ],
+            "continentalness": [
+              -2.0,
+              2.0
+            ],
+            "erosion": [
+              -2.0,
+              0.1
+            ],
+            "weirdness": [
+              0.07,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_forest/misty_forest",
+          "parameters": {
+            "temperature": [
+              -0.25,
+              0.15
+            ],
+            "humidity": [
+              -2.0,
+              0.2
+            ],
+            "continentalness": [
+              -2.0,
+              2.0
+            ],
+            "erosion": [
+              0.1,
+              2.0
+            ],
+            "weirdness": [
+              -2.0,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_forest/misty_forest",
+          "parameters": {
+            "temperature": [
+              -0.25,
+              0.15
+            ],
+            "humidity": [
+              -2.0,
+              0.2
+            ],
+            "continentalness": [
+              -2.0,
+              2.0
+            ],
+            "erosion": [
+              -2.0,
+              0.1
+            ],
+            "weirdness": [
+              -2.0,
+              -0.07
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_forest/misty_forest",
+          "parameters": {
+            "temperature": [
+              -0.25,
+              0.15
+            ],
+            "humidity": [
+              -2.0,
+              0.2
+            ],
+            "continentalness": [
+              -2.0,
+              2.0
+            ],
+            "erosion": [
+              -2.0,
+              0.1
+            ],
+            "weirdness": [
+              0.07,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        }
+      ]
+    }
+  }
+}

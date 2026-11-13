@@ -162,6 +162,7 @@ object GenerationsCoreClient {
 
         PlatformEvents.CLIENT_PLAYER_LOGIN.subscribe(Priority.NORMAL, GenerationsCoreClient::onLogin)
         PlatformEvents.CLIENT_PLAYER_LOGOUT.subscribe(Priority.NORMAL, GenerationsCoreClient::onLogout)
+        generations.gg.generations.core.generationscore.common.client.ultraspace.UltraWarpRideClient.init()
     }
 
 

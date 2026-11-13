@@ -1,0 +1,51 @@
+{
+  "type": "generations_core:crystal_spike",
+  "config": {
+    "block": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "generations_core:glowing_charge_cobblestone"
+          },
+          "weight": 4
+        },
+        {
+          "data": {
+            "Name": "generations_core:crystal_light"
+          },
+          "weight": 1
+        },
+        {
+          "data": {
+            "Name": "minecraft:shroomlight"
+          },
+          "weight": 1
+        }
+      ]
+    },
+    "core": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "generations_core:crystal_light"
+      }
+    },
+    "height": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 2,
+      "max_inclusive": 7
+    },
+    "radius": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 0,
+      "max_inclusive": 1
+    },
+    "count": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 1,
+      "max_inclusive": 3
+    },
+    "tilt": 0.35,
+    "hanging": false
+  }
+}

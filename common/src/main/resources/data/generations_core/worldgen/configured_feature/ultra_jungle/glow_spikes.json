@@ -1,0 +1,57 @@
+{
+  "type": "generations_core:crystal_spike",
+  "config": {
+    "block": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "minecraft:shroomlight"
+          },
+          "weight": 3
+        },
+        {
+          "data": {
+            "Name": "minecraft:lime_stained_glass"
+          },
+          "weight": 2
+        },
+        {
+          "data": {
+            "Name": "minecraft:yellow_stained_glass"
+          },
+          "weight": 2
+        },
+        {
+          "data": {
+            "Name": "minecraft:green_stained_glass"
+          },
+          "weight": 1
+        }
+      ]
+    },
+    "core": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:shroomlight"
+      }
+    },
+    "height": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 2,
+      "max_inclusive": 5
+    },
+    "radius": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 0,
+      "max_inclusive": 1
+    },
+    "count": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 1,
+      "max_inclusive": 2
+    },
+    "tilt": 0.3,
+    "hanging": false
+  }
+}

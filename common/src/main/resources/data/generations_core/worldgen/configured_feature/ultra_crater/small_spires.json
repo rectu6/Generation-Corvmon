@@ -1,0 +1,57 @@
+{
+  "type": "generations_core:crystal_spike",
+  "config": {
+    "block": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "minecraft:terracotta"
+          },
+          "weight": 3
+        },
+        {
+          "data": {
+            "Name": "minecraft:red_terracotta"
+          },
+          "weight": 3
+        },
+        {
+          "data": {
+            "Name": "minecraft:brown_terracotta"
+          },
+          "weight": 2
+        },
+        {
+          "data": {
+            "Name": "minecraft:granite"
+          },
+          "weight": 1
+        }
+      ]
+    },
+    "core": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:terracotta"
+      }
+    },
+    "height": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 3,
+      "max_inclusive": 8
+    },
+    "radius": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 0,
+      "max_inclusive": 1
+    },
+    "count": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 1,
+      "max_inclusive": 3
+    },
+    "tilt": 0.15,
+    "hanging": false
+  }
+}

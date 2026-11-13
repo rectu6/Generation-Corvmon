@@ -1,0 +1,42 @@
+{
+  "carvers": {},
+  "downfall": 0.4,
+  "effects": {
+    "fog_color": 13691604,
+    "sky_color": 9227156,
+    "water_color": 4168330,
+    "water_fog_color": 1456690,
+    "grass_color": 13164728,
+    "foliage_color": 15921902,
+    "mood_sound": {
+      "block_search_extent": 8,
+      "offset": 2.0,
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000
+    }
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "generations_core:ultra_forest/resources"
+    ],
+    [],
+    [],
+    [
+      "generations_core:ultra_forest/grass",
+      "generations_core:ultra_forest/ultra_flowers",
+      "generations_core:ultra_forest/origami_trees",
+      "generations_core:ultra_forest/paper_folds"
+    ],
+    []
+  ],
+  "has_precipitation": false,
+  "spawn_costs": {},
+  "spawners": {},
+  "temperature": 0.8
+}

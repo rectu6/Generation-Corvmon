@@ -1,0 +1,49 @@
+{
+  "type": "minecraft:flat_cache",
+  "argument": {
+    "type": "minecraft:cache_2d",
+    "argument": {
+      "type": "minecraft:mul",
+      "argument1": "minecraft:overworld/factor",
+      "argument2": {
+        "type": "minecraft:add",
+        "argument1": 1.0,
+        "argument2": {
+          "type": "minecraft:mul",
+          "argument1": {
+            "type": "minecraft:mul",
+            "argument1": {
+              "type": "minecraft:clamp",
+              "input": {
+                "type": "minecraft:mul",
+                "argument1": {
+                  "type": "minecraft:add",
+                  "argument1": "minecraft:overworld/erosion",
+                  "argument2": 0.16999999999999998
+                },
+                "argument2": -9.999999999999996
+              },
+              "min": 0.0,
+              "max": 1.0
+            },
+            "argument2": {
+              "type": "minecraft:clamp",
+              "input": {
+                "type": "minecraft:mul",
+                "argument1": {
+                  "type": "minecraft:add",
+                  "argument1": "minecraft:overworld/continents",
+                  "argument2": 0.25
+                },
+                "argument2": 10.000000000000002
+              },
+              "min": 0.0,
+              "max": 1.0
+            }
+          },
+          "argument2": -0.35
+        }
+      }
+    }
+  }
+}

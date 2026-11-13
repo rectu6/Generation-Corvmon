@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 2.0,
+  "group": "ultrite_remnant",
+  "ingredient": {
+    "item": "generations_core:ultrite_debris"
+  },
+  "result": {
+    "id": "generations_core:ultrite_remnant"
+  }
+}

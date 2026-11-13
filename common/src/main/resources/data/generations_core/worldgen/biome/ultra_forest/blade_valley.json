@@ -1,0 +1,41 @@
+{
+  "carvers": {},
+  "downfall": 0.4,
+  "effects": {
+    "fog_color": 11589816,
+    "sky_color": 9227156,
+    "water_color": 4168330,
+    "water_fog_color": 1456690,
+    "grass_color": 12110000,
+    "foliage_color": 13621472,
+    "mood_sound": {
+      "block_search_extent": 8,
+      "offset": 2.0,
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000
+    }
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "generations_core:ultra_forest/resources"
+    ],
+    [],
+    [],
+    [
+      "generations_core:ultra_forest/leaf_blades",
+      "generations_core:ultra_forest/cut_rocks",
+      "generations_core:ultra_forest/grass"
+    ],
+    []
+  ],
+  "has_precipitation": false,
+  "spawn_costs": {},
+  "spawners": {},
+  "temperature": 0.8
+}

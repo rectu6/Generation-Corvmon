@@ -124,3 +124,5 @@ fabric/src/main/generated/.cache
 /.kotlin/
 
 !/libs/*.jar
+# Python caches (tools/)
+__pycache__/

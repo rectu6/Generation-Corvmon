@@ -9,6 +9,8 @@ rapport au Generations d'origine.
 | Page | Contenu |
 |---|---|
 | [Raids Dynamax](raids-dynamax.md) | Antres naturels, multijoueur, boucliers, ondes de choc, capture, récompenses |
+| [Ultra Warp Ride](ultra-warp-ride.md) | Le voyage vers l'Ultra-Espace depuis l'autel céleste : tunnel, énergie, portails |
+| [Ultra-Mondes](ultra-mondes.md) | Les sept mondes où mènent les portails, l'arrivée, le retour |
 | [Dynamax](dynamax.md) | Dynamaxer ses Pokémon en combat, effet visuel |
 | [Interface de combat](interface-combat.md) | Interface de combat HD façon Épée et Bouclier, météo |
 | [Méga-évolution](mega-evolution.md) | Animation en combat et hors combat |
@@ -33,6 +35,9 @@ rapport au Generations d'origine.
   selon le biome, raids de 1 à 6 étoiles jusqu'à 4 joueurs (PNJ pour les places
   libres), boucliers, ondes de choc, encouragements, explosion en cas de défaite,
   capture et récompenses par joueur, tout réglable en JSON.
+- **Ultra Warp Ride** (phase 1) : l'autel céleste ouvre un menu qui demande Solgaleo
+  (Soleil) ou Lunala (Lune) et lance une session de test, 6 à la fois au plus, en
+  solo comme sur serveur ; commande `/ultrawarp` pour tester seul.
 - **Dynamax** : quand un Pokémon Dynamaxe en combat (Poignet Dynamax), il devient
   géant, rouge, avec les nuages Dynamax au-dessus de la tête.
 - **Interface de combat** façon Épée et Bouclier, en haute définition.

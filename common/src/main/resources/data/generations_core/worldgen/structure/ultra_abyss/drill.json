@@ -1,0 +1,15 @@
+{
+  "type": "generations_core:ultra_cavern",
+  "biomes": "#generations_core:has_structure/ultra_abyss/drill",
+  "step": "underground_structures",
+  "spawn_overrides": {},
+  "terrain_adaptation": "beard_thin",
+  "start_pool": "generations_core:ultra_abyss/sites/drill",
+  "size": 1,
+  "max_distance_from_center": 32,
+  "min_y": 36,
+  "max_y": 114,
+  "clearance": 7,
+  "reach": 6,
+  "open_sides": 5
+}

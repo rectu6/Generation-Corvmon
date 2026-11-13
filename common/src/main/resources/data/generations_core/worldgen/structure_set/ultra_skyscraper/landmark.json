@@ -1,0 +1,15 @@
+{
+  "structures": [
+    {
+      "structure": "generations_core:ultra_skyscraper/complex",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "generations_core:ultra_spread",
+    "config": "ultra_skyscraper/landmark",
+    "salt": 1129468203,
+    "spacing": 36,
+    "separation": 14
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "carvers": {},
+  "downfall": 0.4,
+  "effects": {
+    "fog_color": 16769208,
+    "sky_color": 16758904,
+    "water_color": 3590360,
+    "water_fog_color": 5255183,
+    "grass_color": 5232746,
+    "foliage_color": 4180058,
+    "mood_sound": {
+      "block_search_extent": 8,
+      "offset": 2.0,
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000
+    }
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "generations_core:ultra_desert/resources"
+    ],
+    [],
+    [],
+    [
+      "generations_core:ultra_desert/palm",
+      "minecraft:patch_sugar_cane",
+      "minecraft:patch_waterlily",
+      "generations_core:ultra_desert/oasis_grass",
+      "generations_core:ultra_desert/oasis_flowers"
+    ],
+    []
+  ],
+  "has_precipitation": false,
+  "spawn_costs": {},
+  "spawners": {},
+  "temperature": 0.8
+}

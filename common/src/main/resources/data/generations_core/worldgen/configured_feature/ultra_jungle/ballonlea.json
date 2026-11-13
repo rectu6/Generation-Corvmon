@@ -1,0 +1,101 @@
+{
+  "type": "minecraft:random_patch",
+  "config": {
+    "feature": {
+      "feature": {
+        "type": "minecraft:simple_block",
+        "config": {
+          "to_place": {
+            "type": "minecraft:weighted_state_provider",
+            "entries": [
+              {
+                "data": {
+                  "Name": "generations_core:ballonlea_blue_mushroom"
+                },
+                "weight": 3
+              },
+              {
+                "data": {
+                  "Name": "generations_core:ballonlea_green_mushroom"
+                },
+                "weight": 3
+              },
+              {
+                "data": {
+                  "Name": "generations_core:ballonlea_pink_mushroom"
+                },
+                "weight": 3
+              },
+              {
+                "data": {
+                  "Name": "generations_core:ballonlea_yellow_mushroom"
+                },
+                "weight": 3
+              },
+              {
+                "data": {
+                  "Name": "generations_core:group_ballonlea_blue_mushroom"
+                },
+                "weight": 2
+              },
+              {
+                "data": {
+                  "Name": "generations_core:group_ballonlea_green_mushroom"
+                },
+                "weight": 2
+              },
+              {
+                "data": {
+                  "Name": "generations_core:group_ballonlea_pink_mushroom"
+                },
+                "weight": 2
+              },
+              {
+                "data": {
+                  "Name": "generations_core:group_ballonlea_yellow_mushroom"
+                },
+                "weight": 2
+              },
+              {
+                "data": {
+                  "Name": "generations_core:tall_ballonlea_blue_mushroom"
+                },
+                "weight": 1
+              },
+              {
+                "data": {
+                  "Name": "generations_core:tall_ballonlea_green_mushroom"
+                },
+                "weight": 1
+              },
+              {
+                "data": {
+                  "Name": "generations_core:tall_ballonlea_pink_mushroom"
+                },
+                "weight": 1
+              },
+              {
+                "data": {
+                  "Name": "generations_core:tall_ballonlea_yellow_mushroom"
+                },
+                "weight": 1
+              }
+            ]
+          }
+        }
+      },
+      "placement": [
+        {
+          "type": "minecraft:block_predicate_filter",
+          "predicate": {
+            "type": "minecraft:matching_blocks",
+            "blocks": "minecraft:air"
+          }
+        }
+      ]
+    },
+    "tries": 20,
+    "xz_spread": 6,
+    "y_spread": 2
+  }
+}

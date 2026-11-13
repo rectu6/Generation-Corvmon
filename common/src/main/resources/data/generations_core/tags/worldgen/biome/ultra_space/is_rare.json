@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "generations_core:ultra_jungle/glowing_jungle",
+    "generations_core:ultra_desert/oasis",
+    "generations_core:ultra_desert/glass_desert",
+    "generations_core:ultra_central/crystal_fields",
+    "generations_core:ultra_forest/blade_valley",
+    "generations_core:ultra_abyss/luminous_caves"
+  ]
+}

@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Containers;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -23,6 +24,8 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import generations.gg.generations.core.generationscore.common.world.ultraspace.UltraWarpRide;
 
 import java.util.Collection;
 import java.util.stream.Stream;
@@ -41,6 +44,12 @@ public abstract class ServerPlayerMixin extends Player {
 
     public ServerPlayerMixin(Level level, BlockPos pos, float yRot, GameProfile gameProfile) {
         super(level, pos, yRot, gameProfile);
+    }
+
+    /** In the Ultra Warp Ride tunnel, the player is not hurt in the world (see UltraWarpRide.protects). */
+    @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
+    private void generations$ultraWarpRide(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+        if (UltraWarpRide.protects((ServerPlayer) (Object) this, source)) cir.setReturnValue(false);
     }
 
     @Inject(method = "checkRidingStatistics", at = @At("TAIL"))

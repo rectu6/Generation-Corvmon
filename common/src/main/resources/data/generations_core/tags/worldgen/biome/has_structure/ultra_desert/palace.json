@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "generations_core:ultra_desert/glass_desert",
+    "generations_core:ultra_desert/crystal_desert",
+    "generations_core:ultra_desert/white_dunes"
+  ]
+}

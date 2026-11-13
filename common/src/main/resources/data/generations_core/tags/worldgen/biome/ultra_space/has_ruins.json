@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "generations_core:ultra_skyscraper/industrial_zone",
+    "generations_core:ultra_skyscraper/collapsed_ruins",
+    "generations_core:ultra_skyscraper/residential",
+    "generations_core:ultra_skyscraper/downtown"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "type": "generations_core:crater",
+  "config": {
+    "radius": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 3,
+      "max_inclusive": 10
+    },
+    "depth": 0.5,
+    "floor": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:moss_block"
+      }
+    },
+    "rim": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "minecraft:grass_block"
+          },
+          "weight": 3
+        },
+        {
+          "data": {
+            "Name": "minecraft:yellow_terracotta"
+          },
+          "weight": 1
+        }
+      ]
+    },
+    "ejecta": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:coarse_dirt"
+      }
+    },
+    "ejecta_count": 2
+  }
+}

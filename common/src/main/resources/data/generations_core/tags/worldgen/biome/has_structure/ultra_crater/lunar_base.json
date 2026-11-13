@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "generations_core:ultra_crater/crater_plains",
+    "generations_core:ultra_crater/giant_craters",
+    "generations_core:ultra_crater/steam_fields"
+  ]
+}

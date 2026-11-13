@@ -1,0 +1,15 @@
+{
+  "structures": [
+    {
+      "structure": "generations_core:ultra_forest/sanctuary",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "generations_core:ultra_spread",
+    "config": "ultra_forest/landmark",
+    "salt": 1237785443,
+    "spacing": 36,
+    "separation": 14
+  }
+}

@@ -35,4 +35,9 @@ public class PosableStateMixin implements CobblemonInstanceProvider, RareCandyMo
     public float generations$modelHalfWidth() {
         return instance != null ? instance.modelHalfWidth : 0f;
     }
+
+    @Override
+    public float generations$modelHeight() {
+        return instance != null ? instance.modelHeight : 0f;
+    }
 }

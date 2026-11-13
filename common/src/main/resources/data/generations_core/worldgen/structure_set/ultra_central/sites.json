@@ -1,0 +1,31 @@
+{
+  "structures": [
+    {
+      "structure": "generations_core:ultra_central/substation",
+      "weight": 3
+    },
+    {
+      "structure": "generations_core:ultra_central/maintenance",
+      "weight": 3
+    },
+    {
+      "structure": "generations_core:ultra_central/relay",
+      "weight": 2
+    },
+    {
+      "structure": "generations_core:ultra_central/shelter",
+      "weight": 3
+    }
+  ],
+  "placement": {
+    "type": "generations_core:ultra_spread",
+    "config": "ultra_central/sites",
+    "salt": 702914457,
+    "spacing": 11,
+    "separation": 5,
+    "exclusion_zone": {
+      "other_set": "generations_core:ultra_central/landmark",
+      "chunk_count": 8
+    }
+  }
+}

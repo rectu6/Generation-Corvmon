@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "generations_core:ultra_crater/giant_craters",
+    "generations_core:ultra_skyscraper/collapsed_ruins"
+  ]
+}

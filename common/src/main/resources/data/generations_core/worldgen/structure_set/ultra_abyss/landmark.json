@@ -1,0 +1,15 @@
+{
+  "structures": [
+    {
+      "structure": "generations_core:ultra_abyss/lab",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "generations_core:ultra_spread",
+    "config": "ultra_abyss/landmark",
+    "salt": 1846210599,
+    "spacing": 26,
+    "separation": 10
+  }
+}

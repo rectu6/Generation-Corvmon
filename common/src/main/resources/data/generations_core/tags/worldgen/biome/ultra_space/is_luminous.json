@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "generations_core:ultra_jungle/glowing_jungle",
+    "generations_core:ultra_central/crystal_fields",
+    "generations_core:ultra_abyss/luminous_caves",
+    "generations_core:ultra_abyss/fungal_forest"
+  ]
+}

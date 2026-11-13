@@ -1,0 +1,45 @@
+{
+  "carvers": {},
+  "downfall": 0.4,
+  "effects": {
+    "fog_color": 15443548,
+    "sky_color": 16039018,
+    "water_color": 8372330,
+    "water_fog_color": 3166250,
+    "grass_color": 14202432,
+    "foliage_color": 13214266,
+    "mood_sound": {
+      "block_search_extent": 8,
+      "offset": 2.0,
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000
+    }
+  },
+  "features": [
+    [],
+    [],
+    [
+      "generations_core:ultra_crater/green_craters"
+    ],
+    [],
+    [],
+    [],
+    [
+      "generations_core:ultra_crater/resources"
+    ],
+    [],
+    [],
+    [
+      "generations_core:ultra_crater/black_arches",
+      "generations_core:ultra_crater/yellow_grass",
+      "generations_core:ultra_crater/boulders",
+      "generations_core:ultra_crater/steam_vents_few",
+      "generations_core:ultra_crater/red_spires"
+    ],
+    []
+  ],
+  "has_precipitation": false,
+  "spawn_costs": {},
+  "spawners": {},
+  "temperature": 0.8
+}

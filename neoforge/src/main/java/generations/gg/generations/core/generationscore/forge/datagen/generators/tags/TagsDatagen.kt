@@ -81,6 +81,19 @@ object TagsDatagen {
                 .addTag(GenerationsBlockTags.POKEBALL_CHESTS)
                 .addTag(GenerationsBlockTags.BALL_DISPLAY_BLOCKS).add(GenerationsBlocks.Z_BLOCK)
                 .add(GenerationsBlocks.LIGHTNING_LANTERN)
+            // Iron-like blocks (they need the right tool to drop): without this a pickaxe got nothing from them.
+            tag(BlockTags.MINEABLE_WITH_PICKAXE).add(
+                GenerationsBlocks.CRYSTAL_BLOCK.value(), GenerationsBlocks.CRYSTAL_LIGHT.value(), GenerationsBlocks.CRYSTAL_SLAB.value(),
+                GenerationsBlocks.CRYSTAL_STAIRS.value(), GenerationsBlocks.CRYSTAL_WALL.value(),
+                GenerationsBlocks.RUBY_BLOCK.value(), GenerationsBlocks.RUBY_SLAB.value(), GenerationsBlocks.RUBY_STAIRS.value(), GenerationsBlocks.RUBY_WALL.value(),
+                GenerationsBlocks.SAPPHIRE_BLOCK.value(), GenerationsBlocks.SAPPHIRE_SLAB.value(), GenerationsBlocks.SAPPHIRE_STAIRS.value(), GenerationsBlocks.SAPPHIRE_WALL.value(),
+                GenerationsBlocks.SILICON_BLOCK.value(),
+                GenerationsBlocks.ULTRA_CRYSTAL_SET.baseBlock, GenerationsBlocks.ULTRA_CRYSTAL_SET.slab, GenerationsBlocks.ULTRA_CRYSTAL_SET.stairs, GenerationsBlocks.ULTRA_CRYSTAL_SET.wall,
+            )
+            // Ultrite debris (phase 4.3.2): mined like ancient debris, with a diamond pickaxe or better.
+            // Its loot table and its smelting into ultrite_remnant are in common/src/main/resources.
+            tag(BlockTags.MINEABLE_WITH_PICKAXE).add(GenerationsBlocks.ULTRITE_DEBRIS.value())
+            tag(BlockTags.NEEDS_DIAMOND_TOOL).add(GenerationsBlocks.ULTRITE_DEBRIS.value())
 
             GenerationsBlocks.STONE.all().forEach { block ->
                 mine_with_pickaxe.add(block)

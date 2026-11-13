@@ -1,0 +1,14 @@
+{
+  "fallback": "generations_core:ultra_crater/base/door_caps",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "generations_core:ultra_crater/base/airlock",
+        "projection": "rigid",
+        "processors": "minecraft:empty"
+      }
+    }
+  ]
+}

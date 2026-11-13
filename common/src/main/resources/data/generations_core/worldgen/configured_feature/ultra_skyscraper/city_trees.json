@@ -1,0 +1,39 @@
+{
+  "type": "minecraft:random_selector",
+  "config": {
+    "features": [
+      {
+        "chance": 0.2,
+        "feature": {
+          "feature": "minecraft:fancy_oak",
+          "placement": []
+        }
+      },
+      {
+        "chance": 0.2,
+        "feature": {
+          "feature": "minecraft:azalea_tree",
+          "placement": []
+        }
+      },
+      {
+        "chance": 0.12,
+        "feature": {
+          "feature": "minecraft:birch",
+          "placement": []
+        }
+      },
+      {
+        "chance": 0.15,
+        "feature": {
+          "feature": "minecraft:jungle_bush",
+          "placement": []
+        }
+      }
+    ],
+    "default": {
+      "feature": "minecraft:oak",
+      "placement": []
+    }
+  }
+}

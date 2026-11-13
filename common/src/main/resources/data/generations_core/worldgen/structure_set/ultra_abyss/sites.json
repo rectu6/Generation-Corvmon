@@ -1,0 +1,31 @@
+{
+  "structures": [
+    {
+      "structure": "generations_core:ultra_abyss/small_lab",
+      "weight": 3
+    },
+    {
+      "structure": "generations_core:ultra_abyss/station",
+      "weight": 3
+    },
+    {
+      "structure": "generations_core:ultra_abyss/drill",
+      "weight": 3
+    },
+    {
+      "structure": "generations_core:ultra_abyss/platform",
+      "weight": 2
+    }
+  ],
+  "placement": {
+    "type": "generations_core:ultra_spread",
+    "config": "ultra_abyss/sites",
+    "salt": 327045863,
+    "spacing": 9,
+    "separation": 4,
+    "exclusion_zone": {
+      "other_set": "generations_core:ultra_abyss/landmark",
+      "chunk_count": 6
+    }
+  }
+}

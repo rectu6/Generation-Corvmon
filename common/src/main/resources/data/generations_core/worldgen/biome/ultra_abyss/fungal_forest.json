@@ -1,0 +1,48 @@
+{
+  "carvers": {},
+  "downfall": 0.4,
+  "effects": {
+    "fog_color": 2759242,
+    "sky_color": 663104,
+    "water_color": 3824895,
+    "water_fog_color": 1050672,
+    "particle": {
+      "options": {
+        "type": "minecraft:mycelium"
+      },
+      "probability": 0.01
+    },
+    "mood_sound": {
+      "block_search_extent": 8,
+      "offset": 2.0,
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000
+    }
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "generations_core:ultra_abyss/resources"
+    ],
+    [],
+    [],
+    [
+      "minecraft:glow_lichen",
+      "generations_core:ultra_abyss/ballonlea",
+      "generations_core:ultra_abyss/huge_red_mushroom",
+      "generations_core:ultra_abyss/huge_brown_mushroom"
+    ],
+    [
+      "generations_core:ultra_abyss/cavern_light"
+    ]
+  ],
+  "has_precipitation": false,
+  "spawn_costs": {},
+  "spawners": {},
+  "temperature": 0.8
+}

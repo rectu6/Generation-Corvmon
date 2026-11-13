@@ -1,0 +1,582 @@
+{
+  "type": "generations_core:ultra_central",
+  "generator": {
+    "type": "minecraft:noise",
+    "settings": "generations_core:ultra_central",
+    "biome_source": {
+      "type": "minecraft:multi_noise",
+      "biomes": [
+        {
+          "biome": "generations_core:ultra_central/electric_mountains",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              2.0
+            ],
+            "humidity": [
+              -2.0,
+              2.0
+            ],
+            "continentalness": [
+              -0.2,
+              2.0
+            ],
+            "erosion": [
+              -2.0,
+              -0.25
+            ],
+            "weirdness": [
+              -2.0,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_central/magnetic_valley",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              2.0
+            ],
+            "humidity": [
+              -2.0,
+              2.0
+            ],
+            "continentalness": [
+              -2.0,
+              -0.2
+            ],
+            "erosion": [
+              -2.0,
+              2.0
+            ],
+            "weirdness": [
+              -0.1,
+              0.1
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_central/magnetic_valley",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              2.0
+            ],
+            "humidity": [
+              -2.0,
+              2.0
+            ],
+            "continentalness": [
+              -0.2,
+              2.0
+            ],
+            "erosion": [
+              -0.25,
+              2.0
+            ],
+            "weirdness": [
+              -0.1,
+              0.1
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_central/crystal_fields",
+          "parameters": {
+            "temperature": [
+              0.38,
+              2.0
+            ],
+            "humidity": [
+              -0.1,
+              2.0
+            ],
+            "continentalness": [
+              -2.0,
+              -0.2
+            ],
+            "erosion": [
+              -2.0,
+              2.0
+            ],
+            "weirdness": [
+              -2.0,
+              -0.1
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_central/crystal_fields",
+          "parameters": {
+            "temperature": [
+              0.38,
+              2.0
+            ],
+            "humidity": [
+              -0.1,
+              2.0
+            ],
+            "continentalness": [
+              -2.0,
+              -0.2
+            ],
+            "erosion": [
+              -2.0,
+              2.0
+            ],
+            "weirdness": [
+              0.1,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_central/crystal_fields",
+          "parameters": {
+            "temperature": [
+              0.38,
+              2.0
+            ],
+            "humidity": [
+              -0.1,
+              2.0
+            ],
+            "continentalness": [
+              -0.2,
+              2.0
+            ],
+            "erosion": [
+              -0.25,
+              2.0
+            ],
+            "weirdness": [
+              -2.0,
+              -0.1
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_central/crystal_fields",
+          "parameters": {
+            "temperature": [
+              0.38,
+              2.0
+            ],
+            "humidity": [
+              -0.1,
+              2.0
+            ],
+            "continentalness": [
+              -0.2,
+              2.0
+            ],
+            "erosion": [
+              -0.25,
+              2.0
+            ],
+            "weirdness": [
+              0.1,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_central/cable_forest",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              0.38
+            ],
+            "humidity": [
+              0.12,
+              2.0
+            ],
+            "continentalness": [
+              -2.0,
+              -0.2
+            ],
+            "erosion": [
+              -2.0,
+              2.0
+            ],
+            "weirdness": [
+              -2.0,
+              -0.1
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_central/cable_forest",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              0.38
+            ],
+            "humidity": [
+              0.12,
+              2.0
+            ],
+            "continentalness": [
+              -2.0,
+              -0.2
+            ],
+            "erosion": [
+              -2.0,
+              2.0
+            ],
+            "weirdness": [
+              0.1,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_central/cable_forest",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              0.38
+            ],
+            "humidity": [
+              0.12,
+              2.0
+            ],
+            "continentalness": [
+              -0.2,
+              2.0
+            ],
+            "erosion": [
+              -0.25,
+              2.0
+            ],
+            "weirdness": [
+              -2.0,
+              -0.1
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_central/cable_forest",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              0.38
+            ],
+            "humidity": [
+              0.12,
+              2.0
+            ],
+            "continentalness": [
+              -0.2,
+              2.0
+            ],
+            "erosion": [
+              -0.25,
+              2.0
+            ],
+            "weirdness": [
+              0.1,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_central/conductive_plains",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              0.38
+            ],
+            "humidity": [
+              -2.0,
+              0.12
+            ],
+            "continentalness": [
+              -2.0,
+              -0.2
+            ],
+            "erosion": [
+              -2.0,
+              2.0
+            ],
+            "weirdness": [
+              -2.0,
+              -0.1
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_central/conductive_plains",
+          "parameters": {
+            "temperature": [
+              0.38,
+              2.0
+            ],
+            "humidity": [
+              -2.0,
+              -0.1
+            ],
+            "continentalness": [
+              -2.0,
+              -0.2
+            ],
+            "erosion": [
+              -2.0,
+              2.0
+            ],
+            "weirdness": [
+              -2.0,
+              -0.1
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_central/conductive_plains",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              0.38
+            ],
+            "humidity": [
+              -2.0,
+              0.12
+            ],
+            "continentalness": [
+              -2.0,
+              -0.2
+            ],
+            "erosion": [
+              -2.0,
+              2.0
+            ],
+            "weirdness": [
+              0.1,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_central/conductive_plains",
+          "parameters": {
+            "temperature": [
+              0.38,
+              2.0
+            ],
+            "humidity": [
+              -2.0,
+              -0.1
+            ],
+            "continentalness": [
+              -2.0,
+              -0.2
+            ],
+            "erosion": [
+              -2.0,
+              2.0
+            ],
+            "weirdness": [
+              0.1,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_central/conductive_plains",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              0.38
+            ],
+            "humidity": [
+              -2.0,
+              0.12
+            ],
+            "continentalness": [
+              -0.2,
+              2.0
+            ],
+            "erosion": [
+              -0.25,
+              2.0
+            ],
+            "weirdness": [
+              -2.0,
+              -0.1
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_central/conductive_plains",
+          "parameters": {
+            "temperature": [
+              0.38,
+              2.0
+            ],
+            "humidity": [
+              -2.0,
+              -0.1
+            ],
+            "continentalness": [
+              -0.2,
+              2.0
+            ],
+            "erosion": [
+              -0.25,
+              2.0
+            ],
+            "weirdness": [
+              -2.0,
+              -0.1
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_central/conductive_plains",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              0.38
+            ],
+            "humidity": [
+              -2.0,
+              0.12
+            ],
+            "continentalness": [
+              -0.2,
+              2.0
+            ],
+            "erosion": [
+              -0.25,
+              2.0
+            ],
+            "weirdness": [
+              0.1,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_central/conductive_plains",
+          "parameters": {
+            "temperature": [
+              0.38,
+              2.0
+            ],
+            "humidity": [
+              -2.0,
+              -0.1
+            ],
+            "continentalness": [
+              -0.2,
+              2.0
+            ],
+            "erosion": [
+              -0.25,
+              2.0
+            ],
+            "weirdness": [
+              0.1,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        }
+      ]
+    }
+  }
+}

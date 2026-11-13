@@ -9,10 +9,12 @@ import generations.gg.generations.core.generationscore.common.world.level.block.
 import generations.gg.generations.core.generationscore.common.world.level.block.entities.GenerationsBlockEntityModels
 import generations.gg.generations.core.generationscore.common.world.level.block.entities.shrines.altar.CelestialAltarBlockEntity
 import generations.gg.generations.core.generationscore.common.world.level.block.generic.GenericRotatableModelBlock
+import generations.gg.generations.core.generationscore.common.world.ultraspace.UltraWarpRide
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.network.chat.Component
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
@@ -66,6 +68,7 @@ class CelestialAltarBlock(properties: Properties) :
             })
     }
 
+    // Whatever the player holds, a click opens the altar's Ultra Warp Ride menu.
     public override fun useItemOn(
         stack: ItemStack,
         state: BlockState,
@@ -74,12 +77,13 @@ class CelestialAltarBlock(properties: Properties) :
         player: Player,
         hand: InteractionHand,
         hit: BlockHitResult
-    ): ItemInteractionResult {
-        if (level.isClientSide) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+    ): ItemInteractionResult = ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
 
-        player.sendSystemMessage(Component.translatable("generations_core.blocks.celestial_altar.hint"))
-
-        return ItemInteractionResult.SUCCESS
+    /** The Ultra Warp Ride menu, from the altar's face as the server sees it. */
+    public override fun useWithoutItem(state: BlockState, level: Level, pos: BlockPos, player: Player, hit: BlockHitResult): InteractionResult {
+        if (level.isClientSide) return InteractionResult.SUCCESS
+        UltraWarpRide.open(player as ServerPlayer, pos)
+        return InteractionResult.CONSUME
     }
 
     public override fun getShape(

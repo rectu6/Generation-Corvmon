@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "generations_core:ultra_central/conductive_plains",
+    "generations_core:ultra_central/magnetic_valley",
+    "generations_core:ultra_central/crystal_fields",
+    "generations_core:ultra_central/cable_forest"
+  ]
+}

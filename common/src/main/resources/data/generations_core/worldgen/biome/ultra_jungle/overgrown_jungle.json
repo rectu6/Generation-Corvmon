@@ -1,0 +1,50 @@
+{
+  "carvers": {},
+  "downfall": 0.4,
+  "effects": {
+    "fog_color": 9431232,
+    "sky_color": 5232288,
+    "water_color": 2864755,
+    "water_fog_color": 736554,
+    "grass_color": 5025616,
+    "foliage_color": 5089888,
+    "mood_sound": {
+      "block_search_extent": 8,
+      "offset": 2.0,
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000
+    }
+  },
+  "features": [
+    [],
+    [],
+    [
+      "generations_core:ultra_jungle/moss",
+      "generations_core:ultra_jungle/rock_mossy_cobblestone",
+      "generations_core:ultra_jungle/rock_mossy_charge_cobblestone",
+      "generations_core:ultra_jungle/rock_mossy_volcanic_cobblestone",
+      "generations_core:ultra_jungle/rock_ultra_cobblestone"
+    ],
+    [],
+    [],
+    [],
+    [
+      "generations_core:ultra_jungle/resources"
+    ],
+    [],
+    [],
+    [
+      "generations_core:ultra_jungle/jungle_bush",
+      "minecraft:patch_grass_jungle",
+      "minecraft:vines",
+      "generations_core:ultra_jungle/ultra_flowers",
+      "generations_core:ultra_jungle/ancient_tree",
+      "generations_core:ultra_jungle/twisted_tree"
+    ],
+    []
+  ],
+  "has_precipitation": false,
+  "spawn_costs": {},
+  "spawners": {},
+  "temperature": 0.8
+}

@@ -18,6 +18,8 @@
 
 package generations.gg.generations.core.generationscore.common.mixin.client;
 
+import generations.gg.generations.core.generationscore.common.client.ultraspace.UltraWarpRideClient;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import generations.gg.generations.core.generationscore.common.client.GenerationsCoreClient;
@@ -44,13 +46,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class LevelRendererMixin {
     @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/debug/DebugRenderer;render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource$BufferSource;DDD)V"))
     private void pokecraft$firstPass(DeltaTracker deltaTracker, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f frustumMatrix, Matrix4f projectionMatrix, CallbackInfo ci) {
+        // The Ultra Warp Ride (walls, Pokémon, player) first: RareCandy draws its Pokémon in the pass below.
+        UltraWarpRideClient.renderOpaque();
         GenerationsCoreClient.INSTANCE.firstRenderPass();
     }
 
     @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Options;getCloudsType()Lnet/minecraft/client/CloudStatus;"))
     private void pokecraft$secondPass(DeltaTracker deltaTracker, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f frustumMatrix, Matrix4f projectionMatrix, CallbackInfo ci) {
+        UltraWarpRideClient.renderTranslucent();
         GenerationsCoreClient.INSTANCE.secondRenderPass();
     }
 
 
+    /** No rain nor snow around the Ultra Warp Ride's camera (Iris frames the call itself, not this method's body). */
+    @Inject(method = "renderSnowAndRain", at = @At("HEAD"), cancellable = true)
+    private void generations$ultraWarpWeather(LightTexture lightTexture, float partialTick, double x, double y, double z, CallbackInfo ci) {
+        if (UltraWarpRideClient.isActive()) ci.cancel();
+    }
 }

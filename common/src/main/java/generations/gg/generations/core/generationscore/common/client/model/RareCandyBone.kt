@@ -121,6 +121,7 @@ class RareCandyBone /*Remove when cobblemon doesn't have parts of code that assu
             // for what sits on it: the Dynamax clouds.
             instance.modelTopY = instance.transformationMatrix().transformPosition(0f, dimensions.y, 0f, TOP).y
             instance.modelHalfWidth = maxOf(dimensions.x, dimensions.z) * modelScale
+            instance.modelHeight = dimensions.y * modelScale
 
             model.render(instance, Minecraft.getInstance().renderBuffers().bufferSource())
         }

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:huge_fungus",
+  "config": {
+    "decor_state": {
+      "Name": "minecraft:shroomlight"
+    },
+    "hat_state": {
+      "Name": "minecraft:warped_wart_block"
+    },
+    "stem_state": {
+      "Name": "generations_core:ultra_dark_log",
+      "Properties": {
+        "axis": "y"
+      }
+    },
+    "valid_base_block": {
+      "Name": "minecraft:moss_block"
+    },
+    "planted": false,
+    "replaceable_blocks": {
+      "type": "minecraft:matching_blocks",
+      "blocks": [
+        "minecraft:short_grass",
+        "minecraft:fern",
+        "minecraft:moss_carpet"
+      ]
+    }
+  }
+}

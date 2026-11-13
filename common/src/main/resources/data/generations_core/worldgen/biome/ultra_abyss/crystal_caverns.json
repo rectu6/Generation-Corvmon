@@ -1,0 +1,43 @@
+{
+  "carvers": {},
+  "downfall": 0.4,
+  "effects": {
+    "fog_color": 1714778,
+    "sky_color": 663104,
+    "water_color": 4881663,
+    "water_fog_color": 530496,
+    "mood_sound": {
+      "block_search_extent": 8,
+      "offset": 2.0,
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000
+    }
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [
+      "minecraft:amethyst_geode"
+    ],
+    [],
+    [],
+    [
+      "generations_core:ultra_abyss/resources"
+    ],
+    [],
+    [],
+    [
+      "generations_core:ultra_abyss/floor_crystals",
+      "generations_core:ultra_abyss/hanging_crystals",
+      "generations_core:ultra_abyss/large_dripstone"
+    ],
+    [
+      "generations_core:ultra_abyss/cavern_light"
+    ]
+  ],
+  "has_precipitation": false,
+  "spawn_costs": {},
+  "spawners": {},
+  "temperature": 0.8
+}

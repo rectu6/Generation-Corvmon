@@ -1,0 +1,106 @@
+{
+  "type": "minecraft:random_patch",
+  "config": {
+    "feature": {
+      "feature": {
+        "type": "minecraft:simple_block",
+        "config": {
+          "to_place": {
+            "type": "minecraft:weighted_state_provider",
+            "entries": [
+              {
+                "data": {
+                  "Name": "generations_core:dichro_eulb"
+                },
+                "weight": 1
+              },
+              {
+                "data": {
+                  "Name": "generations_core:muilla"
+                },
+                "weight": 1
+              },
+              {
+                "data": {
+                  "Name": "generations_core:noilednad"
+                },
+                "weight": 1
+              },
+              {
+                "data": {
+                  "Name": "generations_core:pilut_der"
+                },
+                "weight": 1
+              },
+              {
+                "data": {
+                  "Name": "generations_core:pilut_egnaro"
+                },
+                "weight": 1
+              },
+              {
+                "data": {
+                  "Name": "generations_core:pilut_etihw"
+                },
+                "weight": 1
+              },
+              {
+                "data": {
+                  "Name": "generations_core:pilut_knip"
+                },
+                "weight": 1
+              },
+              {
+                "data": {
+                  "Name": "generations_core:rewolfnroc"
+                },
+                "weight": 1
+              },
+              {
+                "data": {
+                  "Name": "generations_core:yellav_eht_fo_ylil"
+                },
+                "weight": 1
+              },
+              {
+                "data": {
+                  "Name": "generations_core:yppop"
+                },
+                "weight": 1
+              },
+              {
+                "data": {
+                  "Name": "generations_core:ysiad_eyexo"
+                },
+                "weight": 1
+              }
+            ]
+          }
+        }
+      },
+      "placement": [
+        {
+          "type": "minecraft:block_predicate_filter",
+          "predicate": {
+            "type": "minecraft:all_of",
+            "predicates": [
+              {
+                "type": "minecraft:matching_blocks",
+                "blocks": "minecraft:air"
+              },
+              {
+                "type": "minecraft:would_survive",
+                "state": {
+                  "Name": "generations_core:dichro_eulb"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "tries": 24,
+    "xz_spread": 6,
+    "y_spread": 2
+  }
+}

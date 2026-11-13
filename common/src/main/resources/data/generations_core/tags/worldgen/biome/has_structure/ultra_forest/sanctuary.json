@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "generations_core:ultra_forest/origami_forest",
+    "generations_core:ultra_forest/zen_garden",
+    "generations_core:ultra_forest/golden_grove"
+  ]
+}

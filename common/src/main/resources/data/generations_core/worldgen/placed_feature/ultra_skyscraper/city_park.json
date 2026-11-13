@@ -1,0 +1,8 @@
+{
+  "feature": "generations_core:ultra_skyscraper/city_park",
+  "placement": [
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

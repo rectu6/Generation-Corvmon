@@ -1,0 +1,522 @@
+{
+  "type": "generations_core:ultra_jungle",
+  "generator": {
+    "type": "minecraft:noise",
+    "settings": "generations_core:ultra_jungle",
+    "biome_source": {
+      "type": "minecraft:multi_noise",
+      "biomes": [
+        {
+          "biome": "generations_core:ultra_jungle/mountain_jungle",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              2.0
+            ],
+            "humidity": [
+              -2.0,
+              2.0
+            ],
+            "continentalness": [
+              -0.2,
+              2.0
+            ],
+            "erosion": [
+              -2.0,
+              -0.22
+            ],
+            "weirdness": [
+              -2.0,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_jungle/swamp_jungle",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              2.0
+            ],
+            "humidity": [
+              -2.0,
+              2.0
+            ],
+            "continentalness": [
+              -2.0,
+              -0.28
+            ],
+            "erosion": [
+              -0.15,
+              2.0
+            ],
+            "weirdness": [
+              -2.0,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_jungle/glowing_jungle",
+          "parameters": {
+            "temperature": [
+              -0.1,
+              2.0
+            ],
+            "humidity": [
+              -2.0,
+              2.0
+            ],
+            "continentalness": [
+              -0.28,
+              -0.2
+            ],
+            "erosion": [
+              -2.0,
+              2.0
+            ],
+            "weirdness": [
+              0.45,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_jungle/glowing_jungle",
+          "parameters": {
+            "temperature": [
+              -0.1,
+              2.0
+            ],
+            "humidity": [
+              -2.0,
+              2.0
+            ],
+            "continentalness": [
+              -2.0,
+              -0.28
+            ],
+            "erosion": [
+              -2.0,
+              -0.15
+            ],
+            "weirdness": [
+              0.45,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_jungle/glowing_jungle",
+          "parameters": {
+            "temperature": [
+              -0.1,
+              2.0
+            ],
+            "humidity": [
+              -2.0,
+              2.0
+            ],
+            "continentalness": [
+              -0.2,
+              2.0
+            ],
+            "erosion": [
+              -0.22,
+              2.0
+            ],
+            "weirdness": [
+              0.45,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_jungle/overgrown_jungle",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              -0.1
+            ],
+            "humidity": [
+              -2.0,
+              -0.15
+            ],
+            "continentalness": [
+              -0.28,
+              -0.2
+            ],
+            "erosion": [
+              -2.0,
+              2.0
+            ],
+            "weirdness": [
+              -2.0,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_jungle/overgrown_jungle",
+          "parameters": {
+            "temperature": [
+              -0.1,
+              2.0
+            ],
+            "humidity": [
+              -2.0,
+              -0.15
+            ],
+            "continentalness": [
+              -0.28,
+              -0.2
+            ],
+            "erosion": [
+              -2.0,
+              2.0
+            ],
+            "weirdness": [
+              -2.0,
+              0.45
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_jungle/overgrown_jungle",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              -0.1
+            ],
+            "humidity": [
+              -2.0,
+              -0.15
+            ],
+            "continentalness": [
+              -2.0,
+              -0.28
+            ],
+            "erosion": [
+              -2.0,
+              -0.15
+            ],
+            "weirdness": [
+              -2.0,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_jungle/overgrown_jungle",
+          "parameters": {
+            "temperature": [
+              -0.1,
+              2.0
+            ],
+            "humidity": [
+              -2.0,
+              -0.15
+            ],
+            "continentalness": [
+              -2.0,
+              -0.28
+            ],
+            "erosion": [
+              -2.0,
+              -0.15
+            ],
+            "weirdness": [
+              -2.0,
+              0.45
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_jungle/overgrown_jungle",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              -0.1
+            ],
+            "humidity": [
+              -2.0,
+              -0.15
+            ],
+            "continentalness": [
+              -0.2,
+              2.0
+            ],
+            "erosion": [
+              -0.22,
+              2.0
+            ],
+            "weirdness": [
+              -2.0,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_jungle/overgrown_jungle",
+          "parameters": {
+            "temperature": [
+              -0.1,
+              2.0
+            ],
+            "humidity": [
+              -2.0,
+              -0.15
+            ],
+            "continentalness": [
+              -0.2,
+              2.0
+            ],
+            "erosion": [
+              -0.22,
+              2.0
+            ],
+            "weirdness": [
+              -2.0,
+              0.45
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_jungle/giant_jungle",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              -0.1
+            ],
+            "humidity": [
+              -0.15,
+              2.0
+            ],
+            "continentalness": [
+              -0.28,
+              -0.2
+            ],
+            "erosion": [
+              -2.0,
+              2.0
+            ],
+            "weirdness": [
+              -2.0,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_jungle/giant_jungle",
+          "parameters": {
+            "temperature": [
+              -0.1,
+              2.0
+            ],
+            "humidity": [
+              -0.15,
+              2.0
+            ],
+            "continentalness": [
+              -0.28,
+              -0.2
+            ],
+            "erosion": [
+              -2.0,
+              2.0
+            ],
+            "weirdness": [
+              -2.0,
+              0.45
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_jungle/giant_jungle",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              -0.1
+            ],
+            "humidity": [
+              -0.15,
+              2.0
+            ],
+            "continentalness": [
+              -2.0,
+              -0.28
+            ],
+            "erosion": [
+              -2.0,
+              -0.15
+            ],
+            "weirdness": [
+              -2.0,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_jungle/giant_jungle",
+          "parameters": {
+            "temperature": [
+              -0.1,
+              2.0
+            ],
+            "humidity": [
+              -0.15,
+              2.0
+            ],
+            "continentalness": [
+              -2.0,
+              -0.28
+            ],
+            "erosion": [
+              -2.0,
+              -0.15
+            ],
+            "weirdness": [
+              -2.0,
+              0.45
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_jungle/giant_jungle",
+          "parameters": {
+            "temperature": [
+              -2.0,
+              -0.1
+            ],
+            "humidity": [
+              -0.15,
+              2.0
+            ],
+            "continentalness": [
+              -0.2,
+              2.0
+            ],
+            "erosion": [
+              -0.22,
+              2.0
+            ],
+            "weirdness": [
+              -2.0,
+              2.0
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        },
+        {
+          "biome": "generations_core:ultra_jungle/giant_jungle",
+          "parameters": {
+            "temperature": [
+              -0.1,
+              2.0
+            ],
+            "humidity": [
+              -0.15,
+              2.0
+            ],
+            "continentalness": [
+              -0.2,
+              2.0
+            ],
+            "erosion": [
+              -0.22,
+              2.0
+            ],
+            "weirdness": [
+              -2.0,
+              0.45
+            ],
+            "depth": [
+              -2.0,
+              2.0
+            ],
+            "offset": 0.0
+          }
+        }
+      ]
+    }
+  }
+}

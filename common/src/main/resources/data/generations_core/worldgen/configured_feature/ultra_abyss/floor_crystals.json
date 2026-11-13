@@ -1,0 +1,74 @@
+{
+  "type": "generations_core:crystal_spike",
+  "config": {
+    "block": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "minecraft:cyan_stained_glass"
+          },
+          "weight": 3
+        },
+        {
+          "data": {
+            "Name": "minecraft:light_blue_stained_glass"
+          },
+          "weight": 3
+        },
+        {
+          "data": {
+            "Name": "minecraft:purple_stained_glass"
+          },
+          "weight": 2
+        },
+        {
+          "data": {
+            "Name": "minecraft:packed_ice"
+          },
+          "weight": 2
+        },
+        {
+          "data": {
+            "Name": "generations_core:crystal_light"
+          },
+          "weight": 1
+        }
+      ]
+    },
+    "core": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "minecraft:packed_ice"
+          },
+          "weight": 2
+        },
+        {
+          "data": {
+            "Name": "generations_core:crystal_light"
+          },
+          "weight": 1
+        }
+      ]
+    },
+    "height": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 4,
+      "max_inclusive": 16
+    },
+    "radius": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 1,
+      "max_inclusive": 3
+    },
+    "count": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 1,
+      "max_inclusive": 4
+    },
+    "tilt": 0.3,
+    "hanging": false
+  }
+}

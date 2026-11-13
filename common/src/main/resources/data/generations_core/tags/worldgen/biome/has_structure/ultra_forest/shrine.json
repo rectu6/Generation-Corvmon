@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "generations_core:ultra_forest/blade_valley",
+    "generations_core:ultra_forest/zen_garden",
+    "generations_core:ultra_forest/golden_grove",
+    "generations_core:ultra_forest/origami_forest",
+    "generations_core:ultra_forest/misty_forest"
+  ]
+}

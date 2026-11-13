@@ -1,0 +1,621 @@
+{
+  "type": "minecraft:flat_cache",
+  "argument": {
+    "type": "minecraft:cache_2d",
+    "argument": {
+      "type": "minecraft:add",
+      "argument1": {
+        "type": "minecraft:add",
+        "argument1": {
+          "type": "minecraft:add",
+          "argument1": {
+            "type": "minecraft:add",
+            "argument1": {
+              "type": "minecraft:add",
+              "argument1": {
+                "type": "minecraft:add",
+                "argument1": {
+                  "type": "minecraft:mul",
+                  "argument1": "minecraft:overworld/offset",
+                  "argument2": 1.0
+                },
+                "argument2": 0.046875
+              },
+              "argument2": {
+                "type": "minecraft:mul",
+                "argument1": {
+                  "type": "minecraft:mul",
+                  "argument1": {
+                    "type": "minecraft:clamp",
+                    "input": {
+                      "type": "minecraft:mul",
+                      "argument1": {
+                        "type": "minecraft:add",
+                        "argument1": "minecraft:overworld/erosion",
+                        "argument2": 0.16999999999999998
+                      },
+                      "argument2": -9.999999999999996
+                    },
+                    "min": 0.0,
+                    "max": 1.0
+                  },
+                  "argument2": {
+                    "type": "minecraft:clamp",
+                    "input": {
+                      "type": "minecraft:mul",
+                      "argument1": {
+                        "type": "minecraft:add",
+                        "argument1": "minecraft:overworld/continents",
+                        "argument2": 0.25
+                      },
+                      "argument2": 10.000000000000002
+                    },
+                    "min": 0.0,
+                    "max": 1.0
+                  }
+                },
+                "argument2": {
+                  "type": "minecraft:add",
+                  "argument1": 0.140625,
+                  "argument2": {
+                    "type": "minecraft:mul",
+                    "argument1": 0.1875,
+                    "argument2": {
+                      "type": "minecraft:add",
+                      "argument1": 1.0,
+                      "argument2": {
+                        "type": "minecraft:mul",
+                        "argument1": -1.0,
+                        "argument2": {
+                          "type": "minecraft:abs",
+                          "argument": {
+                            "type": "minecraft:noise",
+                            "noise": "generations_core:ultra_relief",
+                            "xz_scale": 1.1,
+                            "y_scale": 0.0
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "argument2": {
+              "type": "minecraft:mul",
+              "argument1": {
+                "type": "minecraft:mul",
+                "argument1": {
+                  "type": "minecraft:mul",
+                  "argument1": {
+                    "type": "minecraft:clamp",
+                    "input": {
+                      "type": "minecraft:mul",
+                      "argument1": {
+                        "type": "minecraft:add",
+                        "argument1": "minecraft:overworld/continents",
+                        "argument2": 0.23000000000000004
+                      },
+                      "argument2": -10.000000000000002
+                    },
+                    "min": 0.0,
+                    "max": 1.0
+                  },
+                  "argument2": {
+                    "type": "minecraft:clamp",
+                    "input": {
+                      "type": "minecraft:mul",
+                      "argument1": {
+                        "type": "minecraft:add",
+                        "argument1": "minecraft:overworld/erosion",
+                        "argument2": 0.2
+                      },
+                      "argument2": 9.999999999999998
+                    },
+                    "min": 0.0,
+                    "max": 1.0
+                  }
+                },
+                "argument2": {
+                  "type": "minecraft:add",
+                  "argument1": 1.0,
+                  "argument2": {
+                    "type": "minecraft:mul",
+                    "argument1": -1.0,
+                    "argument2": {
+                      "type": "minecraft:mul",
+                      "argument1": {
+                        "type": "minecraft:clamp",
+                        "input": {
+                          "type": "minecraft:mul",
+                          "argument1": {
+                            "type": "minecraft:add",
+                            "argument1": "minecraft:overworld/erosion",
+                            "argument2": 0.16999999999999998
+                          },
+                          "argument2": -9.999999999999996
+                        },
+                        "min": 0.0,
+                        "max": 1.0
+                      },
+                      "argument2": {
+                        "type": "minecraft:clamp",
+                        "input": {
+                          "type": "minecraft:mul",
+                          "argument1": {
+                            "type": "minecraft:add",
+                            "argument1": "minecraft:overworld/continents",
+                            "argument2": 0.25
+                          },
+                          "argument2": 10.000000000000002
+                        },
+                        "min": 0.0,
+                        "max": 1.0
+                      }
+                    }
+                  }
+                }
+              },
+              "argument2": {
+                "type": "minecraft:mul",
+                "argument1": 0.03125,
+                "argument2": {
+                  "type": "minecraft:noise",
+                  "noise": "generations_core:ultra_relief",
+                  "xz_scale": 3.0,
+                  "y_scale": 0.0
+                }
+              }
+            }
+          },
+          "argument2": {
+            "type": "minecraft:mul",
+            "argument1": {
+              "type": "minecraft:mul",
+              "argument1": {
+                "type": "minecraft:mul",
+                "argument1": {
+                  "type": "minecraft:mul",
+                  "argument1": {
+                    "type": "minecraft:clamp",
+                    "input": {
+                      "type": "minecraft:mul",
+                      "argument1": {
+                        "type": "minecraft:add",
+                        "argument1": "minecraft:overworld/ridges",
+                        "argument2": -0.4
+                      },
+                      "argument2": 10.000000000000002
+                    },
+                    "min": 0.0,
+                    "max": 1.0
+                  },
+                  "argument2": {
+                    "type": "minecraft:clamp",
+                    "input": {
+                      "type": "minecraft:mul",
+                      "argument1": {
+                        "type": "minecraft:add",
+                        "argument1": "generations_core:ultra_jungle/temperature",
+                        "argument2": 0.15000000000000002
+                      },
+                      "argument2": 9.999999999999998
+                    },
+                    "min": 0.0,
+                    "max": 1.0
+                  }
+                },
+                "argument2": {
+                  "type": "minecraft:add",
+                  "argument1": 1.0,
+                  "argument2": {
+                    "type": "minecraft:mul",
+                    "argument1": -1.0,
+                    "argument2": {
+                      "type": "minecraft:mul",
+                      "argument1": {
+                        "type": "minecraft:clamp",
+                        "input": {
+                          "type": "minecraft:mul",
+                          "argument1": {
+                            "type": "minecraft:add",
+                            "argument1": "minecraft:overworld/erosion",
+                            "argument2": 0.16999999999999998
+                          },
+                          "argument2": -9.999999999999996
+                        },
+                        "min": 0.0,
+                        "max": 1.0
+                      },
+                      "argument2": {
+                        "type": "minecraft:clamp",
+                        "input": {
+                          "type": "minecraft:mul",
+                          "argument1": {
+                            "type": "minecraft:add",
+                            "argument1": "minecraft:overworld/continents",
+                            "argument2": 0.25
+                          },
+                          "argument2": 10.000000000000002
+                        },
+                        "min": 0.0,
+                        "max": 1.0
+                      }
+                    }
+                  }
+                }
+              },
+              "argument2": {
+                "type": "minecraft:add",
+                "argument1": 1.0,
+                "argument2": {
+                  "type": "minecraft:mul",
+                  "argument1": -1.0,
+                  "argument2": {
+                    "type": "minecraft:mul",
+                    "argument1": {
+                      "type": "minecraft:clamp",
+                      "input": {
+                        "type": "minecraft:mul",
+                        "argument1": {
+                          "type": "minecraft:add",
+                          "argument1": "minecraft:overworld/continents",
+                          "argument2": 0.23000000000000004
+                        },
+                        "argument2": -10.000000000000002
+                      },
+                      "min": 0.0,
+                      "max": 1.0
+                    },
+                    "argument2": {
+                      "type": "minecraft:clamp",
+                      "input": {
+                        "type": "minecraft:mul",
+                        "argument1": {
+                          "type": "minecraft:add",
+                          "argument1": "minecraft:overworld/erosion",
+                          "argument2": 0.2
+                        },
+                        "argument2": 9.999999999999998
+                      },
+                      "min": 0.0,
+                      "max": 1.0
+                    }
+                  }
+                }
+              }
+            },
+            "argument2": {
+              "type": "minecraft:mul",
+              "argument1": 0.0625,
+              "argument2": {
+                "type": "minecraft:noise",
+                "noise": "generations_core:ultra_relief",
+                "xz_scale": 1.2,
+                "y_scale": 0.0
+              }
+            }
+          }
+        },
+        "argument2": {
+          "type": "minecraft:mul",
+          "argument1": {
+            "type": "minecraft:mul",
+            "argument1": {
+              "type": "minecraft:mul",
+              "argument1": {
+                "type": "minecraft:mul",
+                "argument1": {
+                  "type": "minecraft:clamp",
+                  "input": {
+                    "type": "minecraft:mul",
+                    "argument1": {
+                      "type": "minecraft:add",
+                      "argument1": "generations_core:ultra_jungle/vegetation",
+                      "argument2": 0.09999999999999999
+                    },
+                    "argument2": -9.999999999999998
+                  },
+                  "min": 0.0,
+                  "max": 1.0
+                },
+                "argument2": {
+                  "type": "minecraft:add",
+                  "argument1": 1.0,
+                  "argument2": {
+                    "type": "minecraft:mul",
+                    "argument1": -1.0,
+                    "argument2": {
+                      "type": "minecraft:mul",
+                      "argument1": {
+                        "type": "minecraft:clamp",
+                        "input": {
+                          "type": "minecraft:mul",
+                          "argument1": {
+                            "type": "minecraft:add",
+                            "argument1": "minecraft:overworld/erosion",
+                            "argument2": 0.16999999999999998
+                          },
+                          "argument2": -9.999999999999996
+                        },
+                        "min": 0.0,
+                        "max": 1.0
+                      },
+                      "argument2": {
+                        "type": "minecraft:clamp",
+                        "input": {
+                          "type": "minecraft:mul",
+                          "argument1": {
+                            "type": "minecraft:add",
+                            "argument1": "minecraft:overworld/continents",
+                            "argument2": 0.25
+                          },
+                          "argument2": 10.000000000000002
+                        },
+                        "min": 0.0,
+                        "max": 1.0
+                      }
+                    }
+                  }
+                }
+              },
+              "argument2": {
+                "type": "minecraft:add",
+                "argument1": 1.0,
+                "argument2": {
+                  "type": "minecraft:mul",
+                  "argument1": -1.0,
+                  "argument2": {
+                    "type": "minecraft:mul",
+                    "argument1": {
+                      "type": "minecraft:clamp",
+                      "input": {
+                        "type": "minecraft:mul",
+                        "argument1": {
+                          "type": "minecraft:add",
+                          "argument1": "minecraft:overworld/continents",
+                          "argument2": 0.23000000000000004
+                        },
+                        "argument2": -10.000000000000002
+                      },
+                      "min": 0.0,
+                      "max": 1.0
+                    },
+                    "argument2": {
+                      "type": "minecraft:clamp",
+                      "input": {
+                        "type": "minecraft:mul",
+                        "argument1": {
+                          "type": "minecraft:add",
+                          "argument1": "minecraft:overworld/erosion",
+                          "argument2": 0.2
+                        },
+                        "argument2": 9.999999999999998
+                      },
+                      "min": 0.0,
+                      "max": 1.0
+                    }
+                  }
+                }
+              }
+            },
+            "argument2": {
+              "type": "minecraft:add",
+              "argument1": 1.0,
+              "argument2": {
+                "type": "minecraft:mul",
+                "argument1": -1.0,
+                "argument2": {
+                  "type": "minecraft:mul",
+                  "argument1": {
+                    "type": "minecraft:clamp",
+                    "input": {
+                      "type": "minecraft:mul",
+                      "argument1": {
+                        "type": "minecraft:add",
+                        "argument1": "minecraft:overworld/ridges",
+                        "argument2": -0.4
+                      },
+                      "argument2": 10.000000000000002
+                    },
+                    "min": 0.0,
+                    "max": 1.0
+                  },
+                  "argument2": {
+                    "type": "minecraft:clamp",
+                    "input": {
+                      "type": "minecraft:mul",
+                      "argument1": {
+                        "type": "minecraft:add",
+                        "argument1": "generations_core:ultra_jungle/temperature",
+                        "argument2": 0.15000000000000002
+                      },
+                      "argument2": 9.999999999999998
+                    },
+                    "min": 0.0,
+                    "max": 1.0
+                  }
+                }
+              }
+            }
+          },
+          "argument2": {
+            "type": "minecraft:mul",
+            "argument1": 0.109375,
+            "argument2": {
+              "type": "minecraft:noise",
+              "noise": "generations_core:ultra_relief",
+              "xz_scale": 1.4,
+              "y_scale": 0.0
+            }
+          }
+        }
+      },
+      "argument2": {
+        "type": "minecraft:mul",
+        "argument1": {
+          "type": "minecraft:mul",
+          "argument1": {
+            "type": "minecraft:mul",
+            "argument1": {
+              "type": "minecraft:mul",
+              "argument1": {
+                "type": "minecraft:mul",
+                "argument1": 1.0,
+                "argument2": {
+                  "type": "minecraft:add",
+                  "argument1": 1.0,
+                  "argument2": {
+                    "type": "minecraft:mul",
+                    "argument1": -1.0,
+                    "argument2": {
+                      "type": "minecraft:mul",
+                      "argument1": {
+                        "type": "minecraft:clamp",
+                        "input": {
+                          "type": "minecraft:mul",
+                          "argument1": {
+                            "type": "minecraft:add",
+                            "argument1": "minecraft:overworld/erosion",
+                            "argument2": 0.16999999999999998
+                          },
+                          "argument2": -9.999999999999996
+                        },
+                        "min": 0.0,
+                        "max": 1.0
+                      },
+                      "argument2": {
+                        "type": "minecraft:clamp",
+                        "input": {
+                          "type": "minecraft:mul",
+                          "argument1": {
+                            "type": "minecraft:add",
+                            "argument1": "minecraft:overworld/continents",
+                            "argument2": 0.25
+                          },
+                          "argument2": 10.000000000000002
+                        },
+                        "min": 0.0,
+                        "max": 1.0
+                      }
+                    }
+                  }
+                }
+              },
+              "argument2": {
+                "type": "minecraft:add",
+                "argument1": 1.0,
+                "argument2": {
+                  "type": "minecraft:mul",
+                  "argument1": -1.0,
+                  "argument2": {
+                    "type": "minecraft:mul",
+                    "argument1": {
+                      "type": "minecraft:clamp",
+                      "input": {
+                        "type": "minecraft:mul",
+                        "argument1": {
+                          "type": "minecraft:add",
+                          "argument1": "minecraft:overworld/continents",
+                          "argument2": 0.23000000000000004
+                        },
+                        "argument2": -10.000000000000002
+                      },
+                      "min": 0.0,
+                      "max": 1.0
+                    },
+                    "argument2": {
+                      "type": "minecraft:clamp",
+                      "input": {
+                        "type": "minecraft:mul",
+                        "argument1": {
+                          "type": "minecraft:add",
+                          "argument1": "minecraft:overworld/erosion",
+                          "argument2": 0.2
+                        },
+                        "argument2": 9.999999999999998
+                      },
+                      "min": 0.0,
+                      "max": 1.0
+                    }
+                  }
+                }
+              }
+            },
+            "argument2": {
+              "type": "minecraft:add",
+              "argument1": 1.0,
+              "argument2": {
+                "type": "minecraft:mul",
+                "argument1": -1.0,
+                "argument2": {
+                  "type": "minecraft:mul",
+                  "argument1": {
+                    "type": "minecraft:clamp",
+                    "input": {
+                      "type": "minecraft:mul",
+                      "argument1": {
+                        "type": "minecraft:add",
+                        "argument1": "minecraft:overworld/ridges",
+                        "argument2": -0.4
+                      },
+                      "argument2": 10.000000000000002
+                    },
+                    "min": 0.0,
+                    "max": 1.0
+                  },
+                  "argument2": {
+                    "type": "minecraft:clamp",
+                    "input": {
+                      "type": "minecraft:mul",
+                      "argument1": {
+                        "type": "minecraft:add",
+                        "argument1": "generations_core:ultra_jungle/temperature",
+                        "argument2": 0.15000000000000002
+                      },
+                      "argument2": 9.999999999999998
+                    },
+                    "min": 0.0,
+                    "max": 1.0
+                  }
+                }
+              }
+            }
+          },
+          "argument2": {
+            "type": "minecraft:add",
+            "argument1": 1.0,
+            "argument2": {
+              "type": "minecraft:mul",
+              "argument1": -1.0,
+              "argument2": {
+                "type": "minecraft:clamp",
+                "input": {
+                  "type": "minecraft:mul",
+                  "argument1": {
+                    "type": "minecraft:add",
+                    "argument1": "generations_core:ultra_jungle/vegetation",
+                    "argument2": 0.09999999999999999
+                  },
+                  "argument2": -9.999999999999998
+                },
+                "min": 0.0,
+                "max": 1.0
+              }
+            }
+          }
+        },
+        "argument2": {
+          "type": "minecraft:mul",
+          "argument1": 0.078125,
+          "argument2": {
+            "type": "minecraft:noise",
+            "noise": "generations_core:ultra_relief",
+            "xz_scale": 0.9,
+            "y_scale": 0.0
+          }
+        }
+      }
+    }
+  }
+}

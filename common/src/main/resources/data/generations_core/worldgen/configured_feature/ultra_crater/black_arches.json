@@ -1,0 +1,42 @@
+{
+  "type": "generations_core:twisted_column",
+  "config": {
+    "block": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "minecraft:blackstone"
+          },
+          "weight": 3
+        },
+        {
+          "data": {
+            "Name": "minecraft:polished_blackstone"
+          },
+          "weight": 1
+        },
+        {
+          "data": {
+            "Name": "minecraft:smooth_basalt"
+          },
+          "weight": 1
+        }
+      ]
+    },
+    "accent": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:polished_blackstone"
+      }
+    },
+    "height": {
+      "type": "minecraft:uniform",
+      "min_inclusive": 4,
+      "max_inclusive": 7
+    },
+    "strands": 1,
+    "turns": 0.25,
+    "arch_chance": 1.0
+  }
+}

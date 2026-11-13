@@ -1,0 +1,15 @@
+{
+  "structures": [
+    {
+      "structure": "generations_core:ultra_desert/palace",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "generations_core:ultra_spread",
+    "config": "ultra_desert/landmark",
+    "salt": 1395027761,
+    "spacing": 36,
+    "separation": 14
+  }
+}

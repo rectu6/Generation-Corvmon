@@ -1,0 +1,14 @@
+{
+  "fallback": "generations_core:ultra_forest/sanctuary/door_caps",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "generations_core:ultra_forest/sanctuary/gatehouse",
+        "projection": "rigid",
+        "processors": "minecraft:empty"
+      }
+    }
+  ]
+}

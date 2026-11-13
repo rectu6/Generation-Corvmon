@@ -102,7 +102,9 @@ class GenerationsCoreClientFabric : ClientModInitializer, GenerationsCoreClientI
                 if (block is DoorBlock || block is TrapDoorBlock) renderLayerMap.putBlock(block, RenderType.cutout())
             }
             GenerationsBlocks.BLOCKS.all().forEach { block ->
-                if (block is DoorBlock || block is GenerationsMushroomBlock) renderLayerMap.putBlock(
+                // Plants (flowers, Ultra flowers, double plants, mushrooms): their models' "render_type"
+                // is only read by NeoForge, so on Fabric they need it here or draw opaque squares.
+                if (block is DoorBlock || block is GenerationsMushroomBlock || block is net.minecraft.world.level.block.BushBlock) renderLayerMap.putBlock(
                     block,
                     RenderType.cutout()
                 )
