@@ -53,6 +53,8 @@ public abstract class LevelRendererMixin {
         } else {
             UltraWarpRideClient.renderOpaque();
         }
+        // A legendary cinematic's Pokémon (no entity), in this pass like any other: the shader pack lights it.
+        generations.gg.generations.core.generationscore.common.client.cinematic.CinematicClient.beforeRareCandy(frustumMatrix, projectionMatrix);
         GenerationsCoreClient.INSTANCE.firstRenderPass();
     }
 

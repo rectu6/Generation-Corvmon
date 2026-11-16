@@ -37,6 +37,8 @@ public abstract class PokemonBattleMixin {
     private void injectEnd(CallbackInfo ci) {
         BattleConditionsProcessor.processBattleEnd((PokemonBattle) (Object) this);
         GenerationsInstructionProcessor.processBattleEnd((PokemonBattle) (Object) this);
+        generations.gg.generations.core.generationscore.common.world.catchcombo.CatchCombo.onBattleEnd((PokemonBattle) (Object) this);
+        generations.gg.generations.core.generationscore.common.battle.flee.InstantFlee.onBattleEnd((PokemonBattle) (Object) this);
     }
 
     @ModifyArgs(

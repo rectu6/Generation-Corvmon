@@ -542,6 +542,18 @@
 
 	globalThis.GenerationsRaid = {
 		/**
+		 * Instant flight (InstantFlee, any wild battle): whether an active Pokémon of
+		 * this side is trapped now (Mean Look, Shadow Tag, Arena Trap, Wrap…), as Showdown
+		 * computed it for this turn, even when the request does not say it (no Pokémon to
+		 * switch in, or a trap not revealed yet).
+		 */
+		trapped(battle, side) {
+			if (!battle) return null;
+			const s = battle.sides.find(x => x.id === side);
+			return !!s && s.active.some(p => p && !p.fainted && !!p.trapped);
+		},
+
+		/**
 		 * data: { localSlot, host, tier, cfg, participants: [{ slot, name, kind, packed? }] }
 		 * tier: { hpMultiplier, shieldSegments, aiSkill, maxAttacks, extraAttackChance, shockwave }
 		 * cfg: { maxTurns, maxFaints, shield, shockwave, cheers }

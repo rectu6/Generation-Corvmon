@@ -1,5 +1,6 @@
 package generations.gg.generations.core.generationscore.common.mixin;
 
+import generations.gg.generations.core.generationscore.common.commands.BossCommands;
 import generations.gg.generations.core.generationscore.common.commands.UltraWarpCommand;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.Commands;
@@ -18,5 +19,8 @@ public abstract class CommandsMixin {
     @Inject(method = "<init>", at = @At("RETURN"))
     private void generations$registerCommands(Commands.CommandSelection selection, CommandBuildContext context, CallbackInfo ci) {
         UltraWarpCommand.register(((Commands) (Object) this).getDispatcher());
+        BossCommands.register(((Commands) (Object) this).getDispatcher());
+        generations.gg.generations.core.generationscore.common.commands.CatchComboCommands.register(((Commands) (Object) this).getDispatcher());
+        generations.gg.generations.core.generationscore.common.commands.CinematicCommands.register(((Commands) (Object) this).getDispatcher());
     }
 }

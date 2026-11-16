@@ -75,6 +75,9 @@ class GenerationsCoreClientFabric : ClientModInitializer, GenerationsCoreClientI
                 // TODO: replace name/category with lang i'm lazy
             )
 
+        // Hides or shows the Catch Combo's HUD (unbound by default).
+        KeyBindingHelper.registerKeyBinding(generations.gg.generations.core.generationscore.common.client.catchcombo.CatchComboHud.TOGGLE_KEY)
+
         ClientLifecycleEvents.CLIENT_STARTED.register(GenerationsCoreClient::setupClient)
 
         registerRenderTypes()

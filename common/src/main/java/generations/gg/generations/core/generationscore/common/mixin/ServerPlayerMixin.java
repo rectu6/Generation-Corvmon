@@ -46,10 +46,22 @@ public abstract class ServerPlayerMixin extends Player {
         super(level, pos, yRot, gameProfile);
     }
 
+    /** The charm case goes to the new player on respawn and on return from the End (like the ender chest). */
+    @Inject(method = "restoreFrom", at = @At("TAIL"))
+    private void generations$keepCharmCase(ServerPlayer oldPlayer, boolean keepEverything, CallbackInfo ci) {
+        generations.gg.generations.core.generationscore.common.world.charm.CharmCase.copy(oldPlayer, (ServerPlayer) (Object) this);
+    }
+
     /** In the Ultra Warp Ride tunnel, the player is not hurt in the world (see UltraWarpRide.protects). */
     @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
     private void generations$ultraWarpRide(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
         if (UltraWarpRide.protects((ServerPlayer) (Object) this, source)) cir.setReturnValue(false);
+    }
+
+    /** Watching a legendary cinematic, the player is not hurt (see LegendaryCinematics.protects). */
+    @Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
+    private void generations$legendaryCinematic(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+        if (generations.gg.generations.core.generationscore.common.world.cinematic.LegendaryCinematics.protects((ServerPlayer) (Object) this, source)) cir.setReturnValue(false);
     }
 
     @Inject(method = "checkRidingStatistics", at = @At("TAIL"))

@@ -93,7 +93,8 @@ class RaidResults : SavedData() {
                 persistentData.remove(RaidManager.BOSS_KEY)
             }
             val types = boss.types.map { it.name.lowercase() }
-            val rewards = RaidConfig.rewards.draw(stars, types, player.random)
+            // The Glimmering Charm multiplies the quantities (world/charm/Charms).
+            val rewards = generations.gg.generations.core.generationscore.common.world.charm.Charms.raidRewards(player, RaidConfig.rewards.draw(stars, types, player.random), player.random)
             val data = of(player.server)
             // A result not taken yet from an earlier raid is given now.
             data.results.remove(player.uuid)?.let { give(player, it.rewards) }

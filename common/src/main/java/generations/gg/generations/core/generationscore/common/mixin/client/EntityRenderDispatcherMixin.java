@@ -29,4 +29,11 @@ public class EntityRenderDispatcherMixin {
                                                           MultiBufferSource buffers, int packedLight, CallbackInfo ci) {
         RareCandyShadows.popEntityBuffers();
     }
+
+    /** The real Pokémon stays hidden while a legendary cinematic's actor stands for it (lot 5). */
+    @Inject(method = "shouldRender", at = @At("HEAD"), cancellable = true)
+    private <E extends Entity> void generations$cinematicActor(E entity, net.minecraft.client.renderer.culling.Frustum frustum, double camX, double camY, double camZ,
+                                                             org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable<Boolean> cir) {
+        if (generations.gg.generations.core.generationscore.common.client.cinematic.CinematicClient.hides(entity)) cir.setReturnValue(false);
+    }
 }

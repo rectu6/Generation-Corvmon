@@ -1,5 +1,9 @@
 package generations.gg.generations.core.generationscore.common.network
 
+import generations.gg.generations.core.generationscore.common.network.packets.boss.BossPacketHandlers
+import generations.gg.generations.core.generationscore.common.network.packets.boss.C2SBossRewardsSavePacket
+import generations.gg.generations.core.generationscore.common.network.packets.boss.S2CBossRewardsEditorPacket
+import generations.gg.generations.core.generationscore.common.network.packets.boss.S2CBossVictoryPacket
 import com.cobblemon.mod.common.api.net.NetworkPacket
 import com.cobblemon.mod.common.client.net.pokemon.update.PokemonUpdatePacketHandler
 import com.cobblemon.mod.common.client.net.spawn.SpawnExtraDataEntityHandler
@@ -63,6 +67,11 @@ object GenerationsNetwork {
         list.add(PacketRegisterInfo(S2CUltraWeatherPacket.ID, S2CUltraWeatherPacket::decode, UltraWarpPacketHandlers.Weather))
         list.add(PacketRegisterInfo(S2CUltraHazardPacket.ID, S2CUltraHazardPacket::decode, UltraWarpPacketHandlers.Hazard))
         list.add(PacketRegisterInfo(S2CUltraRiftPacket.ID, S2CUltraRiftPacket::decode, UltraWarpPacketHandlers.Rift))
+        list.add(PacketRegisterInfo(S2CBossVictoryPacket.ID, S2CBossVictoryPacket::decode, BossPacketHandlers.Victory))
+        list.add(PacketRegisterInfo(S2CBossRewardsEditorPacket.ID, S2CBossRewardsEditorPacket::decode, BossPacketHandlers.Editor))
+        list.add(PacketRegisterInfo(generations.gg.generations.core.generationscore.common.network.packets.combo.S2CCatchComboPacket.ID, generations.gg.generations.core.generationscore.common.network.packets.combo.S2CCatchComboPacket::decode, generations.gg.generations.core.generationscore.common.network.packets.combo.ComboPacketHandlers.Combo))
+        list.add(PacketRegisterInfo(generations.gg.generations.core.generationscore.common.network.packets.cinematic.S2CCinematicStartPacket.ID, generations.gg.generations.core.generationscore.common.network.packets.cinematic.S2CCinematicStartPacket::decode, generations.gg.generations.core.generationscore.common.network.packets.cinematic.CinematicPacketHandlers.Start))
+        list.add(PacketRegisterInfo(generations.gg.generations.core.generationscore.common.network.packets.cinematic.S2CCinematicEndPacket.ID, generations.gg.generations.core.generationscore.common.network.packets.cinematic.S2CCinematicEndPacket::decode, generations.gg.generations.core.generationscore.common.network.packets.cinematic.CinematicPacketHandlers.End))
         // TODO: remove TeraTypeUpdatePacket when its registered in Cobblemon's own network
 //        list.add(PacketRegisterInfo(TeraTypeUpdatePacket.ID, TeraTypeUpdatePacket::decode, PokemonUpdatePacketHandler()))
 
@@ -82,6 +91,8 @@ object GenerationsNetwork {
         list.add(PacketRegisterInfo(C2SUltraWarpActionPacket.ID, C2SUltraWarpActionPacket::decode, UltraWarpPacketHandlers.Action))
         list.add(PacketRegisterInfo(C2SUltraWarpRideStatePacket.ID, C2SUltraWarpRideStatePacket::decode, UltraWarpPacketHandlers.RideState))
         list.add(PacketRegisterInfo(C2SUltraReturnPacket.ID, C2SUltraReturnPacket::decode, UltraWarpPacketHandlers.Return))
+        list.add(PacketRegisterInfo(C2SBossRewardsSavePacket.ID, C2SBossRewardsSavePacket::decode, BossPacketHandlers.Save))
+        list.add(PacketRegisterInfo(generations.gg.generations.core.generationscore.common.network.packets.combo.C2SOpenCharmCasePacket.ID, generations.gg.generations.core.generationscore.common.network.packets.combo.C2SOpenCharmCasePacket::decode, generations.gg.generations.core.generationscore.common.network.packets.combo.ComboPacketHandlers.OpenCase))
         list.add(PacketRegisterInfo(C2SShopItemPacket.ID, C2SShopItemPacket::decode, C2SShopItemHandler))
         list.add(PacketRegisterInfo(HeadPatPacket.ID, ::HeadPatPacket, HeadPatPacketHandler))
 

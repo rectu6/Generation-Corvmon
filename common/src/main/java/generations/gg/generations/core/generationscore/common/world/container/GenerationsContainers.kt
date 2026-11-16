@@ -20,6 +20,8 @@ object GenerationsContainers: PlatformRegistry<MenuType<*>>(Registries.MENU, Bui
     val TRASHCAN = register("trashcan", ::TrashCanContainer)
     val RKS_MACHINE = register("rks_machine", ::RksMachineContainer)
     val GENERIC = registerExtended("generic", GenericChestContainer.Companion::fromBuffer)
+    /** The charm case (world/charm/CharmCase), opened from the inventory. */
+    val CHARM_CASE = register("charm_case") { id, inventory -> generations.gg.generations.core.generationscore.common.world.charm.CharmCaseMenu(id, inventory) }
 
 
     fun <T: AbstractContainerMenu> registerExtended(name: String, constructor: (Int, Inventory, FriendlyByteBuf) -> T): Holder<MenuType<T>> = create(name, GenerationsCore.implementation.createExtendedMenu<T>(constructor))

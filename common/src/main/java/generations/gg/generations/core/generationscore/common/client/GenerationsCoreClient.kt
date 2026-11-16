@@ -56,6 +56,7 @@ import gg.generations.rarecandy.renderer.rendering.RareCandy
 import gg.generations.rarecandy.renderer.rendering.RenderStage
 import net.minecraft.client.Camera
 import net.minecraft.client.KeyMapping
+import generations.gg.generations.core.generationscore.common.client.charm.CharmCaseScreen
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.screens.MenuScreens
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
@@ -137,6 +138,8 @@ object GenerationsCoreClient {
         ITextureLoader.setInstance(GenerationsTextureLoader)
 
         implementation.registerResourceReloader(GenerationsCore.id("model_registry"), CompiledModelLoader(), emptyList())
+        // HD texts are textures: emptied when the resources are reloaded.
+        implementation.registerResourceReloader(GenerationsCore.id("hd_text"), generations.gg.generations.core.generationscore.common.client.screen.hd.HdText.Reloader, emptyList())
 
         GenerationsClientMolangFunctions.addAnimationFunctions()
 
@@ -163,10 +166,16 @@ object GenerationsCoreClient {
         PlatformEvents.CLIENT_PLAYER_LOGIN.subscribe(Priority.NORMAL, GenerationsCoreClient::onLogin)
         PlatformEvents.CLIENT_PLAYER_LOGOUT.subscribe(Priority.NORMAL, GenerationsCoreClient::onLogout)
         generations.gg.generations.core.generationscore.common.client.ultraspace.UltraWarpRideClient.init()
+        generations.gg.generations.core.generationscore.common.client.boss.BossClient.init()
+        generations.gg.generations.core.generationscore.common.client.catchcombo.CatchComboHud.init()
+        // The legendary cinematics (CINEMATIQUES-PLAN.md).
+        generations.gg.generations.core.generationscore.common.client.cinematic.CinematicClient.init()
     }
 
 
     fun setupClient(event: Minecraft) {
+        // Java's font system on a background thread: no freeze at the first HD screen.
+        generations.gg.generations.core.generationscore.common.client.screen.hd.HdText.warmUp()
 
         event.tell({
             val renderer = TimeCapsuleItemRender()
@@ -315,6 +324,7 @@ object GenerationsCoreClient {
 //        registerScreen(GenerationsContainers.MELODY_FLUTE, ::MelodyFluteScreen)
         registerScreen(GenerationsContainers.TRASHCAN, ::TrashCanScreen)
         registerScreen(GenerationsContainers.RKS_MACHINE, ::RksMachineScreen)
+        registerScreen(GenerationsContainers.CHARM_CASE, ::CharmCaseScreen)
     }
 
     private fun <T: AbstractContainerMenu> registerScreen(
@@ -401,6 +411,7 @@ object GenerationsCoreClient {
     }
 
     fun onLogout(logout: ClientPlayerEvent.Logout) {
+        generations.gg.generations.core.generationscore.common.client.catchcombo.CatchComboHud.clear()
 //        GenerationsDataProvider.INSTANCE.canReload = true;
     }
 
@@ -410,6 +421,7 @@ object GenerationsCoreClient {
         }
 
         WalkmonSoundManager.tick()
+        generations.gg.generations.core.generationscore.common.client.catchcombo.CatchComboHud.tick()
     }
 
     fun renderHighlightedPath(poseStack: PoseStack, renderTick: Int, camera: Camera) {

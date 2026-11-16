@@ -1,0 +1,26 @@
+{
+    "vertex": "generations_cinematic_screen",
+    "fragment": "generations_cinematic_post",
+    "samplers": [
+        { "name": "Sampler0" },
+        { "name": "Sampler1" },
+        { "name": "Sampler2" },
+        { "name": "Sampler3" },
+        { "name": "Sampler4" }
+    ],
+    "uniforms": [
+        { "name": "FxTime", "type": "float", "count": 1, "values": [ 0.0 ] },
+        { "name": "Quality", "type": "float", "count": 1, "values": [ 1.0 ] },
+        { "name": "Aspect", "type": "float", "count": 1, "values": [ 1.0 ] },
+        { "name": "Wave0", "type": "float", "count": 4, "values": [ 0.5, 0.5, 0.0, 0.0 ] },
+        { "name": "Wave1", "type": "float", "count": 4, "values": [ 0.5, 0.5, 0.0, 0.0 ] },
+        { "name": "WaveWidth", "type": "float", "count": 2, "values": [ 0.05, 0.05 ] },
+        { "name": "Heat", "type": "float", "count": 4, "values": [ 0.0, 0.0, 1.0, 0.0 ] },
+        { "name": "Tint", "type": "float", "count": 4, "values": [ 1.0, 1.0, 1.0, 1.0 ] },
+        { "name": "Look", "type": "float", "count": 4, "values": [ 1.0, 1.0, 0.0, 0.0 ] },
+        { "name": "Flash", "type": "float", "count": 4, "values": [ 1.0, 1.0, 1.0, 0.0 ] },
+        { "name": "Rays", "type": "float", "count": 4, "values": [ 0.5, 0.5, 0.0, 0.95 ] },
+        { "name": "Glow", "type": "float", "count": 2, "values": [ 1.0, 0.0 ] },
+        { "name": "Radial", "type": "float", "count": 4, "values": [ 0.5, 0.5, 0.0, 0.0 ] }
+    ]
+}

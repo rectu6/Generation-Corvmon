@@ -185,6 +185,9 @@ public class Config {
         public boolean traceOpenGlErrors = false;
         // Battle interface in the style of Sword and Shield (HD); false for Cobblemon's.
         public boolean swshBattleUi = true;
+        // Diagnostic of the first-use freezes: screen openings, frames over 50 ms, battle start
+        // (client) and BattleRegistry.startBattle (server) written to the log. Off by default.
+        public boolean profileFirstUse = false;
     }
 
     public static class Economy {

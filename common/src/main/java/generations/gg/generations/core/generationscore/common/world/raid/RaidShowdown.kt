@@ -57,6 +57,13 @@ object RaidShowdown {
     }
 
     /** One Pokémon as a Cobblemon packed team, the format Showdown receives for real battles. */
+    /** Whether the active Pokémon of this side ("p1") is trapped now (InstantFlee); null when Showdown cannot say. */
+    fun trapped(battle: PokemonBattle, side: String): Boolean? = when (call(battle, "trapped", "'${side.filter { it.isLetterOrDigit() }}'", json = true)) {
+        "true" -> true
+        "false" -> false
+        else -> null
+    }
+
     fun pack(pokemon: Pokemon): String = with(BattleRegistry) { listOf(BattlePokemon(pokemon)).packTeam() }
 
     private fun json(text: String?): JsonObject? =

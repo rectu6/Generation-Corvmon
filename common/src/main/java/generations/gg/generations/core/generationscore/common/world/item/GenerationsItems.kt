@@ -544,9 +544,13 @@ object GenerationsItems: ItemPlatformRegistry() {
     /**
     * Player Items
     */
-    val MARK_CHARM = register("mark_charm", ::Item, PLAYER_ITEMS)
-    val CATCHING_CHARM = register("catching_charm", ::Item, PLAYER_ITEMS)
-    val EXP_CHARM = register("exp_charm", ::Item, PLAYER_ITEMS)
+    // Charms (world/charm/Charms): stack sizes kept as they were (saved stacks); the new ones do not stack.
+    val MARK_CHARM = register("mark_charm", { generations.gg.generations.core.generationscore.common.world.charm.CharmItem(it, generations.gg.generations.core.generationscore.common.world.charm.Charm.MARK) }, PLAYER_ITEMS)
+    val CATCHING_CHARM = register("catching_charm", { generations.gg.generations.core.generationscore.common.world.charm.CharmItem(it, generations.gg.generations.core.generationscore.common.world.charm.Charm.CATCHING) }, PLAYER_ITEMS)
+    val EXP_CHARM = register("exp_charm", { generations.gg.generations.core.generationscore.common.world.charm.CharmItem(it, generations.gg.generations.core.generationscore.common.world.charm.Charm.EXP) }, PLAYER_ITEMS)
+    val SHINY_CHARM = register("shiny_charm", { generations.gg.generations.core.generationscore.common.world.charm.CharmItem(it.stacksTo(1), generations.gg.generations.core.generationscore.common.world.charm.Charm.SHINY) }, PLAYER_ITEMS)
+    val OVAL_CHARM = register("oval_charm", { generations.gg.generations.core.generationscore.common.world.charm.CharmItem(it.stacksTo(1), generations.gg.generations.core.generationscore.common.world.charm.Charm.OVAL) }, PLAYER_ITEMS)
+    val GLIMMERING_CHARM = register("glimmering_charm", { generations.gg.generations.core.generationscore.common.world.charm.CharmItem(it.stacksTo(1), generations.gg.generations.core.generationscore.common.world.charm.Charm.GLIMMERING) }, PLAYER_ITEMS)
     // Cobblemon rods (Poké / Great / Ultra Ball bobber, data/generations_core/pokerods),
     // with Pixelmon-like tiers on what they catch: see GenerationsFishing.
     val OLD_ROD = register("old_rod", { PokerodItem(GenerationsCore.id("old_rod"), it.stacksTo(1).durability(256)) }, PLAYER_ITEMS)
@@ -565,7 +569,7 @@ object GenerationsItems: ItemPlatformRegistry() {
     val SPRAYDUCK = register("sprayduck", { Item(it.stacksTo(1)) }, PLAYER_ITEMS)
     val SQUIRT_BOTTLE = register("squirt_bottle", { Item(it.stacksTo(1)) }, PLAYER_ITEMS)
     val MEGA_BRACELET = register("mega_bracelet", { Item(it.stacksTo(1)) }, PLAYER_ITEMS)
-    val MEGA_CHARM = register("mega_charm", { Item(it.stacksTo(1)) }, PLAYER_ITEMS)
+    val MEGA_CHARM = register("mega_charm", { generations.gg.generations.core.generationscore.common.world.charm.CharmItem(it.stacksTo(1), generations.gg.generations.core.generationscore.common.world.charm.Charm.MEGA) }, PLAYER_ITEMS)
     val MEGA_CUFF = register("mega_cuff", { Item(it.stacksTo(1)) }, PLAYER_ITEMS)
     val MEGA_RING = register("mega_ring", { Item(it.stacksTo(1)) }, PLAYER_ITEMS)
     val Z_POWER_RING = register("z_power_ring", { Item(it.stacksTo(1)) }, PLAYER_ITEMS)
@@ -1148,7 +1152,7 @@ object GenerationsItems: ItemPlatformRegistry() {
     val MYSTIC_TICKET = register("mystic_ticket", { Item(it.stacksTo(64)) }, UNIMPLEMENTED)
     val OAKS_LETTER = register("oaks_letter", { Item(it.stacksTo(64)) }, UNIMPLEMENTED)
     val OAKS_PARCEL = register("oaks_parcel", { Item(it.stacksTo(64)) }, UNIMPLEMENTED)
-    val OLD_CHARM = register("old_charm", { Item(it.stacksTo(64)) }, UNIMPLEMENTED)
+    val OLD_CHARM = register("old_charm", { generations.gg.generations.core.generationscore.common.world.charm.CharmItem(it.stacksTo(64), generations.gg.generations.core.generationscore.common.world.charm.Charm.OLD) }, UNIMPLEMENTED)
     val OLD_LETTER = register("old_letter", { Item(it.stacksTo(64)) }, UNIMPLEMENTED)
     val OLD_SEA_MAP = register("old_sea_map", { Item(it.stacksTo(64)) }, UNIMPLEMENTED)
     val PAIR_OF_TICKETS = register("pair_of_tickets", { Item(it.stacksTo(64)) }, UNIMPLEMENTED)

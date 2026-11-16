@@ -24,17 +24,17 @@ public abstract class GameRendererMixin {
 
     @Inject(method = "bobView", at = @At("HEAD"), cancellable = true)
     private void generations$ultraWarpBob(PoseStack poseStack, float partialTick, CallbackInfo ci) {
-        if (UltraWarpRideClient.isActive()) ci.cancel();
+        if (UltraWarpRideClient.isActive() || generations.gg.generations.core.generationscore.common.client.cinematic.CinematicClient.isActive()) ci.cancel();
     }
 
     @Inject(method = "bobHurt", at = @At("HEAD"), cancellable = true)
     private void generations$ultraWarpHurt(PoseStack poseStack, float partialTick, CallbackInfo ci) {
-        if (UltraWarpRideClient.isActive()) ci.cancel();
+        if (UltraWarpRideClient.isActive() || generations.gg.generations.core.generationscore.common.client.cinematic.CinematicClient.isActive()) ci.cancel();
     }
 
     @Inject(method = "renderItemInHand", at = @At("HEAD"), cancellable = true)
     private void generations$ultraWarpHand(Camera camera, float partialTick, Matrix4f projection, CallbackInfo ci) {
-        if (UltraWarpRideClient.isActive()) ci.cancel();
+        if (UltraWarpRideClient.isActive() || generations.gg.generations.core.generationscore.common.client.cinematic.CinematicClient.isActive()) ci.cancel();
     }
 
     /**
@@ -48,6 +48,8 @@ public abstract class GameRendererMixin {
         }
         // The rifts (phase 6), the same way: the pack's lights and shadows leave them alone.
         generations.gg.generations.core.generationscore.common.client.ultraspace.rift.UltraRiftRenderer.renderAfterShaders();
+        // The legendary cinematics: one path, with or without a shader pack (their effects and composition).
+        generations.gg.generations.core.generationscore.common.client.cinematic.CinematicClient.renderAfterLevel();
     }
 
     /** The heat's shimmer (phase 4.4): the field of view sways a little (ultra_weather_client.json, viewSway). */
@@ -56,5 +58,17 @@ public abstract class GameRendererMixin {
         if (!useFovSetting) return;
         double sway = generations.gg.generations.core.generationscore.common.client.ultraspace.weather.UltraWeatherClient.fovSway(partialTick);
         if (sway != 0.0) cir.setReturnValue(cir.getReturnValue() + sway);
+    }
+
+    /** A legendary cinematic's field of view (mixed with the player's while it fades in and out). */
+    @Inject(method = "getFov", at = @At("RETURN"), cancellable = true)
+    private void generations$legendaryCinematicFov(Camera camera, float partialTick, boolean useFovSetting, CallbackInfoReturnable<Double> cir) {
+        if (useFovSetting && generations.gg.generations.core.generationscore.common.client.cinematic.CinematicClient.isActive()) cir.setReturnValue(generations.gg.generations.core.generationscore.common.client.cinematic.CinematicClient.fov(cir.getReturnValue()));
+    }
+
+    /** The legendary cinematics' shaders, compiled with Minecraft's own (never when a scene starts). */
+    @Inject(method = "reloadShaders", at = @At("TAIL"))
+    private void generations$cinematicShaders(net.minecraft.server.packs.resources.ResourceProvider provider, CallbackInfo ci) {
+        generations.gg.generations.core.generationscore.common.client.cinematic.fx.CinematicShaders.reload(provider);
     }
 }

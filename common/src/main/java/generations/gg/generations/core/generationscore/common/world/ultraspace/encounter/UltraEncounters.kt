@@ -46,6 +46,8 @@ object UltraEncounters {
     private const val OWNER = "generations_core_ultra_encounter_owner"
     private const val UNTIL = "generations_core_ultra_encounter_until"
     private const val JOURNEY = "generations_core_ultra_encounter_journey"
+    /** Set on a spawn kept by the Catch Combo (reserve): its own message. */
+    private const val COMBO = "generations_core_catch_combo_reserved"
 
     private val random = Random()
     private var data: UltraEncounterSavedData? = null
@@ -102,7 +104,7 @@ object UltraEncounters {
     }
 
     /** One draw with the three chances of ultra_warp_ride.json for these light-years and this portal level. */
-    fun drawFor(world: String, biome: String, lightYears: Double, portalLevel: Int, rng: Random = random): UltraEncounterDraw.Result? {
+    fun drawFor(world: String, biome: String, lightYears: Double, portalLevel: Int, rng: Random = random, player: ServerPlayer? = null): UltraEncounterDraw.Result? {
         val tables = UltraSpaceConfig.ride.encounters
         val settings = UltraEncountersConfig.settings
         val tier = settings.level(lightYears)
@@ -115,13 +117,22 @@ object UltraEncounters {
             ordinary(world, biome),
             tier.min..tier.max,
             settings.ultraBeastMinLevel..settings.ultraBeastMaxLevel,
+            // The player's Shiny Charm and Catch Combo raise the table's chance, never lower it.
+            player?.let { traveller ->
+                { ultraBeast: Boolean, species: String, chance: Float ->
+                    generations.gg.generations.core.generationscore.common.world.shiny.ShinyOdds.special(
+                        traveller, PokemonSpecies.getByName(species.substringAfter(':').lowercase()), chance,
+                        if (ultraBeast) "Ultra Warp Ride, Ultra Beast" else "Ultra Warp Ride",
+                    )
+                }
+            },
         )
     }
 
     private fun draw(server: MinecraftServer, player: UUID, journey: UUID, world: String, biome: String, lightYears: Double, portalLevel: Int, test: Boolean): UltraEncounterSavedData.Entry? {
         val data = data ?: return null
         val now = now(server)
-        val result = drawFor(world, biome, lightYears, portalLevel)
+        val result = drawFor(world, biome, lightYears, portalLevel, player = server.playerList.getPlayer(player))
         val entry = if (result == null) {
             UltraEncounterSavedData.Entry(journey, player, world, biome, lightYears, portalLevel, false, "", 0, false, now, now, UltraEncounterSavedData.State.NONE, test = test)
         } else {
@@ -231,6 +242,25 @@ object UltraEncounters {
 
     // ---- the traveller's priority ----
 
+    /**
+     * Keeps this Pokémon for one player until the given game time, as the traveller's
+     * priority: another player can neither throw a ball at it nor start a battle with it.
+     * Used by the Catch Combo for the spawns that got its bonus (COMBO-FUITE-PERF-PLAN.md, D3).
+     */
+    fun reserve(pokemon: com.cobblemon.mod.common.pokemon.Pokemon, owner: UUID, until: Long) {
+        pokemon.persistentData.apply {
+            putUUID(OWNER, owner)
+            putLong(UNTIL, until)
+            putBoolean(COMBO, true)
+        }
+    }
+
+    /** The Pokémon met on arrival after an Ultra Warp Ride (InstantFlee's ultraEncounters). */
+    fun isArrivalEncounter(pokemon: com.cobblemon.mod.common.pokemon.Pokemon): Boolean = pokemon.persistentData.contains(JOURNEY)
+
+    private fun priorityMessage(entity: PokemonEntity): String =
+        if (entity.pokemon.persistentData.getBoolean(COMBO)) "generations_core.catch_combo.reserved" else "generations_core.ultra_encounter.priority"
+
     /** The traveller who has priority on this Pokémon now, null when none. */
     private fun priorityOwner(entity: PokemonEntity): UUID? {
         val tag = entity.pokemon.persistentData
@@ -243,7 +273,7 @@ object UltraEncounters {
         val thrower = event.pokeBall.owner as? ServerPlayer ?: return
         if (thrower.uuid == owner) return
         event.cancel()
-        thrower.displayClientMessage(Component.translatable("generations_core.ultra_encounter.priority").withStyle(ChatFormatting.GOLD), true)
+        thrower.displayClientMessage(Component.translatable(priorityMessage(event.pokemon)).withStyle(ChatFormatting.GOLD), true)
     }
 
     private fun battleStarting(event: BattleStartedEvent.Pre) {
@@ -255,7 +285,7 @@ object UltraEncounters {
             val others = battle.players.filter { it.uuid != owner }
             if (others.isEmpty()) continue
             event.cancel()
-            others.forEach { it.displayClientMessage(Component.translatable("generations_core.ultra_encounter.priority").withStyle(ChatFormatting.GOLD), true) }
+            others.forEach { it.displayClientMessage(Component.translatable(priorityMessage(entity)).withStyle(ChatFormatting.GOLD), true) }
             return
         }
     }

@@ -22,7 +22,7 @@ public class GuiMixin {
     /** No HUD during the Ultra Warp Ride (dev.hideHud in its client config). Before the line below. */
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     private void generations$ultraWarpRide(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
-        if (UltraWarpRideClient.hidesHud()) ci.cancel();
+        if (UltraWarpRideClient.hidesHud() || generations.gg.generations.core.generationscore.common.client.cinematic.CinematicClient.hidesHud()) ci.cancel();
     }
 
     @Inject(method = "render", at = @At("HEAD"))
@@ -30,5 +30,11 @@ public class GuiMixin {
         Overlays.render(guiGraphics, deltaTracker);
         // The Ultra weathers' veil and the indicator of their dangers (phase 4.4).
         generations.gg.generations.core.generationscore.common.client.ultraspace.weather.UltraWeatherClient.renderOverlay(guiGraphics, deltaTracker);
+    }
+
+    /** The Catch Combo's HUD, over the vanilla HUD. */
+    @Inject(method = "render", at = @At("TAIL"))
+    private void generations$catchCombo(GuiGraphics guiGraphics, DeltaTracker deltaTracker, CallbackInfo ci) {
+        generations.gg.generations.core.generationscore.common.client.catchcombo.CatchComboHud.render(guiGraphics);
     }
 }

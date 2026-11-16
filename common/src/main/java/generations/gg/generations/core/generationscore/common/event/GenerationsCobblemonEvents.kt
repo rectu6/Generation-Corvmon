@@ -56,6 +56,14 @@ class GenerationsCobblemonEvents {
             GenerationsFishing.init()
             generations.gg.generations.core.generationscore.common.world.raid.RaidManager.init()
             generations.gg.generations.core.generationscore.common.world.ultraspace.UltraWarpRide.init()
+            generations.gg.generations.core.generationscore.common.world.boss.Bosses.init()
+            // Shiny odds first (its event), then the bonuses that register with it.
+            generations.gg.generations.core.generationscore.common.world.shiny.ShinyOdds.init()
+            generations.gg.generations.core.generationscore.common.world.charm.Charms.init()
+            generations.gg.generations.core.generationscore.common.world.catchcombo.CatchCombo.init()
+            generations.gg.generations.core.generationscore.common.battle.flee.InstantFlee.init()
+            // The legendary cinematics (CINEMATIQUES-PLAN.md).
+            generations.gg.generations.core.generationscore.common.world.cinematic.LegendaryCinematics.init()
             CobblemonEvents.TERASTALLIZATION.subscribe(Priority.NORMAL, GenerationsInstructionProcessor::processTerastallization)
             CobblemonEvents.BATTLE_STARTED_PRE.subscribe(Priority.NORMAL, GenerationsInstructionProcessor::preBattleChanges)
 
@@ -143,10 +151,12 @@ class GenerationsCobblemonEvents {
 
                     keyItems.removeAll(gimmackItems)
 
-                    if(it.inventory.contains(GenerationsItemTags.KEY_STONES)) keyItems.add(cobblemonResource("key_stone"))
-                    if(it.inventory.contains(GenerationsItemTags.DYNAMAX_BANDS)) keyItems.add(cobblemonResource("dynamax_band"))
-                    if(it.inventory.contains(GenerationsItemTags.TERA_ORBS)) keyItems.add(cobblemonResource("tera_orb"))
-                    if(it.inventory.contains(GenerationsItemTags.Z_RINGS)) keyItems.add(cobblemonResource("z_ring"))
+                    // In the inventory or in the charm case (world/charm/CharmCase).
+                    val case = generations.gg.generations.core.generationscore.common.world.charm.CharmCase
+                    if(it.inventory.contains(GenerationsItemTags.KEY_STONES) || case.contains(it, GenerationsItemTags.KEY_STONES)) keyItems.add(cobblemonResource("key_stone"))
+                    if(it.inventory.contains(GenerationsItemTags.DYNAMAX_BANDS) || case.contains(it, GenerationsItemTags.DYNAMAX_BANDS)) keyItems.add(cobblemonResource("dynamax_band"))
+                    if(it.inventory.contains(GenerationsItemTags.TERA_ORBS) || case.contains(it, GenerationsItemTags.TERA_ORBS)) keyItems.add(cobblemonResource("tera_orb"))
+                    if(it.inventory.contains(GenerationsItemTags.Z_RINGS) || case.contains(it, GenerationsItemTags.Z_RINGS)) keyItems.add(cobblemonResource("z_ring"))
                 }
                 // Showdown reads dmaxLevel; the summary bar (DynamaxLevel) is the reference.
                 it.battle.actors.filterIsInstance<PlayerBattleActor>().flatMap { actor -> actor.pokemonList }

@@ -5,6 +5,7 @@ import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import com.cobblemon.mod.common.util.PlayerExtensionsKt;
 import generations.gg.generations.core.generationscore.common.network.packets.GensInteractPokemonUIPacket;
 import generations.gg.generations.core.generationscore.common.util.PokemonEntityFunctionsKt;
+import generations.gg.generations.core.generationscore.common.world.boss.BossRegistry;
 import generations.gg.generations.core.generationscore.common.world.entity.PokemonInteractProxy;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -83,5 +84,13 @@ public abstract class PokemonEntityMixin {
             }
 
         }
+    }
+
+    /** Bosses (BossRegistry): once a second on the server, the living bosses and their lifetime. */
+    @Inject(method = "tick", at = @At("HEAD"))
+    private void generations$bossTick(CallbackInfo ci) {
+        PokemonEntity self = (PokemonEntity) (Object) this;
+        if (self.tickCount % 20 != 0 || self.level().isClientSide()) return;
+        BossRegistry.tick(self);
     }
 }

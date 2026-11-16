@@ -110,7 +110,7 @@ object DynamaxCloudRenderer {
      * from the 3D model as drawn (RareCandyBone), its hitbox otherwise. Hitboxes are
      * often far from the model (a placeholder for some big Pokémon, a scale that grew).
      */
-    private fun size(entity: PokemonEntity, pose: PoseStack): Pair<Float, Float> {
+    fun size(entity: PokemonEntity, pose: PoseStack): Pair<Float, Float> {
         val hitbox = entity.bbHeight to entity.bbWidth / 2f
         val model = entity.delegate as? RareCandyModelSize ?: return hitbox
         val halfWidth = model.`generations$modelHalfWidth`()
