@@ -50,6 +50,8 @@ public abstract class GameRendererMixin {
         generations.gg.generations.core.generationscore.common.client.ultraspace.rift.UltraRiftRenderer.renderAfterShaders();
         // The legendary cinematics: one path, with or without a shader pack (their effects and composition).
         generations.gg.generations.core.generationscore.common.client.cinematic.CinematicClient.renderAfterLevel();
+        // Mew's light effects (no post-processing).
+        generations.gg.generations.core.generationscore.common.client.mew.MewClient.renderAfterLevel();
     }
 
     /** The heat's shimmer (phase 4.4): the field of view sways a little (ultra_weather_client.json, viewSway). */

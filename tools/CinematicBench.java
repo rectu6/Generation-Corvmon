@@ -13,6 +13,8 @@ import generations.gg.generations.core.generationscore.common.client.cinematic.s
 import generations.gg.generations.core.generationscore.common.client.cinematic.scenes.MoltresScript;
 import generations.gg.generations.core.generationscore.common.client.cinematic.scenes.MewtwoScript;
 import generations.gg.generations.core.generationscore.common.client.cinematic.audio.MewtwoMusic;
+import generations.gg.generations.core.generationscore.common.client.cinematic.scenes.MewScript;
+import generations.gg.generations.core.generationscore.common.client.cinematic.audio.MewMusic;
 import generations.gg.generations.core.generationscore.common.client.cinematic.scenes.SceneScript;
 import generations.gg.generations.core.generationscore.common.client.cinematic.scenes.ZapdosScript;
 import generations.gg.generations.core.generationscore.common.client.cinematic.camera.Shot;
@@ -66,6 +68,11 @@ public class CinematicBench {
         mewtwo(new Vector3d(1.8, 0, 4.2), false, 0.9, "mewtwo, landing aside");
         mewtwo(new Vector3d(-0.5, 1, 4.0), true, 1.2, "mewtwo, landing higher");
         mewtwoSynth();
+        mew(new Vector3d(0, 0, 4), true, "mew, flat, test");
+        mew(new Vector3d(0, 0, 4), false, "mew, flat, game won");
+        mew(new Vector3d(2.0, 0, 5), false, "mew, landing aside");
+        mew(new Vector3d(-1.5, 1, 3.5), true, "mew, landing higher");
+        mewSynth();
         stateMachine();
         flashes();
         clock();
@@ -465,6 +472,157 @@ public class CinematicBench {
             spawnAt = now;
         }
         check(test ? spawns == 0 : spawns == 1 && spawnAt == 488, label + ": the server's spawn (" + spawns + " at " + spawnAt + ")");
+    }
+
+    /** Mew's scene (MEW-PLAN.md section 10): the camera, Mew, its illusions, the envelopes and the cues. */
+    private static void mew(Vector3d landing, boolean test, String label) {
+        MewScript script = new MewScript(landing, test);
+        double end = MewScript.SECONDS;
+        java.util.ArrayList<Double> cuts = new java.util.ArrayList<>();
+        for (Shot shot : script.getDirector().getShots()) if (shot.getStart() > 0 && shot.getBlendIn() <= 0) cuts.add(shot.getStart());
+        for (int mode = 0; mode < 2; mode++) {
+            CameraMotion motion = new CameraMotion(mode == 1);
+            CamFrame frame = new CamFrame();
+            ActorKey actor = new ActorKey();
+            ActorKey extra = new ActorKey();
+            Grade grade = new Grade();
+            double lowest = 99, minFov = 999, maxFov = 0, maxJump = 0, maxJumpAt = 0, actorStep = 0, actorStepAt = 0, extraStep = 0, extraStepAt = 0, minDistance = 99;
+            Vector3d last = null, lastActor = null;
+            Vector3d[] lastExtra = new Vector3d[MewScript.ILLUSION_COUNT];
+            int invalid = 0, below = 0, envelopes = 0, shown = 0;
+            String first = null;
+            for (int i = 0; i <= 4800; i++) {
+                double t = i * 0.005;
+                double a = script.action(t);
+                script.getDirector().evaluate(t, motion, frame);
+                if (!frame.isFinite()) {
+                    invalid++;
+                    if (first == null) first = "camera at " + t;
+                }
+                Vector3d pos = frame.getPos();
+                double ground = Math.min(0.0, landing.y);
+                lowest = Math.min(lowest, pos.y - ground);
+                if (pos.y - ground < 0.4) below++;
+                minFov = Math.min(minFov, frame.getFov());
+                maxFov = Math.max(maxFov, frame.getFov());
+                if (last != null) {
+                    boolean cut = false;
+                    for (double c : cuts) if (Math.abs(t - c) < 0.006) cut = true;
+                    double jump = last.distance(pos);
+                    if (!cut && jump > maxJump) {
+                        maxJump = jump;
+                        maxJumpAt = t;
+                    }
+                }
+                last = new Vector3d(pos);
+                script.actor(a, actor);
+                if (!actor.isFinite() || actor.getScale() < 0 || actor.getScale() > 1.0001 || Math.abs(actor.getRoll()) > 60 || Math.abs(actor.getPitch()) > 60) {
+                    invalid++;
+                    if (first == null) first = "actor at " + t;
+                }
+                // Mew never too close to the camera while the scene holds it.
+                if (script.cameraWeight(t) > 0.5 && actor.getPose() != ActorPose.HIDDEN) minDistance = Math.min(minDistance, pos.distance(actor.getPos().x, actor.getPos().y + MewScript.HEAD, actor.getPos().z));
+                if (lastActor != null) {
+                    double step = lastActor.distance(actor.getPos());
+                    if (step > actorStep) {
+                        actorStep = step;
+                        actorStepAt = t;
+                    }
+                }
+                lastActor = new Vector3d(actor.getPos());
+                for (int k = 0; k < MewScript.ILLUSION_COUNT; k++) {
+                    script.illusion(k, a, extra);
+                    if (extra.getPose() == ActorPose.HIDDEN) {
+                        lastExtra[k] = null;
+                        continue;
+                    }
+                    shown++;
+                    if (!extra.isFinite() || extra.getScale() < 0 || extra.getScale() > 1.0001) invalid++;
+                    if (lastExtra[k] != null) {
+                        double step = lastExtra[k].distance(extra.getPos());
+                        if (step > extraStep) {
+                            extraStep = step;
+                            extraStepAt = t;
+                        }
+                    }
+                    lastExtra[k] = new Vector3d(extra.getPos());
+                }
+                script.grade(t, grade);
+                if (!grade.isFinite() || grade.getExposure() <= 0.3 || grade.getExposure() > 1.5) {
+                    invalid++;
+                    if (first == null) first = "grade at " + t;
+                }
+                double[] common = {script.cameraWeight(t), script.letterbox(t), script.title(t), script.presence(t), script.flash(a)};
+                for (double v : common) if (!finite(v) || v < -1e-9 || v > 1.0 + 1e-9) envelopes++;
+                for (double v : script.envelopes(a)) if (!finite(v) || v < -1e-9 || v > 1.0 + 1e-9) envelopes++;
+                if (!finite(script.shake(a)) || script.shake(a) < 0) envelopes++;
+            }
+            String m = label + (mode == 1 ? ", reduced motion" : "");
+            check(invalid == 0, m + ": " + invalid + " invalid values (first: " + first + ")");
+            check(below == 0, m + ": camera below 0.4 m above the ground " + below + " times (lowest " + lowest + ")");
+            check(minFov >= 20 && maxFov <= 100, m + ": field of view from " + minFov + " to " + maxFov);
+            check(envelopes == 0, m + ": " + envelopes + " envelope values out of range");
+            check(maxJump < 0.35, m + ": camera jump " + maxJump + " at " + maxJumpAt);
+            check(actorStep < 0.12, m + ": Mew step " + actorStep + " at " + actorStepAt);
+            check(extraStep < 0.12, m + ": illusion step " + extraStep + " at " + extraStepAt);
+            check(shown > 0, m + ": the illusions are seen");
+            check(minDistance > 0.7, m + ": Mew at least " + minDistance + " m from the camera");
+            System.out.printf("%s: lowest camera %.2f m, fov %.1f to %.1f, largest camera step %.3f m at %.3f s, Mew step %.3f m at %.3f s, illusion step %.3f m, closest %.2f m%n", m, lowest, minFov, maxFov, maxJump, maxJumpAt, actorStep, actorStepAt, extraStep, minDistance);
+        }
+        ActorKey key = new ActorKey();
+        script.actor(0.0, key);
+        check(key.getPose() == ActorPose.HOVER && key.getPos().distance(script.getHover()) < 0.1, label + ": waits in front of the player at first");
+        script.actor(MewScript.CRY, key);
+        check(key.getPos().distance(script.getCentre()) < 0.2, label + ": at the heart of the whirlwind for its cry");
+        ActorKey ill = new ActorKey();
+        script.illusion(0, MewScript.FUSION - 0.02, ill);
+        boolean merged = ill.getPose() == ActorPose.HIDDEN || ill.getPos().distance(script.getCentre()) < 0.6;
+        script.illusion(0, MewScript.FUSION + 0.01, ill);
+        check(merged && ill.getPose() == ActorPose.HIDDEN, label + ": the illusions merge into Mew at the fusion");
+        script.actor(MewScript.LANDING + 0.1, key);
+        check(key.getPos().distance(landing) < 1e-6, label + ": on the landing point after " + MewScript.LANDING + " s");
+        script.actor(23.95, key);
+        check(test ? key.getPose() == ActorPose.HIDDEN : key.getPose() == ActorPose.HOVER && key.getPos().distance(landing) < 1e-6, label + ": at the end (" + key.getPose() + ")");
+        check(script.cameraWeight(0) == 0 && script.cameraWeight(23.99) < 0.01 && script.cameraWeight(12) > 0.99, label + ": the camera taken and given back");
+        List<Cue> cues = script.getCues();
+        double lastTime = -1;
+        boolean ok = true;
+        for (Cue cue : cues) {
+            if (cue.getTime() < lastTime || cue.getTime() < 0 || cue.getTime() > end) ok = false;
+            lastTime = cue.getTime();
+            if (cue.getId().isEmpty() || cue.getVolume() <= 0 || cue.getPitch() <= 0 || cue.getPitch() > 2.0f) ok = false;
+        }
+        check(ok, label + ": " + cues.size() + " cues sorted, within the scene, valid");
+        check(cues.stream().anyMatch(c -> c.getKind() == Cue.Kind.CRY && c.getId().equals("cobblemon:pokemon.mew.cry") && Math.abs(c.getTime() - MewScript.CRY) < 1e-9), label + ": its cry at 18 s");
+        check(cues.stream().anyMatch(c -> c.getKind() == Cue.Kind.EVENT && c.getId().equals("fusion")), label + ": the fusion");
+        // The server side: the real Mew takes the actor's place right at the end, once.
+        CinematicStateMachine server = new CinematicStateMachine(10, 480, test, 2);
+        int spawns = 0;
+        long spawnAt = -1;
+        for (long now = 0; now < 600; now++) for (CinematicStateMachine.Action action : server.tick(now)) if (action == CinematicStateMachine.Action.SPAWN) {
+            spawns++;
+            spawnAt = now;
+        }
+        check(test ? spawns == 0 : spawns == 1 && spawnAt == 488, label + ": the server's spawn (" + spawns + " at " + spawnAt + ")");
+    }
+
+    private static void mewSynth() {
+        for (double stretch : new double[]{1.0, 20.0 / 24.0, 25.0 / 24.0}) {
+            for (double offset : new double[]{0.0, 12.0}) {
+                MewScript script = new MewScript(new Vector3d(0, 0, 4), true);
+                SynthRenderer music = MewMusic.INSTANCE.music(script, stretch, offset);
+                SynthRenderer ambience = MewMusic.INSTANCE.ambience(script, stretch, offset);
+                long started = System.nanoTime();
+                float peak = music.peak();
+                double ms = (System.nanoTime() - started) / 1e6;
+                float ambiencePeak = ambience.peak();
+                String what = String.format("mew synth x%.2f from %.1f s", stretch, offset);
+                check(Float.isFinite(peak) && peak <= 1.0f && peak > 0.05f, what + ": music peak " + peak);
+                check(Float.isFinite(ambiencePeak) && ambiencePeak <= 1.0f && ambiencePeak > 0.005f, what + ": ambience peak " + ambiencePeak);
+                check(ms < 9000, what + ": music made in " + ms + " ms");
+                System.out.printf("%s: music peak %.2f (%.0f ms), ambience peak %.3f%n", what, peak, ms, ambiencePeak);
+            }
+        }
     }
 
     private static void mewtwoSynth() {

@@ -72,6 +72,7 @@
     "client.LevelRendererMixin",
     "client.LightTextureMixin",
     "client.MinecraftFrameMixin",
+    "client.MewClickMixin",
     "client.ModelAssetVariationMixin",
     "client.PcGuiMixin",
     "client.PokemonClientDelegateMixin",

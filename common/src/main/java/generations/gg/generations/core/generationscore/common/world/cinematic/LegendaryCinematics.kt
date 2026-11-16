@@ -145,7 +145,7 @@ object LegendaryCinematics {
         participants += invoker.uuid
         val ambient = LinkedHashSet<UUID>()
         // Mewtwo's scene has an ambience for those who cannot watch it (D11).
-        val ambientRadius = if (request.scene == CinematicScenes.MEWTWO) config.ambientRadius else 0.0
+        val ambientRadius = if (CinematicScenes.hasAmbience(request.scene)) config.ambientRadius else 0.0
         for (player in request.level.players()) {
             if (player.uuid == invoker.uuid) continue
             val distance = player.position().distanceTo(request.origin)
@@ -154,7 +154,7 @@ object LegendaryCinematics {
         }
         val now = request.level.gameTime
         // Mewtwo's entity takes the actor's place right at the end (no second Mewtwo on screen for a second).
-        val lead = if (request.scene == CinematicScenes.MEWTWO) 2 else 20
+        val lead = CinematicScenes.spawnLeadTicks(request.scene)
         val machine = CinematicStateMachine(now + LEAD_TICKS, config.durationTicks(request.scene), request.test, lead)
         val session = CinematicSession(
             UUID.randomUUID(), request.scene, request.level.dimension(), request.origin, request.facing, request.spawn,

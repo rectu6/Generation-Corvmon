@@ -170,6 +170,7 @@ object GenerationsCoreClient {
         generations.gg.generations.core.generationscore.common.client.catchcombo.CatchComboHud.init()
         // The legendary cinematics (CINEMATIQUES-PLAN.md).
         generations.gg.generations.core.generationscore.common.client.cinematic.CinematicClient.init()
+        generations.gg.generations.core.generationscore.common.client.mew.MewClient.init()
     }
 
 

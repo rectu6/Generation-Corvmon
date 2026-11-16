@@ -55,6 +55,8 @@ public abstract class LevelRendererMixin {
         }
         // A legendary cinematic's Pokémon (no entity), in this pass like any other: the shader pack lights it.
         generations.gg.generations.core.generationscore.common.client.cinematic.CinematicClient.beforeRareCandy(frustumMatrix, projectionMatrix);
+        // Mew's appearances and game (MEW-PLAN.md), the same way.
+        generations.gg.generations.core.generationscore.common.client.mew.MewClient.beforeRareCandy(frustumMatrix, projectionMatrix);
         GenerationsCoreClient.INSTANCE.firstRenderPass();
         // The RKS Machine's glass and liquid, over the Mewtwo of its tank (RareCandy drew it just above).
         generations.gg.generations.core.generationscore.common.client.rks.RksMachineClient.afterRareCandy();

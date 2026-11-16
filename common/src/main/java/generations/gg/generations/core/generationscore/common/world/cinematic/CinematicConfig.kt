@@ -63,9 +63,11 @@ class CinematicConfig(
     companion object {
         const val VERSION = 1
 
-        fun defaultSceneSeconds(): MutableMap<String, Double> = linkedMapOf(CinematicScenes.MEWTWO to CinematicScenes.MEWTWO_SECONDS)
+        fun defaultSceneSeconds(): MutableMap<String, Double> =
+            linkedMapOf(CinematicScenes.MEWTWO to CinematicScenes.MEWTWO_SECONDS, CinematicScenes.MEW to CinematicScenes.MEW_SECONDS)
 
-        fun defaultSceneRadius(): MutableMap<String, Double> = linkedMapOf(CinematicScenes.MEWTWO to 50.0)
+        /** Mewtwo 50 blocks (D11 of the RKS plan), Mew 32 like the birds (D10 of the Mew plan). */
+        fun defaultSceneRadius(): MutableMap<String, Double> = linkedMapOf(CinematicScenes.MEWTWO to 50.0, CinematicScenes.MEW to 32.0)
 
         fun defaultScenes(): MutableMap<String, String> =
             CinematicScenes.ALL.associateWithTo(LinkedHashMap()) { CinematicScenes.defaultSpecies(it) }

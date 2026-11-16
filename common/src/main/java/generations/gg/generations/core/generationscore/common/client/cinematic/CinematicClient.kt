@@ -56,6 +56,11 @@ object CinematicClient {
         /** The scene's duration over the seconds it is written for (20, Mewtwo's 24). */
         val stretch: Double,
     ) {
+        /** The scene's other actors (Mew's illusions), the same species. */
+        val extras = Array(scene.extraActors) { CinematicActor(actor.species, actor.aspects) }
+        val extraKeys = Array(scene.extraActors) { generations.gg.generations.core.generationscore.common.client.cinematic.scenes.ActorKey() }
+        val extraWorld = Array(scene.extraActors) { Vector3d() }
+
         /** Near the scene but unable to watch it: its ambience only (effects, sound), no camera, no screen (D11). */
         val ambient: Boolean get() = packet.ambient
 
@@ -131,6 +136,7 @@ object CinematicClient {
                     val height = (form?.let { it.hitbox.height() * it.baseScale } ?: 2f) * 0.9
                     generations.gg.generations.core.generationscore.common.client.cinematic.scenes.MewtwoScene(landing, packet.test, title, 1.95 - height / 2.0)
                 }
+                CinematicScenes.MEW -> generations.gg.generations.core.generationscore.common.client.cinematic.scenes.MewScene(landing, packet.test, title)
                 else -> ArticunoScene(landing, packet.test, title)
             }
             val particles: FxParticles = scene.particles(6000)
@@ -348,6 +354,12 @@ object CinematicClient {
             val actor = p.frame.actor
             if (actor.pose != ActorPose.HIDDEN && p.sceneTime >= 0.0) {
                 p.actor.render(p.frame.actorWorld, p.camera.yawToWorld(actor.yaw), actor.pitch, actor.roll, actor.scale, actor.pose, p.frame.a.toFloat())
+            }
+            if (p.sceneTime >= 0.0) for (i in p.extras.indices) {
+                val key = p.scene.extraActor(i, p.frame.a, p.extraKeys[i])
+                if (key.pose == ActorPose.HIDDEN || !key.isFinite()) continue
+                p.camera.toWorld(key.pos, p.extraWorld[i])
+                p.extras[i].render(p.extraWorld[i], p.camera.yawToWorld(key.yaw), key.pitch, key.roll, key.scale, key.pose, p.frame.a.toFloat() + i * 0.37f)
             }
         } catch (e: Exception) {
             fail(e)

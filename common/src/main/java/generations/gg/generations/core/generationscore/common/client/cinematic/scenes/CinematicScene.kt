@@ -124,4 +124,13 @@ interface CinematicScene {
     fun music(stretch: Double, offset: Double): SynthRenderer?
 
     fun ambience(stretch: Double, offset: Double): SynthRenderer?
+
+    /** More actors than the scene's Pokémon (Mew's illusions), drawn like it: how many. */
+    val extraActors: Int get() = 0
+
+    /** Extra actor i at action time a (hidden by default). */
+    fun extraActor(i: Int, a: Double, out: ActorKey): ActorKey {
+        out.pose = ActorPose.HIDDEN
+        return out
+    }
 }
