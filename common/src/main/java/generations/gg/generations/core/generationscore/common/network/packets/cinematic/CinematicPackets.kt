@@ -30,6 +30,8 @@ class S2CCinematicStartPacket(
     val aspects: List<String>,
     val test: Boolean,
     val debug: Boolean,
+    /** Near the scene but unable to watch it (in a battle...): its ambience only, no camera (Mewtwo, D11). */
+    val ambient: Boolean = false,
 ) : NetworkPacket<S2CCinematicStartPacket> {
     override val id: ResourceLocation = ID
 
@@ -47,6 +49,7 @@ class S2CCinematicStartPacket(
         aspects.forEach { buffer.writeUtf(it) }
         buffer.writeBoolean(test)
         buffer.writeBoolean(debug)
+        buffer.writeBoolean(ambient)
     }
 
     companion object {
@@ -72,7 +75,7 @@ class S2CCinematicStartPacket(
             val species = buf.readUtf(256)
             val count = buf.readVarInt().coerceIn(0, 64)
             val aspects = List(count) { buf.readUtf(128) }
-            return S2CCinematicStartPacket(session, scene, origin, facing, spawn, start, duration, invoker, species, aspects, buf.readBoolean(), buf.readBoolean())
+            return S2CCinematicStartPacket(session, scene, origin, facing, spawn, start, duration, invoker, species, aspects, buf.readBoolean(), buf.readBoolean(), buf.readBoolean())
         }
     }
 }

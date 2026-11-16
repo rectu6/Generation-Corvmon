@@ -1,23 +1,29 @@
 {
-  "type": "generations_core:shapeless_rks",
-  "consumesTimeCapsules": true,
-  "experience": 1.0,
-  "group": "",
-  "pattern": [
+  "type": "generations_core:rks_protocol",
+  "category": "items",
+  "order": 126,
+  "group": "unown_blocks",
+  "description": "generations_core.rks.recipe.unown_blocks.desc",
+  "ingredients": [
     {
-      "type": "generations_core:item",
-      "items": "generations_core:temple_block"
+      "ingredient": {
+        "items": "generations_core:temple_block",
+        "type": "generations_core:item"
+      },
+      "count": 1
     },
     {
-      "type": "generations_core:pokemon_item",
-      "aspects": [
-        "exclamation"
-      ],
-      "species": "cobblemon:unown",
-      "strict": false
+      "ingredient": {
+        "aspects": [
+          "exclamation"
+        ],
+        "species": "cobblemon:unown",
+        "strict": false,
+        "type": "generations_core:pokemon_item"
+      },
+      "count": 1
     }
   ],
-  "processingTime": 240,
   "result": {
     "type": "generations_core:item",
     "stack": {
@@ -25,5 +31,5 @@
       "id": "generations_core:unown_block_exclamation_mark"
     }
   },
-  "showNotification": false
+  "processingTime": 240
 }

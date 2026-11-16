@@ -64,6 +64,8 @@ class GenerationsCobblemonEvents {
             generations.gg.generations.core.generationscore.common.battle.flee.InstantFlee.init()
             // The legendary cinematics (CINEMATIQUES-PLAN.md).
             generations.gg.generations.core.generationscore.common.world.cinematic.LegendaryCinematics.init()
+            // The RKS Machine's settings (RKS-PLAN.md).
+            generations.gg.generations.core.generationscore.common.world.rks.RksSettings.init()
             CobblemonEvents.TERASTALLIZATION.subscribe(Priority.NORMAL, GenerationsInstructionProcessor::processTerastallization)
             CobblemonEvents.BATTLE_STARTED_PRE.subscribe(Priority.NORMAL, GenerationsInstructionProcessor::preBattleChanges)
 

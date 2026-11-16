@@ -37,6 +37,10 @@ class CinematicSession(
     val machine: CinematicStateMachine,
     /** The players watching it, the invoker first. Nobody is added once it started. */
     val participants: MutableSet<UUID>,
+    /** The players near it who could not watch (in a battle...): the ambience only, on their client. */
+    val ambient: MutableSet<UUID> = LinkedHashSet(),
+    /** What makes the Pokémon appear (the RKS Machine's Mewtwo); the global onSpawn otherwise. */
+    val onSpawn: ((CinematicSession) -> Unit)? = null,
 )
 
 /**
@@ -77,6 +81,8 @@ object LegendaryCinematics {
         val species: ResourceLocation,
         val aspects: Set<String>,
         val test: Boolean,
+        /** This scene's own spawn (RKS Machine); the global onSpawn otherwise. */
+        val onSpawn: ((CinematicSession) -> Unit)? = null,
     )
 
     fun init() {
@@ -101,6 +107,19 @@ object LegendaryCinematics {
 
     fun isWatching(player: UUID): Boolean = watching.containsKey(player)
 
+    fun session(id: UUID): CinematicSession? = sessions[id]
+
+    /** Whether this player could watch a scene now (alive, playing, not in a battle, a journey or another scene). */
+    fun canWatch(player: ServerPlayer): Boolean = free(player)
+
+    /** Cut short without a word to its invoker (a test command); the Pokémon appears as after any interruption. */
+    fun interruptQuietly(session: CinematicSession) {
+        val server = com.cobblemon.mod.common.util.server() ?: return
+        val interruption = session.machine.interrupt() ?: return
+        if (interruption.spawnNow) spawn(session)
+        end(server, session, CinematicEndReason.STOPPED)
+    }
+
     /** Watching a cinematic: not hurt (except by what ignores invulnerability, like /kill). */
     @JvmStatic
     fun protects(player: ServerPlayer, source: DamageSource): Boolean =
@@ -118,35 +137,47 @@ object LegendaryCinematics {
         if (!config.enabled) return StartResult.Refused(key("refused.disabled"))
         if (request.scene !in CinematicScenes.AVAILABLE) return StartResult.Refused(key("refused.unavailable", request.scene))
         if (!free(invoker)) return StartResult.Refused(key("refused.busy"))
-        val radius = config.spectatorRadius
+        val radius = config.radius(request.scene)
         val near = sessions.values.any { it.dimension == request.level.dimension() && it.origin.distanceTo(request.origin) < 2.0 * maxOf(radius, 16.0) }
         if (near) return StartResult.Refused(key("refused.nearby"))
 
         val participants = LinkedHashSet<UUID>()
         participants += invoker.uuid
+        val ambient = LinkedHashSet<UUID>()
+        // Mewtwo's scene has an ambience for those who cannot watch it (D11).
+        val ambientRadius = if (request.scene == CinematicScenes.MEWTWO) config.ambientRadius else 0.0
         for (player in request.level.players()) {
             if (player.uuid == invoker.uuid) continue
-            if (player.position().distanceTo(request.origin) <= radius && free(player)) participants += player.uuid
+            val distance = player.position().distanceTo(request.origin)
+            if (distance <= radius && free(player)) participants += player.uuid
+            else if (distance <= ambientRadius && player.isAlive && !player.isSpectator && !watching.containsKey(player.uuid)) ambient += player.uuid
         }
         val now = request.level.gameTime
-        val machine = CinematicStateMachine(now + LEAD_TICKS, config.durationTicks, request.test)
+        // Mewtwo's entity takes the actor's place right at the end (no second Mewtwo on screen for a second).
+        val lead = if (request.scene == CinematicScenes.MEWTWO) 2 else 20
+        val machine = CinematicStateMachine(now + LEAD_TICKS, config.durationTicks(request.scene), request.test, lead)
         val session = CinematicSession(
             UUID.randomUUID(), request.scene, request.level.dimension(), request.origin, request.facing, request.spawn,
-            invoker.uuid, invoker.gameProfile.name, request.species, request.aspects, request.test, machine, participants,
+            invoker.uuid, invoker.gameProfile.name, request.species, request.aspects, request.test, machine, participants, ambient, request.onSpawn,
         )
         sessions[session.id] = session
-        val packet = S2CCinematicStartPacket(
+        fun packet(ambience: Boolean) = S2CCinematicStartPacket(
             session.id, session.scene, session.origin, session.facing, session.spawn, machine.startTick, machine.durationTicks,
-            invoker.uuid, session.species.toString(), session.aspects.toList(), session.test, config.debugOverlay && session.test,
+            invoker.uuid, session.species.toString(), session.aspects.toList(), session.test, config.debugOverlay && session.test, ambience,
         )
         val players = request.level.server.playerList
+        val watch = packet(false)
         for (uuid in participants) {
             watching[uuid] = session
-            players.getPlayer(uuid)?.sendPacket(packet)
+            players.getPlayer(uuid)?.sendPacket(watch)
+        }
+        if (ambient.isNotEmpty()) {
+            val ambience = packet(true)
+            for (uuid in ambient) players.getPlayer(uuid)?.sendPacket(ambience)
         }
         GenerationsCore.LOGGER.info(
-            "Legendary cinematic {} ({}) started by {} at {} in {}, {} participant(s){}",
-            session.scene, session.id, session.invokerName, session.origin, session.dimension.location(), participants.size, if (session.test) ", test" else "",
+            "Legendary cinematic {} ({}) started by {} at {} in {}, {} participant(s), {} with the ambience only{}",
+            session.scene, session.id, session.invokerName, session.origin, session.dimension.location(), participants.size, ambient.size, if (session.test) ", test" else "",
         )
         return StartResult.Started(session)
     }
@@ -180,7 +211,7 @@ object LegendaryCinematics {
     private fun spawn(session: CinematicSession) {
         if (session.test) return
         try {
-            onSpawn?.invoke(session)
+            (session.onSpawn ?: onSpawn)?.invoke(session)
         } catch (e: Exception) {
             GenerationsCore.LOGGER.error("Legendary cinematic {}: the Pokémon could not appear", session.id, e)
         }
@@ -201,7 +232,9 @@ object LegendaryCinematics {
             if (watching[uuid] === session) watching.remove(uuid)
             server.playerList.getPlayer(uuid)?.sendPacket(packet)
         }
+        for (uuid in session.ambient) server.playerList.getPlayer(uuid)?.sendPacket(packet)
         session.participants.clear()
+        session.ambient.clear()
     }
 
     /** A participant disconnected, died or left the dimension. */

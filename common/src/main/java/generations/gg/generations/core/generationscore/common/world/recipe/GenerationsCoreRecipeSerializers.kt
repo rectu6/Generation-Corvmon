@@ -14,6 +14,8 @@ object GenerationsCoreRecipeSerializers: PlatformRegistry<RecipeSerializer<*>>(R
 
     var SHAPED_RKS = register("shaped_rks", ShapedRksRecipe.CODEC, ShapedRksRecipe.STREAM_CODEC)
     var SHAPELESS_RKS = register("shapeless_rks", ShapelessRksRecipe.CODEC, ShapelessRksRecipe.STREAM_CODEC)
+    /** The RKS Machine's counted recipes (RKS-PLAN.md § 2.2). */
+    val RKS_PROTOCOL = register("rks_protocol", RksProtocolRecipe.CODEC, RksProtocolRecipe.STREAM_CODEC)
 
     /** Installing an environmental shield on a piece of the Ultra Suit (smithing table, phase 4.5). */
     val ULTRA_SHIELD_SMITHING = register(

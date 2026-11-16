@@ -40,6 +40,15 @@ object GenerationsUtilityBlocks: BlockPlatformRegistry() {
 
     val RKS_MACHINE = registerBlockItem("rks_machine") { RksMachineBlock(Properties.ofFullCopy(Blocks.IRON_BLOCK)) }
 
+    // The RKS Machine's five modules (RKS-PLAN.md § 3, D6): multi-cell blocks, the console is the master.
+    private val rksModules = LinkedHashMap<generations.gg.generations.core.generationscore.common.world.rks.machine.RksModule, Holder<generations.gg.generations.core.generationscore.common.world.level.block.rks.RksModuleBlock>>()
+    val RKS_CONTROL_CONSOLE = registerRksModule(generations.gg.generations.core.generationscore.common.world.rks.machine.RksModule.CONSOLE)
+    val RKS_CONTAINMENT_CHAMBER = registerRksModule(generations.gg.generations.core.generationscore.common.world.rks.machine.RksModule.CHAMBER)
+    val RKS_REACTOR = registerRksModule(generations.gg.generations.core.generationscore.common.world.rks.machine.RksModule.REACTOR)
+    val RKS_POWER_MODULE = registerRksModule(generations.gg.generations.core.generationscore.common.world.rks.machine.RksModule.POWER)
+    val RKS_GENETIC_ANALYZER = registerRksModule(generations.gg.generations.core.generationscore.common.world.rks.machine.RksModule.ANALYZER)
+    val RKS_MODULES: Map<generations.gg.generations.core.generationscore.common.world.rks.machine.RksModule, Holder<generations.gg.generations.core.generationscore.common.world.level.block.rks.RksModuleBlock>> get() = rksModules
+
     // Dynamax den (raids): stone, glowing while a raid waits in it.
     val RAID_DEN = registerBlockItem("raid_den") { RaidDenBlock(Properties.ofFullCopy(Blocks.TUFF).noOcclusion().lightLevel(RaidDenBlock::lightLevel)) }
 
@@ -115,6 +124,20 @@ object GenerationsUtilityBlocks: BlockPlatformRegistry() {
         name: String,
         itemSupplier: (Item.Properties) -> T
     ): Holder<Item> = GenerationsItems.ITEMS.create(name) { itemSupplier.invoke(Item.Properties()) }
+
+    private fun registerRksModule(module: generations.gg.generations.core.generationscore.common.world.rks.machine.RksModule): Holder<generations.gg.generations.core.generationscore.common.world.level.block.rks.RksModuleBlock> {
+        val block = registerBlock(module.id) {
+            generations.gg.generations.core.generationscore.common.world.level.block.rks.RksModuleBlock(
+                Properties.of().mapColor(net.minecraft.world.level.material.MapColor.METAL).strength(4f, 1200f).sound(SoundType.NETHERITE_BLOCK)
+                    .noOcclusion().pushReaction(net.minecraft.world.level.material.PushReaction.BLOCK)
+                    .isRedstoneConductor { _, _, _ -> false }.isSuffocating { _, _, _ -> false }.isViewBlocking { _, _, _ -> false },
+                module,
+            )
+        }
+        register(module.id) { properties -> generations.gg.generations.core.generationscore.common.world.item.rks.RksModuleItem(block.value(), properties) }
+        rksModules[module] = block
+        return block
+    }
 
     private fun <T : Block> registerBlockItem(name: String, blockSupplier: () -> T): Holder<T> {
         val block = registerBlock(name, blockSupplier)

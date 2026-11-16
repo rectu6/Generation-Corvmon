@@ -1,5 +1,7 @@
 package generations.gg.generations.core.generationscore.common.world.level.block.entities
 
+import generations.gg.generations.core.generationscore.common.world.level.block.rks.RksConsoleBlockEntity
+import generations.gg.generations.core.generationscore.common.world.level.block.rks.RksModuleBlockEntity
 import generations.gg.generations.core.generationscore.common.world.level.block.raid.RaidDenBlockEntity
 import generations.gg.generations.core.generationscore.common.GenerationsCore
 import generations.gg.generations.core.generationscore.common.util.PlatformRegistry
@@ -187,6 +189,14 @@ object GenerationsBlockEntities: PlatformRegistry<BlockEntityType<*>>(Registries
 
     @JvmField
     val RKS_MACHINE = registerRegular("rks_machine", ::RksMachineBlockEntity, GenerationsUtilityBlocks.RKS_MACHINE)
+    /** The RKS Machine's master (RKS-PLAN.md § 3.2) and its four other modules. */
+    @JvmField
+    val RKS_CONSOLE = registerRegular("rks_control_console", ::RksConsoleBlockEntity, GenerationsUtilityBlocks.RKS_CONTROL_CONSOLE)
+    @JvmField
+    val RKS_MODULE = registerRegular(
+        "rks_module", ::RksModuleBlockEntity, GenerationsUtilityBlocks.RKS_CONTAINMENT_CHAMBER, GenerationsUtilityBlocks.RKS_REACTOR,
+        GenerationsUtilityBlocks.RKS_POWER_MODULE, GenerationsUtilityBlocks.RKS_GENETIC_ANALYZER,
+    )
     @JvmField
     val STREET_LAMP = registerRegularWithArray("street_lamp", ::StreetLampBlockEntity, GenerationsDecorationBlocks.STREET_LAMP.toArray())
     val BOX = registerRegular("box", ::BoxBlockEntity, GenerationsUtilityBlocks.BOX)

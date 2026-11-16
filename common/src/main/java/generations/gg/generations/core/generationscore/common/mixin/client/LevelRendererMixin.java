@@ -56,6 +56,8 @@ public abstract class LevelRendererMixin {
         // A legendary cinematic's Pokémon (no entity), in this pass like any other: the shader pack lights it.
         generations.gg.generations.core.generationscore.common.client.cinematic.CinematicClient.beforeRareCandy(frustumMatrix, projectionMatrix);
         GenerationsCoreClient.INSTANCE.firstRenderPass();
+        // The RKS Machine's glass and liquid, over the Mewtwo of its tank (RareCandy drew it just above).
+        generations.gg.generations.core.generationscore.common.client.rks.RksMachineClient.afterRareCandy();
     }
 
     @Inject(method = "renderLevel", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Options;getCloudsType()Lnet/minecraft/client/CloudStatus;"))

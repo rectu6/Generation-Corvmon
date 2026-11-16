@@ -611,6 +611,13 @@ object GenerationsItems: ItemPlatformRegistry() {
      * Legendary Items
      */
     val ORB = register("orb", ::ItemWithLangTooltipImpl, LEGENDARY_ITEMS)
+
+    // The RKS Machine (RKS-PLAN.md § 4.3). The research files have no survival source (no recipe,
+    // loot or quest, no creative tab): /give and /generations rks give only.
+    val RKS_RESEARCH_M01_GENETICS = register("rks_research_m01_genetics", { generations.gg.generations.core.generationscore.common.world.item.rks.RksResearchItem(it) })
+    val RKS_RESEARCH_M02_STABILIZATION = register("rks_research_m02_stabilization", { generations.gg.generations.core.generationscore.common.world.item.rks.RksResearchItem(it) })
+    val RKS_RESEARCH_M03_CONTAINMENT = register("rks_research_m03_containment", { generations.gg.generations.core.generationscore.common.world.item.rks.RksResearchItem(it) })
+    val RKS_REPAIR_KIT = register("rks_repair_kit", { generations.gg.generations.core.generationscore.common.world.item.rks.RksRepairKitItem(it) }, UTILITY)
     val ADAMANT_ORB = register("adamant_orb", { CreationTrioItem(it.stacksTo(1), LegendKeys.DIALGA, GenerationsCore.id("models/block/shrines/creation_trio/adamant_orb.pk")) }, LEGENDARY_ITEMS)
     val GRISEOUS_ORB = register("griseous_orb", { CreationTrioItem(it.stacksTo(1), LegendKeys.GIRATINA, GenerationsCore.id("models/block/shrines/creation_trio/griseous_orb.pk")) }, LEGENDARY_ITEMS)
     val LUSTROUS_ORB = register("lustrous_orb", { CreationTrioItem(it.stacksTo(1), LegendKeys.PALKIA, GenerationsCore.id("models/block/shrines/creation_trio/lustrous_orb.pk")) }, LEGENDARY_ITEMS)

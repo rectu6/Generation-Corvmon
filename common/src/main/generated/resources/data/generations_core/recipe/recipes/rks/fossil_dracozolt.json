@@ -1,0 +1,35 @@
+{
+  "type": "generations_core:rks_protocol",
+  "category": "fossil",
+  "order": 90,
+  "description": "generations_core.rks.recipe.fossil.desc",
+  "ingredients": [
+    {
+      "ingredient": {
+        "type": "generations_core:item",
+        "items": "cobblemon:fossilized_bird"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "type": "generations_core:item",
+        "items": "cobblemon:fossilized_drake"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "type": "generations_core:item",
+        "items": "minecraft:bone_meal"
+      },
+      "count": 32
+    }
+  ],
+  "result": {
+    "type": "generations_core:fossil",
+    "fossil": "cobblemon:dracozolt",
+    "species": "cobblemon:dracozolt"
+  },
+  "processingTime": 1200
+}

@@ -11,6 +11,7 @@ object GenerationsRksTypes: PlatformRegistry<RksResultType<*>>(GenerationsCore.R
 
     val POKEMON = register("pokemon", PokemonResult.CODEC, PokemonResult.STREAM_CODEC)
     val ITEM = register("item", ItemResult.CODEC, ItemResult.STREAM_CODEC)
+    val FOSSIL = register("fossil", FossilResult.CODEC, FossilResult.STREAM_CODEC)
 
     private fun <T: RksResult<T>> register(name: String, codec: MapCodec<T>, streamCodec: StreamCodec<RegistryFriendlyByteBuf, T>): Holder<RksResultType<*>> = create(name, { RksResultType(codec, streamCodec) })
 }

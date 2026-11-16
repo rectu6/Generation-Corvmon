@@ -53,9 +53,15 @@ object CinematicClient {
         val frame: SceneFrame,
         val level: ClientLevel,
         val actor: CinematicActor,
-        /** The scene's duration over the 20 s it is written for. */
+        /** The scene's duration over the seconds it is written for (20, Mewtwo's 24). */
         val stretch: Double,
     ) {
+        /** Near the scene but unable to watch it: its ambience only (effects, sound), no camera, no screen (D11). */
+        val ambient: Boolean get() = packet.ambient
+
+        /** The seconds the scene is written for. */
+        val written: Double = CinematicScenes.writtenSeconds(packet.scene)
+
         val motion = CameraMotion(config.reduceCameraMotion)
         val flash = FlashLimiter(config.reduceFlashes)
         val shot = CamFrame()
@@ -91,11 +97,12 @@ object CinematicClient {
         PlatformEvents.CLIENT_PLAYER_LOGOUT.subscribe(Priority.NORMAL) { stopLocally(0) }
     }
 
+    /** A scene holds this player's camera (not only its ambience). */
     @JvmStatic
-    fun isActive(): Boolean = playback != null
+    fun isActive(): Boolean = playback?.ambient == false
 
     @JvmStatic
-    fun hidesHud(): Boolean = playback != null
+    fun hidesHud(): Boolean = playback?.ambient == false
 
     @JvmStatic
     fun hides(entity: Entity): Boolean = hidden.isNotEmpty() && entity.uuid in hidden
@@ -118,11 +125,17 @@ object CinematicClient {
             val scene: CinematicScene = when (packet.scene) {
                 CinematicScenes.ZAPDOS -> generations.gg.generations.core.generationscore.common.client.cinematic.scenes.ZapdosScene(landing, packet.test, title)
                 CinematicScenes.MOLTRES -> generations.gg.generations.core.generationscore.common.client.cinematic.scenes.MoltresScene(landing, packet.test, title)
+                CinematicScenes.MEWTWO -> {
+                    // Where the RKS Machine's renderer draws Mewtwo in its tank (0.9 of its size, centred at 1.95).
+                    val form = PokemonSpecies.getByIdentifier(species)?.standardForm
+                    val height = (form?.let { it.hitbox.height() * it.baseScale } ?: 2f) * 0.9
+                    generations.gg.generations.core.generationscore.common.client.cinematic.scenes.MewtwoScene(landing, packet.test, title, 1.95 - height / 2.0)
+                }
                 else -> ArticunoScene(landing, packet.test, title)
             }
             val particles: FxParticles = scene.particles(6000)
             val frame = SceneFrame(camera, config, particles, packet.test)
-            val stretch = (packet.durationTicks / 20.0 / CinematicScenes.WRITTEN_SECONDS).coerceIn(0.5, 2.0)
+            val stretch = (packet.durationTicks / 20.0 / CinematicScenes.writtenSeconds(packet.scene)).coerceIn(0.5, 2.0)
             val clock = CinematicClock(CinematicClock.startSeconds(level.gameTime, packet.startGameTime))
             val playback = Playback(packet, config, scene, clock, camera, frame, level, CinematicActor(species, packet.aspects.toSet()), stretch)
             // A late client skips what already happened.
@@ -140,7 +153,7 @@ object CinematicClient {
             failed = false
             CinematicRenderer.reset()
             minecraft.musicManager.stopPlaying()
-            minecraft.setScreen(CinematicScreen())
+            if (!packet.ambient) minecraft.setScreen(CinematicScreen())
         } catch (e: Exception) {
             fail(e)
         }
@@ -193,7 +206,7 @@ object CinematicClient {
         if (minecraft.level == null || player == null || minecraft.level !== p.level) return stopLocally(0)
         if (p.clock.seconds > p.durationSeconds + 3.0) return stopLocally()
         // The scene's screen holds the keys; it comes back when another closed it (the pause menu).
-        if (minecraft.screen == null && player.isAlive) minecraft.setScreen(CinematicScreen())
+        if (!p.ambient && minecraft.screen == null && player.isAlive) minecraft.setScreen(CinematicScreen())
     }
 
     /**
@@ -225,12 +238,12 @@ object CinematicClient {
         val t = seconds / p.stretch
         p.sceneTime = t
         // The end: the scene played out, the quick fade of an interruption done, or the server's end.
-        if (t >= CinematicScenes.WRITTEN_SECONDS + 0.05 || (p.ending >= 0 && seconds - p.ending > 0.6) || (p.finishedAt >= 0 && seconds - p.finishedAt > 1.5)) {
+        if (t >= p.written + 0.05 || (p.ending >= 0 && seconds - p.ending > 0.6) || (p.finishedAt >= 0 && seconds - p.finishedAt > 1.5)) {
             stopLocally()
             return false
         }
         val script = p.scene.script
-        val clamped = t.coerceIn(0.0, CinematicScenes.WRITTEN_SECONDS)
+        val clamped = t.coerceIn(0.0, p.written)
         val a = script.action(clamped)
         val frame = p.frame
         frame.t = clamped
@@ -249,10 +262,11 @@ object CinematicClient {
 
         script.director.evaluate(clamped, p.motion, p.shot)
         val endFade = if (p.ending >= 0) 1.0 - CameraMath.smooth((seconds - p.ending) / 0.6) else 1.0
-        val weight = if (t < 0.0) 0.0 else script.cameraWeight(clamped) * endFade
-        p.presence = (if (t < 0.0) 0.0 else script.presence(clamped)) * endFade
-        p.flashValue = p.flash.limit(clamped, script.flash(a)) * endFade
-        val shake = script.shake(a) * p.motion.shake * endFade
+        // The ambience only: the player's own camera, softer effects.
+        val weight = if (t < 0.0 || p.ambient) 0.0 else script.cameraWeight(clamped) * endFade
+        p.presence = (if (t < 0.0) 0.0 else script.presence(clamped)) * endFade * (if (p.ambient) 0.8 else 1.0)
+        p.flashValue = p.flash.limit(clamped, script.flash(a)) * endFade * (if (p.ambient) 0.5 else 1.0)
+        val shake = if (p.ambient) 0.0 else script.shake(a) * p.motion.shake * endFade
         p.camera.update(level, p.shot, clamped, dt, shake, weight, camera.position, Quaternionf(camera.rotation()))
         frame.cam.set(p.camera.position)
         frame.right.set(1f, 0f, 0f).rotate(p.camera.rotation)
@@ -265,7 +279,7 @@ object CinematicClient {
     private fun streams(p: Playback, seconds: Double) {
         if (p.streams || p.ending >= 0) return
         p.streams = true
-        p.musicSource?.let { p.music = CinematicAudio.playStream(p.scene.id, "music", it, p.config.musicVolume) }
+        p.musicSource?.let { p.music = CinematicAudio.playStream(p.scene.id, "music", it, p.config.musicVolume * (if (p.ambient) 0.5f else 1f)) }
         p.ambienceSource?.let { p.ambience = CinematicAudio.playStream(p.scene.id, "ambience", it, p.config.volume) }
     }
 

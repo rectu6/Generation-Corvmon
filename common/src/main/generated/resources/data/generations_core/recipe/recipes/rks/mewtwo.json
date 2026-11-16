@@ -1,39 +1,44 @@
 {
-  "type": "generations_core:shaped_rks",
-  "consumesTimeCapsules": true,
-  "experience": 1.0,
-  "group": "",
-  "key": "cobblemon:mewtwo",
-  "pattern": {
-    "key": {
-      "A": {
-        "type": "generations_core:item",
-        "items": "generations_core:dna_splicers"
+  "type": "generations_core:rks_protocol",
+  "category": "genetic",
+  "order": 10,
+  "description": "generations_core.rks.recipe.mewtwo.desc",
+  "protocol": "mewtwo",
+  "ingredients": [
+    {
+      "ingredient": {
+        "items": "generations_core:mew_fossil",
+        "type": "generations_core:item"
       },
-      "B": {
-        "type": "generations_core:item",
-        "items": "generations_core:orb"
-      },
-      "C": {
-        "type": "generations_core:item",
-        "items": "generations_core:mew_dna_fiber"
-      },
-      "X": {
-        "type": "generations_core:item",
-        "items": "generations_core:mew_fossil"
-      }
+      "count": 6
     },
-    "pattern": [
-      "XAX",
-      "XBX",
-      "XCX"
-    ]
-  },
-  "processingTime": 240,
+    {
+      "ingredient": {
+        "items": "generations_core:dna_splicers",
+        "type": "generations_core:item"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "items": "generations_core:orb",
+        "type": "generations_core:item"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "items": "generations_core:mew_dna_fiber",
+        "type": "generations_core:item"
+      },
+      "count": 1
+    }
+  ],
   "result": {
     "type": "generations_core:pokemon",
     "level": 70,
     "species": "cobblemon:mewtwo"
   },
-  "showNotification": false
+  "processingTime": 240,
+  "key": "cobblemon:mewtwo"
 }

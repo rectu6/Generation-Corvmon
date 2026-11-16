@@ -22,5 +22,7 @@ public abstract class CommandsMixin {
         BossCommands.register(((Commands) (Object) this).getDispatcher());
         generations.gg.generations.core.generationscore.common.commands.CatchComboCommands.register(((Commands) (Object) this).getDispatcher());
         generations.gg.generations.core.generationscore.common.commands.CinematicCommands.register(((Commands) (Object) this).getDispatcher());
+        // The RKS Machine's test commands (RKS-PLAN.md § 6).
+        generations.gg.generations.core.generationscore.common.commands.RksCommands.register(((Commands) (Object) this).getDispatcher());
     }
 }

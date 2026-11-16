@@ -13,8 +13,6 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import generations.gg.generations.core.generationscore.common.util.StreamCodecs
 import generations.gg.generations.core.generationscore.common.world.entity.block.PokemonUtil
-import generations.gg.generations.core.generationscore.common.world.level.block.entities.RksMachineBlockEntity
-import generations.gg.generations.core.generationscore.common.world.level.block.generic.GenericRotatableModelBlock.Companion.FACING
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -50,15 +48,15 @@ data class PokemonResult(
         return GenerationsRksTypes.POKEMON.value() as RksResultType<PokemonResult>
     }
 
-    override fun process(player: Player, rksMachineBlockEntity: RksMachineBlockEntity, stack: ItemStack) {
+    override fun process(player: Player, host: RksMachineHost, stack: ItemStack) {
         val pokemon: Pokemon?
 
-        if (usePokemonInCapsule && rksMachineBlockEntity.pokemon.isPresent) {
+        if (usePokemonInCapsule && host.capsulePokemon.isPresent) {
             val properties = PokemonProperties()
             properties.aspects = aspects
             properties.species = species.toString()
 
-            pokemon = rksMachineBlockEntity.pokemon.get()
+            pokemon = host.capsulePokemon.get()
             properties.apply(pokemon)
             val list = pokemon.form.moves.allMoves
 
@@ -128,14 +126,9 @@ data class PokemonResult(
         }
 
         if (spawnInWorld) {
-            val pos = rksMachineBlockEntity.blockPos
-            val dir = rksMachineBlockEntity.blockState.getValue(FACING)
-            PokemonUtil.spawn(
-                PokemonEntity(rksMachineBlockEntity.level!!, pokemon),
-                rksMachineBlockEntity.level,
-                Vec3.atCenterOf(pos.above(2)),
-                dir.toYRot()
-            )
+            // In front of the machine (D16), on its level.
+            val level = host.hostLevel ?: return
+            PokemonUtil.spawn(PokemonEntity(level, pokemon), level, host.spawnPoint(), host.spawnYaw())
         } else {
             try {
                 storage.getParty(player as ServerPlayer).add(pokemon)

@@ -19,6 +19,8 @@ object GenerationsContainers: PlatformRegistry<MenuType<*>>(Registries.MENU, Bui
     val COOKING_POT = register("cooking_pot", ::CookingPotContainer)
     val TRASHCAN = register("trashcan", ::TrashCanContainer)
     val RKS_MACHINE = register("rks_machine", ::RksMachineContainer)
+    /** The new RKS Machine's menu (RKS-PLAN.md § 4.1), opened with the console's position. */
+    val RKS_CONSOLE = registerExtended("rks_control_console", generations.gg.generations.core.generationscore.common.world.rks.machine.RksConsoleMenu.Companion::fromBuffer)
     val GENERIC = registerExtended("generic", GenericChestContainer.Companion::fromBuffer)
     /** The charm case (world/charm/CharmCase), opened from the inventory. */
     val CHARM_CASE = register("charm_case") { id, inventory -> generations.gg.generations.core.generationscore.common.world.charm.CharmCaseMenu(id, inventory) }

@@ -41,7 +41,7 @@ class CinematicScreen : Screen(Component.translatable("generations_core.cinemati
     override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
         val p = CinematicClient.playback ?: return
         val script = p.scene.script
-        val t = p.sceneTime.coerceIn(0.0, CinematicScenes.WRITTEN_SECONDS)
+        val t = p.sceneTime.coerceIn(0.0, p.written)
         val endFade = if (p.ending >= 0) 1.0 - ((p.clock.seconds - p.ending) / 0.6).coerceIn(0.0, 1.0) else 1.0
         if (p.config.letterbox && p.sceneTime >= 0.0) {
             // Bars to 2.39:1.

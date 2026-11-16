@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "rks_machine",
+  "pattern": [
+    "BBB",
+    "PKP",
+    "IDI"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:black_stained_glass"
+    },
+    "P": {
+      "item": "minecraft:repeater"
+    },
+    "K": {
+      "item": "minecraft:comparator"
+    },
+    "I": {
+      "item": "minecraft:iron_block"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "generations_core:rks_control_console"
+  }
+}

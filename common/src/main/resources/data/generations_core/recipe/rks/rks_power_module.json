@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "rks_machine",
+  "pattern": [
+    "CRC",
+    "GKG",
+    "CRC"
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:copper_block"
+    },
+    "R": {
+      "item": "minecraft:redstone_block"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    },
+    "K": {
+      "item": "minecraft:comparator"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "generations_core:rks_power_module"
+  }
+}

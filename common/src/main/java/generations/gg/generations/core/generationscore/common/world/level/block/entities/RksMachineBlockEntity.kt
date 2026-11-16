@@ -10,6 +10,9 @@ import generations.gg.generations.core.generationscore.common.world.container.Rk
 import generations.gg.generations.core.generationscore.common.world.recipe.GenerationsCoreRecipeTypes
 import generations.gg.generations.core.generationscore.common.world.recipe.PokemonResult
 import generations.gg.generations.core.generationscore.common.world.recipe.RksRecipe
+import generations.gg.generations.core.generationscore.common.world.recipe.RksProtocolRecipe
+import generations.gg.generations.core.generationscore.common.world.rks.RksSettings
+import generations.gg.generations.core.generationscore.common.util.getPokemon
 import generations.gg.generations.core.generationscore.common.world.sound.GenerationsSounds
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap
 import net.minecraft.core.BlockPos
@@ -46,12 +49,20 @@ import kotlin.jvm.optionals.getOrNull
 
 open class RksMachineBlockEntity(pos: BlockPos, state: BlockState) :
     ModelProvidingBlockEntity(GenerationsBlockEntities.RKS_MACHINE, pos, state), MenuProvider,
-    Container, Toggleable {
+    Container, Toggleable, generations.gg.generations.core.generationscore.common.world.recipe.RksMachineHost {
     private val dataAccess: ContainerData
 
     var processingTime: Int = 0
     var processTimeTotal: Int = 0
     var pokemon: Optional<Pokemon> = Optional.empty()
+
+    // The old machine (D5) makes nothing any more; kept for the worlds and the two Ultra-Space structures.
+    override val hostLevel: Level? get() = level
+    override fun spawnPoint(): Vec3 = Vec3.atCenterOf(blockPos.above(2))
+    override fun spawnYaw(): Float = blockState.getValue(generations.gg.generations.core.generationscore.common.world.level.block.generic.GenericRotatableModelBlock.FACING).toYRot()
+    override var capsulePokemon: Optional<Pokemon>
+        get() = pokemon
+        set(value) { pokemon = value }
 
     private var isProcessing = false
 
@@ -216,12 +227,17 @@ open class RksMachineBlockEntity(pos: BlockPos, state: BlockState) :
             return getMappedRecipe(manager)
         }
 
+    /** The first recipe the slots hold, among those of an active category (rks/rks_machine.json). */
     private fun getMappedRecipe(manager: RecipeManager): Optional<RecipeHolder<RksRecipe>> {
-        return manager.getRecipeFor(GenerationsCoreRecipeTypes.RKS.asValue(), craftingInput, level)
+        val input = craftingInput
+        return Optional.ofNullable(
+            manager.getAllRecipesFor(GenerationsCoreRecipeTypes.RKS.asValue<RksRecipe>())
+                .firstOrNull { RksSettings.allows(it.value()) && it.value().matches(input, level!!) }
+        )
     }
 
     private fun getMappedRecipe(manager: RecipeManager, id: ResourceLocation): Optional<RecipeHolder<RksRecipe>> {
-        return manager.byKey(id).filter { a: RecipeHolder<*> -> a.value() is RksRecipe }
+        return manager.byKey(id).filter { a: RecipeHolder<*> -> a.value() is RksRecipe && RksSettings.allows(a.value() as RksRecipe) }
             .map { a: RecipeHolder<*> -> a as RecipeHolder<RksRecipe> }
     }
 
@@ -257,6 +273,16 @@ open class RksMachineBlockEntity(pos: BlockPos, state: BlockState) :
 
         val recipe = holder.value()
 
+        // Counted recipes (rks_protocol): the ingredients are taken first, all or nothing.
+        if (recipe is RksProtocolRecipe) {
+            if (result.isEmpty || !this.canSmelt(result, recipe)) return
+            val leftovers = recipe.consume(inventory) { capsule -> pokemon = Optional.ofNullable(capsule.getPokemon()) } ?: return
+            if (output.isEmpty) output = result.copy() else output.grow(result.count)
+            if (!level!!.isClientSide()) this.setLastRecipe(holder)
+            Containers.dropContents(level!!, worldPosition, NonNullList.of(ItemStack.EMPTY, *leftovers.toTypedArray()))
+            setChanged()
+            return
+        }
 
         if (!result.isEmpty && this.canSmelt(result, recipe)) {
             val outstack = output.copy()
@@ -353,7 +379,8 @@ open class RksMachineBlockEntity(pos: BlockPos, state: BlockState) :
         private const val PROCESSING_TIME_TOTAL_TAG = "ProcessingTimeTotal"
         private const val IS_PROCESSING_TAG = "IsProcessing"
         fun serverTick(level: Level, blockpos: BlockPos, blockstate: BlockState?, tile: RksMachineBlockEntity) {
-            val flag1 = false
+            // Sent to the clients only while it works and on the tick it stops (it was every tick).
+            val working = tile.isToggled
 
             if (tile.isToggled) {
                 val result = tile.result;
@@ -396,7 +423,7 @@ open class RksMachineBlockEntity(pos: BlockPos, state: BlockState) :
             tile.processingTime = Mth.clamp(tile.processingTime - 2, 0, tile.processTimeTotal);
         }*/
 
-            tile.sync()
+            if (working) tile.sync()
         }
 
         private fun createExperience(level: ServerLevel, popVec: Vec3, recipeIndex: Int, experience: Float) {

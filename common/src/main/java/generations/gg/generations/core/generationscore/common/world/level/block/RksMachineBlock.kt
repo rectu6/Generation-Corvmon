@@ -85,8 +85,9 @@ class RksMachineBlock(copy: Properties) : GenericRotatableModelBlock(
         player: Player,
         hitResult: BlockHitResult,
     ): InteractionResult {
+        // D5: the old machine makes nothing any more; it points to the new installation.
         if (!level.isClientSide()) {
-            this.openContainer(level, pos, player)
+            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("generations_core.rks.old_machine").withStyle(net.minecraft.ChatFormatting.GOLD), false)
         }
 
         return InteractionResult.SUCCESS

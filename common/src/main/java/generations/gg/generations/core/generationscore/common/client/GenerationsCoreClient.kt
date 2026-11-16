@@ -187,6 +187,8 @@ object GenerationsCoreClient {
             CobblemonBuiltinItemRendererRegistry.register(GenerationsItems.RAIKOU_STATUE.value(), renderer)
             CobblemonBuiltinItemRendererRegistry.register(GenerationsItems.ENTEI_STATUE.value(), renderer)
             CobblemonBuiltinItemRendererRegistry.register(GenerationsUtilityBlocks.RAID_DEN.value().asItem(), RaidDenItemRenderer())
+            // The RKS Machine's modules, drawn in 3D in the inventory (RKS-PLAN.md D15).
+            for ((module, holder) in GenerationsUtilityBlocks.RKS_MODULES) CobblemonBuiltinItemRendererRegistry.register(holder.value().asItem(), generations.gg.generations.core.generationscore.common.client.rks.RksModuleItemRenderer(module))
 
             addWoodType(GenerationsWoodTypes.ULTRA_JUNGLE)
             addWoodType(GenerationsWoodTypes.ULTRA_DARK)
@@ -318,6 +320,7 @@ object GenerationsCoreClient {
     fun registerScreens() {
         registerScreen(GenerationsContainers.COOKING_POT, ::CookingPotScreen)
         registerScreen(GenerationsContainers.GENERIC, ::GenericChestScreen)
+        registerScreen(GenerationsContainers.RKS_CONSOLE) { menu, inventory, title -> generations.gg.generations.core.generationscore.common.client.rks.RksConsoleScreen(menu, inventory, title) }
 //        MenuRegistry.registerScreenFactory(GenerationsContainers.WALKMON, GenericChestScreen::new);
 //        MenuRegistry.registerScreenFactory(GenerationsContainers.CALYREX_STEED, GenericChestScreen::new);
 //        MenuRegistry.registerScreenFactory(GenerationsContainers.MACHINE_BLOCK, ::MachineBlockScreen)
@@ -365,6 +368,9 @@ object GenerationsCoreClient {
     fun registerBlockEntityRenderers(consumer: BlockEntityRendererHandler) {
         consumer.register(GenerationsBlockEntities.POKE_DOLL.asValue<PokeDollBlockEntity>(), ::GeneralUseBlockEntityRenderer)
         consumer.register(GenerationsBlockEntities.RAID_DEN.asValue<RaidDenBlockEntity>(), ::RaidDenRenderer)
+        // The RKS Machine (RKS-PLAN.md § 3.3): the console draws the assembled machine, a module alone itself.
+        consumer.register(GenerationsBlockEntities.RKS_CONSOLE.asValue<generations.gg.generations.core.generationscore.common.world.level.block.rks.RksConsoleBlockEntity>()) { generations.gg.generations.core.generationscore.common.client.rks.RksMachineRenderer<generations.gg.generations.core.generationscore.common.world.level.block.rks.RksConsoleBlockEntity>(it) }
+        consumer.register(GenerationsBlockEntities.RKS_MODULE.asValue<generations.gg.generations.core.generationscore.common.world.level.block.rks.RksModuleBlockEntity>()) { generations.gg.generations.core.generationscore.common.client.rks.RksMachineRenderer<generations.gg.generations.core.generationscore.common.world.level.block.rks.RksModuleBlockEntity>(it) }
 
         consumer.register(GenerationsBlockEntities.TIMESPACE_ALTAR.asValue<TimeSpaceAltarBlockEntity>(), ::TimeSpaceAltarEntityRenderer)
         consumer.register(GenerationsBlockEntities.ABUNDANT_SHRINE.asValue<AbundantShrineBlockEntity>(), ::GeneralUseBlockEntityRenderer)

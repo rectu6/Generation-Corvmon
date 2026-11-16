@@ -1,0 +1,35 @@
+{
+  "type": "generations_core:rks_protocol",
+  "category": "fossil",
+  "order": 80,
+  "description": "generations_core.rks.recipe.fossil.desc",
+  "ingredients": [
+    {
+      "ingredient": {
+        "type": "generations_core:item",
+        "items": "cobblemon:fossilized_fish"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "type": "generations_core:item",
+        "items": "cobblemon:fossilized_drake"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "type": "generations_core:item",
+        "items": "minecraft:bone_meal"
+      },
+      "count": 32
+    }
+  ],
+  "result": {
+    "type": "generations_core:fossil",
+    "fossil": "cobblemon:dracovish",
+    "species": "cobblemon:dracovish"
+  },
+  "processingTime": 1200
+}

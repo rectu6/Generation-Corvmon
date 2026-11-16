@@ -1,36 +1,37 @@
 {
-  "type": "generations_core:shaped_rks",
-  "consumesTimeCapsules": true,
-  "experience": 1.0,
-  "group": "",
-  "key": "cobblemon:magearna",
-  "pattern": {
-    "key": {
-      "A": {
-        "type": "generations_core:item",
-        "items": "minecraft:netherite_ingot"
+  "type": "generations_core:rks_protocol",
+  "category": "genetic",
+  "order": 30,
+  "description": "generations_core.rks.recipe.magearna.desc",
+  "ingredients": [
+    {
+      "ingredient": {
+        "items": "minecraft:iron_ingot",
+        "type": "generations_core:item"
       },
-      "B": {
-        "type": "generations_core:damage",
-        "damage": 100,
-        "item": "generations_core:soul_heart"
-      },
-      "C": {
-        "type": "generations_core:item",
-        "items": "minecraft:iron_ingot"
-      }
+      "count": 4
     },
-    "pattern": [
-      "CAC",
-      "ABA",
-      "CAC"
-    ]
-  },
-  "processingTime": 240,
+    {
+      "ingredient": {
+        "items": "minecraft:netherite_ingot",
+        "type": "generations_core:item"
+      },
+      "count": 4
+    },
+    {
+      "ingredient": {
+        "damage": 100,
+        "item": "generations_core:soul_heart",
+        "type": "generations_core:damage"
+      },
+      "count": 1
+    }
+  ],
   "result": {
     "type": "generations_core:pokemon",
     "level": 70,
     "species": "cobblemon:magearna"
   },
-  "showNotification": false
+  "processingTime": 240,
+  "key": "cobblemon:magearna"
 }

@@ -11,6 +11,8 @@ import generations.gg.generations.core.generationscore.common.client.cinematic.s
 import generations.gg.generations.core.generationscore.common.client.cinematic.scenes.Cue;
 import generations.gg.generations.core.generationscore.common.client.cinematic.scenes.Grade;
 import generations.gg.generations.core.generationscore.common.client.cinematic.scenes.MoltresScript;
+import generations.gg.generations.core.generationscore.common.client.cinematic.scenes.MewtwoScript;
+import generations.gg.generations.core.generationscore.common.client.cinematic.audio.MewtwoMusic;
 import generations.gg.generations.core.generationscore.common.client.cinematic.scenes.SceneScript;
 import generations.gg.generations.core.generationscore.common.client.cinematic.scenes.ZapdosScript;
 import generations.gg.generations.core.generationscore.common.client.cinematic.camera.Shot;
@@ -59,6 +61,11 @@ public class CinematicBench {
             generic(id, new Vector3d(2.5, 0, 5), true, id + ", landing aside");
             generic(id, new Vector3d(-3, 1, 3), true, id + ", landing higher");
         }
+        mewtwo(new Vector3d(0, 0, 3.5), true, 1.05, "mewtwo, flat, test");
+        mewtwo(new Vector3d(0, 0, 3.5), false, 1.05, "mewtwo, flat, machine");
+        mewtwo(new Vector3d(1.8, 0, 4.2), false, 0.9, "mewtwo, landing aside");
+        mewtwo(new Vector3d(-0.5, 1, 4.0), true, 1.2, "mewtwo, landing higher");
+        mewtwoSynth();
         stateMachine();
         flashes();
         clock();
@@ -332,6 +339,161 @@ public class CinematicBench {
         check(first == l.length && ms < 500, id + " made ahead: first four seconds ready in " + ms + " ms");
         buffer.cancel();
         System.out.printf("%s made ahead: first 4 s in %.0f ms%n", id, ms);
+    }
+
+    /** The awakening of Mewtwo: 24 s, its own checks (the tank, the machine's box, the landing). */
+    private static void mewtwo(Vector3d landing, boolean test, double tankFeet, String label) {
+        MewtwoScript script = new MewtwoScript(landing, test, tankFeet);
+        double end = MewtwoScript.SECONDS;
+        check(Math.abs(script.action(0.0)) < 1e-6 && Math.abs(script.action(end) - end) < 1e-3, label + ": action time from 0 to 24 (" + script.action(end) + ")");
+        check(Math.abs(script.action(13.8) - 13.8) < 0.005, label + ": slow motion given back by 13.8 s (" + script.action(13.8) + ")");
+        java.util.ArrayList<Double> cuts = new java.util.ArrayList<>();
+        for (Shot shot : script.getDirector().getShots()) if (shot.getStart() > 0 && shot.getBlendIn() <= 0) cuts.add(shot.getStart());
+        double minSpeed = 9, maxSpeed = 0;
+        for (int mode = 0; mode < 2; mode++) {
+            CameraMotion motion = new CameraMotion(mode == 1);
+            CamFrame frame = new CamFrame();
+            ActorKey actor = new ActorKey();
+            Grade grade = new Grade();
+            double lowest = 99, minFov = 999, maxFov = 0, maxJump = 0, maxJumpAt = 0, lastA = -1, actorStep = 0, actorStepAt = 0;
+            Vector3d last = null, lastActor = null;
+            int invalid = 0, below = 0, backwards = 0, envelopes = 0, inside = 0;
+            String first = null;
+            for (int i = 0; i <= 4800; i++) {
+                double t = i * 0.005;
+                double a = script.action(t);
+                if (i > 0) {
+                    double speed = (a - script.action(t - 0.005)) / 0.005;
+                    minSpeed = Math.min(minSpeed, speed);
+                    maxSpeed = Math.max(maxSpeed, speed);
+                }
+                if (!finite(a)) invalid++;
+                if (a < lastA - 1e-9) backwards++;
+                lastA = a;
+                script.getDirector().evaluate(t, motion, frame);
+                if (!frame.isFinite()) {
+                    invalid++;
+                    if (first == null) first = "camera at " + t;
+                }
+                Vector3d pos = frame.getPos();
+                double ground = landing.y > 0 ? 0.0 : Math.min(0.0, landing.y);
+                lowest = Math.min(lowest, pos.y - ground);
+                if (pos.y - ground < 0.4) below++;
+                // Never inside the machine (x and z within 1.5 of the tank, up to its cables).
+                if (Math.abs(pos.x) < 1.55 && Math.abs(pos.z) < 1.55 && pos.y < 4.4) {
+                    inside++;
+                    if (first == null) first = "camera inside the machine at " + t + " (" + pos + ")";
+                }
+                minFov = Math.min(minFov, frame.getFov());
+                maxFov = Math.max(maxFov, frame.getFov());
+                if (last != null) {
+                    boolean cut = false;
+                    for (double c : cuts) if (Math.abs(t - c) < 0.006) cut = true;
+                    double jump = last.distance(pos);
+                    if (!cut && jump > maxJump) {
+                        maxJump = jump;
+                        maxJumpAt = t;
+                    }
+                }
+                last = new Vector3d(pos);
+                script.actor(a, actor);
+                if (!actor.isFinite() || actor.getScale() < 0 || actor.getScale() > 1.0001 || Math.abs(actor.getRoll()) > 60 || Math.abs(actor.getPitch()) > 60) {
+                    invalid++;
+                    if (first == null) first = "actor at " + t;
+                }
+                if (lastActor != null) {
+                    double step = lastActor.distance(actor.getPos());
+                    if (step > actorStep) {
+                        actorStep = step;
+                        actorStepAt = t;
+                    }
+                }
+                lastActor = new Vector3d(actor.getPos());
+                script.grade(t, grade);
+                if (!grade.isFinite() || grade.getExposure() <= 0.3 || grade.getExposure() > 1.5) {
+                    invalid++;
+                    if (first == null) first = "grade at " + t;
+                }
+                double[] common = {script.cameraWeight(t), script.letterbox(t), script.title(t), script.presence(t), script.flash(a)};
+                for (double v : common) if (!finite(v) || v < -1e-9 || v > 1.0 + 1e-9) envelopes++;
+                for (double v : script.envelopes(a)) if (!finite(v) || v < -1e-9 || v > 1.0 + 1e-9) envelopes++;
+                if (!finite(script.shake(a)) || script.shake(a) < 0) envelopes++;
+            }
+            String m = label + (mode == 1 ? ", reduced motion" : "");
+            check(invalid == 0, m + ": " + invalid + " invalid values (first: " + first + ")");
+            check(backwards == 0, m + ": action time goes back " + backwards + " times");
+            check(below == 0, m + ": camera below 0.4 m above the ground " + below + " times (lowest " + lowest + ")");
+            check(inside == 0, m + ": camera inside the machine " + inside + " times (" + first + ")");
+            check(minFov >= 20 && maxFov <= 100, m + ": field of view from " + minFov + " to " + maxFov);
+            check(envelopes == 0, m + ": " + envelopes + " envelope values out of range");
+            check(maxJump < 0.35, m + ": camera jump " + maxJump + " at " + maxJumpAt);
+            check(actorStep < 0.12, m + ": actor step " + actorStep + " at " + actorStepAt);
+            System.out.printf("%s: lowest camera %.2f m, fov %.1f to %.1f, largest camera step %.3f m at %.3f s, actor step %.3f m at %.3f s%n", m, lowest, minFov, maxFov, maxJump, maxJumpAt, actorStep, actorStepAt);
+        }
+        check(minSpeed >= 0.35 && maxSpeed <= 1.7, label + ": slow motion from " + minSpeed + " to " + maxSpeed);
+        ActorKey key = new ActorKey();
+        script.actor(0.0, key);
+        check(key.getPose() == ActorPose.HOVER && Math.abs(key.getScale() - 0.9) < 1e-9 && Math.abs(key.getPos().y - tankFeet) < 0.06 && Math.abs(key.getPos().x) < 0.05, label + ": starts where the tank's renderer draws it (" + key.getPos() + ", " + key.getScale() + ")");
+        script.actor(MewtwoScript.BREAK - 0.01, key);
+        check(Math.hypot(key.getPos().x, key.getPos().z) < 0.1, label + ": in the tank until the breach");
+        script.actor(MewtwoScript.CRY, key);
+        check(key.getPos().distance(script.getHoverPoint()) < 0.2 && key.getPose() == ActorPose.HOVER, label + ": hovering over the console for its cry");
+        script.actor(MewtwoScript.LANDING + 0.1, key);
+        check(key.getPose() == ActorPose.STAND && key.getPos().distance(landing) < 1e-6, label + ": standing on the landing point after " + MewtwoScript.LANDING + " s");
+        script.actor(23.95, key);
+        check(test ? key.getPose() == ActorPose.HIDDEN : key.getPose() == ActorPose.STAND && key.getPos().distance(landing) < 1e-6, label + ": at the end (" + key.getPose() + ")");
+        check(script.cameraWeight(0) == 0 && script.cameraWeight(23.99) < 0.01 && script.cameraWeight(12) > 0.99, label + ": the camera taken and given back");
+        check(script.cracks(MewtwoScript.CRACK1 - 0.5) < 1e-9 && script.cracks(MewtwoScript.BREAK - 0.1) > 0.99 && script.cracks(MewtwoScript.BREAK) == 0.0, label + ": the cracks spread, gone with the glass");
+        List<Cue> cues = script.getCues();
+        double lastTime = -1;
+        boolean ok = true;
+        for (Cue cue : cues) {
+            if (cue.getTime() < lastTime || cue.getTime() < 0 || cue.getTime() > end) ok = false;
+            lastTime = cue.getTime();
+            if (cue.getId().isEmpty() || cue.getVolume() <= 0 || cue.getPitch() <= 0 || cue.getPitch() > 2.0f) ok = false;
+        }
+        check(ok, label + ": " + cues.size() + " cues sorted, within the scene, valid");
+        check(cues.stream().anyMatch(c -> c.getKind() == Cue.Kind.CRY && c.getId().equals("cobblemon:pokemon.mewtwo.cry") && Math.abs(c.getTime() - MewtwoScript.CRY) < 1e-9), label + ": its cry at 16.5 s");
+        check(cues.stream().anyMatch(c -> c.getKind() == Cue.Kind.EVENT && c.getId().equals("break") && Math.abs(c.getTime() - MewtwoScript.BREAK) < 1e-9), label + ": the breach at 11 s");
+        check(cues.stream().filter(c -> c.getKind() == Cue.Kind.EVENT && c.getId().startsWith("crack:")).count() == 3, label + ": three steps of cracks");
+        // The server side: Mewtwo's entity takes the actor's place right at the end, once.
+        CinematicStateMachine server = new CinematicStateMachine(10, 480, test, 2);
+        int spawns = 0;
+        long spawnAt = -1;
+        for (long now = 0; now < 600; now++) for (CinematicStateMachine.Action action : server.tick(now)) if (action == CinematicStateMachine.Action.SPAWN) {
+            spawns++;
+            spawnAt = now;
+        }
+        check(test ? spawns == 0 : spawns == 1 && spawnAt == 488, label + ": the server's spawn (" + spawns + " at " + spawnAt + ")");
+    }
+
+    private static void mewtwoSynth() {
+        for (double stretch : new double[]{1.0, 0.75, 1.25}) {
+            for (double offset : new double[]{0.0, 11.3}) {
+                MewtwoScript script = new MewtwoScript(new Vector3d(0, 0, 3.5), true, 1.05);
+                SynthRenderer music = MewtwoMusic.INSTANCE.music(script, stretch, offset);
+                SynthRenderer ambience = MewtwoMusic.INSTANCE.ambience(script, stretch, offset);
+                long started = System.nanoTime();
+                float peak = music.peak();
+                double ms = (System.nanoTime() - started) / 1e6;
+                float ambiencePeak = ambience.peak();
+                String what = String.format("mewtwo synth x%.2f from %.1f s", stretch, offset);
+                check(Float.isFinite(peak) && peak <= 1.0f && peak > 0.05f, what + ": music peak " + peak);
+                check(Float.isFinite(ambiencePeak) && ambiencePeak <= 1.0f && ambiencePeak > 0.01f, what + ": ambience peak " + ambiencePeak);
+                check(ms < 9000, what + ": music made in " + ms + " ms");
+                System.out.printf("%s: music peak %.2f (%.0f ms), ambience peak %.2f%n", what, peak, ms, ambiencePeak);
+            }
+        }
+        SynthRenderer renderer = MewtwoMusic.INSTANCE.music(new MewtwoScript(new Vector3d(0, 0, 3.5), true, 1.05), 1.0, 0.0);
+        long started = System.nanoTime();
+        SynthBuffer buffer = new SynthBuffer(renderer).start("bench");
+        float[] l = new float[4 * 44100];
+        float[] r = new float[4 * 44100];
+        int first = buffer.read(0, l.length, l, r);
+        double ms = (System.nanoTime() - started) / 1e6;
+        check(first == l.length && ms < 500, "mewtwo made ahead: first four seconds ready in " + ms + " ms");
+        buffer.cancel();
+        System.out.printf("mewtwo made ahead: first 4 s in %.0f ms%n", ms);
     }
 
     private static void stateMachine() {

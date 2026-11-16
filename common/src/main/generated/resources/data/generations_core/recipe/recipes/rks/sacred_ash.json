@@ -1,0 +1,37 @@
+{
+  "type": "generations_core:rks_protocol",
+  "category": "items",
+  "order": 10,
+  "description": "generations_core.rks.recipe.sacred_ash.desc",
+  "ingredients": [
+    {
+      "ingredient": {
+        "items": "minecraft:totem_of_undying",
+        "type": "generations_core:item"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "items": "minecraft:coal",
+        "type": "generations_core:item"
+      },
+      "count": 1
+    },
+    {
+      "ingredient": {
+        "items": "generations_core:rainbow_wing",
+        "type": "generations_core:item"
+      },
+      "count": 1
+    }
+  ],
+  "result": {
+    "type": "generations_core:item",
+    "stack": {
+      "count": 1,
+      "id": "generations_core:sacred_ash"
+    }
+  },
+  "processingTime": 240
+}

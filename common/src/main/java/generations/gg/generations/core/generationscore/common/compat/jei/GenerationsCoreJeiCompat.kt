@@ -3,17 +3,14 @@ package generations.gg.generations.core.generationscore.common.compat.jei
 import generations.gg.generations.core.generationscore.common.GenerationsCore
 import generations.gg.generations.core.generationscore.common.client.asValue
 import generations.gg.generations.core.generationscore.common.client.screen.container.RksMachineScreen
-import generations.gg.generations.core.generationscore.common.world.container.GenerationsContainers
-import generations.gg.generations.core.generationscore.common.world.container.RksMachineContainer
 import generations.gg.generations.core.generationscore.common.world.level.block.GenerationsUtilityBlocks
 import generations.gg.generations.core.generationscore.common.world.recipe.GenerationsCoreRecipeTypes
+import generations.gg.generations.core.generationscore.common.world.recipe.RksCategory
+import generations.gg.generations.core.generationscore.common.world.recipe.RksProtocolRecipe
 import generations.gg.generations.core.generationscore.common.world.recipe.RksRecipe
 import mezz.jei.api.IModPlugin
 import mezz.jei.api.JeiPlugin
-import mezz.jei.api.recipe.category.IRecipeCategory
 import mezz.jei.api.registration.*
-import mezz.jei.api.runtime.IIngredientManager
-import mezz.jei.library.plugins.vanilla.crafting.CategoryRecipeValidator
 import net.minecraft.client.Minecraft
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeHolder
@@ -23,24 +20,18 @@ class GenerationsCoreJeiCompat : IModPlugin {
     companion object {
         private val id: ResourceLocation = GenerationsCore.id("rks")
     }
-    lateinit var rksCategory: IRecipeCategory<RecipeHolder<RksRecipe>>
-
 
     override fun getPluginUid(): ResourceLocation {
         return id
     }
 
     override fun registerCategories(registration: IRecipeCategoryRegistration) {
-        rksCategory = RksRecipeCategory(registration.jeiHelpers.guiHelper)
-        registration.addRecipeCategories(rksCategory)
+        // The RKS Machine's three families (RKS-PLAN.md § 2.4).
+        for (category in RksCategory.entries) registration.addRecipeCategories(RksProtocolCategory(registration.jeiHelpers.guiHelper, category))
     }
 
     override fun registerRecipes(registration: IRecipeRegistration) {
-        val ingredientManager = registration.ingredientManager
-
-        val craftingRecipes: Pair<List<RecipeHolder<RksRecipe>>, List<RecipeHolder<RksRecipe>>> = ingredientManager.rksRecipes()
-        registration.addRecipes(RksRecipeCategory.RKS_MACHINE, craftingRecipes.first)
-        registration.addRecipes(RksRecipeCategory.RKS_MACHINE, craftingRecipes.second)
+        for ((category, recipes) in rksRecipes()) registration.addRecipes(RksProtocolCategory.type(category), recipes)
 
         // The Ultra Suit's shields: what they protect against and how they are installed.
         registration.addItemStackInfo(
@@ -59,36 +50,20 @@ class GenerationsCoreJeiCompat : IModPlugin {
     }
 
     override fun registerRecipeCatalysts(registration: IRecipeCatalystRegistration) {
-        registration.addRecipeCatalyst(GenerationsUtilityBlocks.RKS_MACHINE.value(), RksRecipeCategory.RKS_MACHINE)
+        for (category in RksCategory.entries) registration.addRecipeCatalyst(GenerationsUtilityBlocks.RKS_CONTROL_CONSOLE.value(), RksProtocolCategory.type(category))
     }
 
     override fun registerGuiHandlers(registration: IGuiHandlerRegistration) {
-        registration.addRecipeClickArea(RksMachineScreen::class.java, 90, 35, 22, 15, RksRecipeCategory.RKS_MACHINE)
+        registration.addRecipeClickArea(RksMachineScreen::class.java, 90, 35, 22, 15, *RksCategory.entries.map(RksProtocolCategory::type).toTypedArray())
     }
 
-    override fun registerRecipeTransferHandlers(registration: IRecipeTransferRegistration) {
-        registration.addRecipeTransferHandler(
-            RksMachineContainer::class.java, GenerationsContainers.RKS_MACHINE.value(), RksRecipeCategory.RKS_MACHINE, 1, 9, 10, 36
-        )
-    }
-
-
-    private fun IIngredientManager.rksRecipes(): Pair<List<RecipeHolder<RksRecipe>>, List<RecipeHolder<RksRecipe>>> {
-        val validator: CategoryRecipeValidator<RksRecipe> = CategoryRecipeValidator(rksCategory, this, 9)
-
-        val handled: MutableList<RecipeHolder<RksRecipe>> = ArrayList()
-        val unhandled: MutableList<RecipeHolder<RksRecipe>> = ArrayList()
-
-        val recipeManager = Minecraft.getInstance().level?.recipeManager ?: return Pair(emptyList(), emptyList())
-
-        recipeManager.getAllRecipesFor(GenerationsCoreRecipeTypes.RKS.asValue<RksRecipe>()).forEach { recipe ->
-                if (validator.isRecipeHandled(recipe)) {
-                    handled.add(recipe)
-                } else {
-                    unhandled.add(recipe)
-                }
-        }
-
-        return handled.toList() to unhandled.toList()
+    /** The rks_protocol recipes by family, in the menu's order (older RKS formats are not shown). */
+    private fun rksRecipes(): Map<RksCategory, List<RecipeHolder<RksProtocolRecipe>>> {
+        val recipeManager = Minecraft.getInstance().level?.recipeManager ?: return emptyMap()
+        return recipeManager.getAllRecipesFor(GenerationsCoreRecipeTypes.RKS.asValue<RksRecipe>())
+            .filter { it.value() is RksProtocolRecipe }
+            .map { @Suppress("UNCHECKED_CAST") (it as RecipeHolder<RksProtocolRecipe>) }
+            .sortedWith(compareBy({ it.value().order }, { it.id().toString() }))
+            .groupBy { it.value().category }
     }
 }

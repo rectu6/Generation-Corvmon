@@ -886,6 +886,11 @@
     "generations_core:ultra_crystal_slab",
     "generations_core:ultra_crystal_stairs",
     "generations_core:ultra_crystal_wall",
-    "generations_core:ultrite_debris"
+    "generations_core:ultrite_debris",
+    "generations_core:rks_control_console",
+    "generations_core:rks_containment_chamber",
+    "generations_core:rks_reactor",
+    "generations_core:rks_power_module",
+    "generations_core:rks_genetic_analyzer"
   ]
 }

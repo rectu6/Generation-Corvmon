@@ -70,8 +70,8 @@ abstract class RksRecipe(
     val isPokemonResult: Boolean
         get() = result.isPokemon
 
-    fun process(player: Player, rksMachineBlockEntity: RksMachineBlockEntity, stack: ItemStack) {
-        result.process(player, rksMachineBlockEntity, stack)
+    fun process(player: Player, host: RksMachineHost, stack: ItemStack) {
+        result.process(player, host, stack)
     }
 
     override fun getType(): RecipeType<*> {
