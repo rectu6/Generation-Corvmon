@@ -14,7 +14,9 @@ import generations.gg.generations.core.generationscore.common.world.level.block.
 import generations.gg.generations.core.generationscore.common.world.level.block.entities.shrines.ShrineBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import generations.gg.generations.core.generationscore.common.world.regi.RegiSummon
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
@@ -42,6 +44,9 @@ class RegiShrineBlock(properties: Properties, model: ResourceLocation, speciesKe
         get() = GenerationsBlockEntities.GENERIC_SHRINE
 
     override fun codec(): MapCodec<RegiShrineBlock> = CODEC
+
+    /** The Regi this shrine wakes. */
+    fun speciesKey(): SpeciesKey = species
 
     public override fun getShape(
         state: BlockState,
@@ -81,9 +86,12 @@ class RegiShrineBlock(properties: Properties, model: ResourceLocation, speciesKe
             if (blockPos.isNotEmpty()) {
                 val list = checkForUnownSequence(level, blockPos[0])
                 if (list.isNotEmpty() && level.getBlockEntity(pos) is ShrineBlockEntity) {
-
-                    list.forEach(Consumer { a: BlockPos? -> level.destroyBlock(a, false) })
-                    player.getItemInHand(hand).shrink(1)
+                    // The original consumption (the letters, the key), in its order; then the Regi
+                    // wakes: its scene first, or at once when no scene can start (REGIS-PLAN.md § 2, D2).
+                    RegiSummon.summonRegi(level as ServerLevel, pos, player as ServerPlayer, species, list) {
+                        list.forEach(Consumer { a: BlockPos? -> level.destroyBlock(a, false) })
+                        player.getItemInHand(hand).shrink(1)
+                    }
                 }
             }
 
@@ -193,14 +201,17 @@ class RegiShrineBlock(properties: Properties, model: ResourceLocation, speciesKe
         }
 
 
+        /**
+         * A letter on its stand: an Unown block with a Regi stand under it. The original read the
+         * block under the letter as the letter's place, so the search (which starts on a letter)
+         * never matched (REGIS-PLAN.md D1); the layout asked for is the same.
+         */
         private fun isPillar(level: Level, pos: BlockPos): Boolean {
-            val block = level.getBlockState(pos)
-
-            return block.`is`(GenerationsBlockTags.REGI_STANDS) && level.getBlockState(pos.above()).block is UnownBlock
+            return level.getBlockState(pos.below()).`is`(GenerationsBlockTags.REGI_STANDS) && level.getBlockState(pos).block is UnownBlock
         }
 
         private fun getSymbol(level: Level, pos: BlockPos): String {
-            return  if(isPillar(level, pos)) symbolFromState(level.getBlockState(pos.above())) ?: "-" else "-"
+            return  if(isPillar(level, pos)) symbolFromState(level.getBlockState(pos)) ?: "-" else "-"
         }
 
         private fun symbolFromState(state: BlockState): String? = state.block.instanceOrNull<UnownBlock>()?.glyph

@@ -25,5 +25,8 @@ public abstract class CommandsMixin {
         // The RKS Machine's test commands (RKS-PLAN.md § 6).
         generations.gg.generations.core.generationscore.common.commands.RksCommands.register(((Commands) (Object) this).getDispatcher());
         generations.gg.generations.core.generationscore.common.commands.MewCommands.register(((Commands) (Object) this).getDispatcher());
+        generations.gg.generations.core.generationscore.common.commands.HoOhCommands.register(((Commands) (Object) this).getDispatcher());
+        generations.gg.generations.core.generationscore.common.commands.JohtoCommands.register(((Commands) (Object) this).getDispatcher());
+        generations.gg.generations.core.generationscore.common.commands.EonCommands.register(((Commands) (Object) this).getDispatcher());
     }
 }

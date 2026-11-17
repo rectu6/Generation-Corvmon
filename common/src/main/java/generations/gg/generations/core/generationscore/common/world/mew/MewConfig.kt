@@ -196,7 +196,8 @@ class MewConfig(
     }
 
     companion object {
-        const val VERSION = 1
+        /** 2: the false appearances last longer (HOOH-PLAN.md § 4), unless their seconds were changed. */
+        const val VERSION = 2
         const val LOST_RESET = "reset"
         const val LOST_RETRY = "retry"
 
@@ -212,14 +213,28 @@ class MewConfig(
         )
 
         fun defaultTypes(): MutableMap<String, ManifestType> = linkedMapOf(
-            "a" to ManifestType(true, 3, 3.0),
-            "b" to ManifestType(true, 3, 6.0),
-            "c" to ManifestType(true, 2, 5.0),
-            "d" to ManifestType(true, 2, 5.0),
+            "a" to ManifestType(true, 3, 6.0),
+            "b" to ManifestType(true, 3, 7.0),
+            "c" to ManifestType(true, 2, 7.0),
+            "d" to ManifestType(true, 2, 6.0),
         )
 
+        /** Version 1's seconds, replaced by version 2's when the file still has them. */
+        private val OLD_SECONDS = mapOf("a" to 3.0, "b" to 6.0, "c" to 5.0, "d" to 5.0)
+
+        private fun migrate(json: com.google.gson.JsonObject, found: Int) {
+            if (found >= 2) return
+            val types = json.getAsJsonObject("manifestations")?.getAsJsonObject("types") ?: return
+            val now = defaultTypes()
+            for ((key, old) in OLD_SECONDS) {
+                val type = types.getAsJsonObject(key) ?: continue
+                val seconds = type.get("seconds")?.takeIf { it.isJsonPrimitive }?.asDouble ?: continue
+                if (kotlin.math.abs(seconds - old) < 1e-6) type.addProperty("seconds", now[key]!!.seconds)
+            }
+        }
+
         fun load(): MewConfig = JsonConfigs.load(
-            "Mew", JsonConfigs.file("mew", "mew.json"), MewConfig::class.java, ::MewConfig, VERSION, { it.validate() },
+            "Mew", JsonConfigs.file("mew", "mew.json"), MewConfig::class.java, ::MewConfig, VERSION, { it.validate() }, ::migrate,
         )
     }
 }

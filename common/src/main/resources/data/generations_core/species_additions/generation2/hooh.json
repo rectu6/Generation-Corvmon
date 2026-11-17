@@ -15,9 +15,9 @@
         "percentage": 100.0
       },
       {
-        "item": "generations_core:rainbow_wing",
+        "item": "generations_core:ho_oh_sacred_feather",
         "percentage": 100.0,
-        "quantityRange": 6-6
+        "quantityRange": 3-3
       }
     ]
   }

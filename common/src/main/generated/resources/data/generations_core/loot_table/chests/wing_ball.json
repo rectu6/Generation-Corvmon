@@ -38,10 +38,6 @@
         },
         {
           "type": "minecraft:item",
-          "name": "generations_core:rainbow_wing"
-        },
-        {
-          "type": "minecraft:item",
           "name": "cobblemon:coba_berry"
         },
         {

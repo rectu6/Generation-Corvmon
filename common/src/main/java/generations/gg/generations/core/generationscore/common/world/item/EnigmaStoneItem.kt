@@ -28,7 +28,7 @@ class EnigmaStoneItem(properties: Properties) : ItemWithLangTooltipImpl(properti
 
                     return InteractionResultHolder.success(player.mainHandItem)
                 } else {
-                    player.sendSystemMessage(Component.literal("You need to defeat/capture " + (player.mainHandItem.maxDamage - player.mainHandItem.damageValue) + " Psychic/Dragon pokemon to use this stone."))
+                    player.sendSystemMessage(Component.translatable("generations_core.eon.stone.charge", player.mainHandItem.maxDamage - player.mainHandItem.damageValue))
                 }
             }
         }

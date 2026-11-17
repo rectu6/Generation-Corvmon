@@ -16,11 +16,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MewClickMixin {
     @Inject(method = "startAttack", at = @At("HEAD"), cancellable = true)
     private void generations$mewAttack(CallbackInfoReturnable<Boolean> cir) {
-        if (MewClient.click()) cir.setReturnValue(false);
+        if (MewClient.click() || generations.gg.generations.core.generationscore.common.client.johto.JohtoClient.click() || generations.gg.generations.core.generationscore.common.client.eon.EonClient.click()) cir.setReturnValue(false);
     }
 
     @Inject(method = "startUseItem", at = @At("HEAD"), cancellable = true)
     private void generations$mewUse(CallbackInfo ci) {
-        if (MewClient.click()) ci.cancel();
+        if (MewClient.click() || generations.gg.generations.core.generationscore.common.client.johto.JohtoClient.click() || generations.gg.generations.core.generationscore.common.client.eon.EonClient.click()) ci.cancel();
     }
 }

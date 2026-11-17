@@ -52,6 +52,9 @@ public abstract class GameRendererMixin {
         generations.gg.generations.core.generationscore.common.client.cinematic.CinematicClient.renderAfterLevel();
         // Mew's light effects (no post-processing).
         generations.gg.generations.core.generationscore.common.client.mew.MewClient.renderAfterLevel();
+        generations.gg.generations.core.generationscore.common.client.hooh.HoOhClient.renderAfterLevel();
+        generations.gg.generations.core.generationscore.common.client.johto.JohtoClient.renderAfterLevel();
+        generations.gg.generations.core.generationscore.common.client.eon.EonClient.renderAfterLevel();
     }
 
     /** The heat's shimmer (phase 4.4): the field of view sways a little (ultra_weather_client.json, viewSway). */

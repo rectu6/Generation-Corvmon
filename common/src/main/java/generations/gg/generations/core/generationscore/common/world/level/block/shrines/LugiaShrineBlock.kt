@@ -1,12 +1,20 @@
 package generations.gg.generations.core.generationscore.common.world.level.block.shrines
 
+import com.cobblemon.mod.common.pokemon.Pokemon
 import com.mojang.serialization.MapCodec
+import generations.gg.generations.core.generationscore.common.world.lugia.LugiaSummon
 import generations.gg.generations.core.generationscore.common.world.item.GenerationsItems
 import generations.gg.generations.core.generationscore.common.world.level.block.GenerationsVoxelShapes
 import generations.gg.generations.core.generationscore.common.world.level.block.GenerationsVoxelShapes.GenericRotatableShapes
 import generations.gg.generations.core.generationscore.common.world.level.block.entities.GenerationsBlockEntityModels
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.ItemInteractionResult
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.shapes.CollisionContext
@@ -24,6 +32,15 @@ class LugiaShrineBlock(materialIn: Properties) : BirdShrineBlock(materialIn, Gen
     }
 
     override fun codec(): MapCodec<LugiaShrineBlock> = CODEC
+
+    /**
+     * The same summoning (same checks, flute, song, Lugia), with its scene before Lugia appears
+     * (LUGIA-PLAN.md); the original 5 s when the scene cannot start.
+     */
+    override fun summon(stack: ItemStack, state: BlockState, level: Level, pos: BlockPos, player: Player, pokemon: Pokemon): ItemInteractionResult {
+        if (level is ServerLevel && player is ServerPlayer && LugiaSummon.summon(this, level, pos, state, player, pokemon, stack)) return ItemInteractionResult.SUCCESS
+        return super.summon(stack, state, level, pos, player, pokemon)
+    }
 
     override val baseX: Int
         get() = 1

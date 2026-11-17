@@ -221,6 +221,8 @@ class StatueEntity(type: EntityType<StatueEntity> = GenerationsEntities.STATUE_E
 
     override fun interact(player: Player, hand: InteractionHand): InteractionResult {
         if (!level().isClientSide()) {
+            // The Legend of Johto's statues (JOHTO-PLAN.md § 5): their history, their awakening; the beasts' others are inert (D6).
+            if (player is ServerPlayer) generations.gg.generations.core.generationscore.common.world.johto.Johto.onStatue(player, this, hand)?.let { return it }
             val stack = player.getItemInHand(hand)
             if (stack.`is`(GenerationsItems.SACRED_ASH) && interactable /* && SacredAshItem.isFullyCharged(stack)*/) {
                 val entity = properties.createEntity(level())

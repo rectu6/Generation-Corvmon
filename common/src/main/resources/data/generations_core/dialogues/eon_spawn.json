@@ -12,38 +12,36 @@
     {
       "id": "intro",
       "lines": [
-        "Which of the eon duo you call?"
+        "generations_core.dialogue.eon.intro"
       ],
       "input": {
         "type": "option",
         "vertical": false,
         "options": [
           {
-            "text": "Latios",
+            "text": "generations_core.dialogue.eon.latios",
             "value": "latios",
             "isVisible": "q.player.capped('cobblemon:latios')",
             "action": [
-              "v.pokemon_concept = 'blue';",
               "v.pokemon_name = 'Latios';",
               "v.pokemon_id = 'latios';",
-              "q.dialogue.set_page('eon_1');"
+              "q.dialogue.set_page('latios_1');"
             ]
           },
           {
-            "text": "Latias",
+            "text": "generations_core.dialogue.eon.latias",
             "value": "latias",
             "isVisible": "q.player.capped('cobblemon:latias')",
             "action": [
-              "v.pokemon_concept = 'blue';",
               "v.pokemon_name = 'Latias';",
               "v.pokemon_id = 'latias';",
-              "q.dialogue.set_page('eon_1');"
+              "q.dialogue.set_page('latias_1');"
             ]
           },
           {
-            "text": "None Available",
+            "text": "generations_core.dialogue.eon.none",
             "value": "none",
-            "isVisible": "!q.player.capped('cobblemon:tapukoko') && !q.player.capped('cobblemon:tapulele') && !q.player.capped('cobblemon:tapubulu') && !q.player.capped('cobblemon:tapufini')",
+            "isVisible": "!q.player.capped('cobblemon:latios') && !q.player.capped('cobblemon:latias')",
             "action": [
               "q.dialogue.set_page('none_1');"
             ]
@@ -52,8 +50,8 @@
       }
     },
     {
-      "id": "eon_1",
-      "lines": [ "*As you examine the Enigma stone, you begin to recall the journey that led you to this moment.*" ],
+      "id": "latios_1",
+      "lines": [ "generations_core.dialogue.eon.recall" ],
       "input": {
         "type": "auto-continue",
         "allowSkip": false,
@@ -61,13 +59,8 @@
       }
     },
     {
-      "id": "tapu_2",
-      "lines": [
-        {
-          "type": "expression",
-          "expression": "'*Having followed you for some time, a sleek ' + v.pokemon_concept + ' form swiftly approaches.*'"
-        }
-      ],
+      "id": "latios_2",
+      "lines": [ "generations_core.dialogue.eon.latios_approach" ],
       "input": {
         "type": "auto-continue",
         "allowSkip": false,
@@ -75,29 +68,52 @@
       }
     },
     {
-      "id": "tapu_4",
-      "lines": [
-        {
-          "type": "expression",
-          "expression": "'*' + v.pokemon_name + ' has arrived.*'"
-        }
-      ],
+      "id": "latios_3",
+      "lines": [ "generations_core.dialogue.eon.latios_arrived" ],
       "input": {
         "type": "auto-continue",
         "allowSkip": false,
         "delay": 1,
         "action": [
-          "q.player.main_hand.shrink(1);",
-          "q.spawn_pokemon(q.player, v.pokemon_id + ' level=65');",
+          "q.generations_eon_summon(q.player, 'latios level=65');",
+          "q.dialogue.close();"
+        ]
+      }
+    },
+    {
+      "id": "latias_1",
+      "lines": [ "generations_core.dialogue.eon.recall" ],
+      "input": {
+        "type": "auto-continue",
+        "allowSkip": false,
+        "delay": 1
+      }
+    },
+    {
+      "id": "latias_2",
+      "lines": [ "generations_core.dialogue.eon.latias_approach" ],
+      "input": {
+        "type": "auto-continue",
+        "allowSkip": false,
+        "delay": 1
+      }
+    },
+    {
+      "id": "latias_3",
+      "lines": [ "generations_core.dialogue.eon.latias_arrived" ],
+      "input": {
+        "type": "auto-continue",
+        "allowSkip": false,
+        "delay": 1,
+        "action": [
+          "q.generations_eon_summon(q.player, 'latias level=65');",
           "q.dialogue.close();"
         ]
       }
     },
     {
       "id": "none_1",
-      "lines": [
-        "*As you examine the Enigma stone, you begin to recall the journey that led you to this moment.*"
-      ],
+      "lines": [ "generations_core.dialogue.eon.recall" ],
       "input": {
         "type": "auto-continue",
         "allowSkip": false,
@@ -107,9 +123,7 @@
     {
       "id": "none_2",
       "allowSkip": false,
-      "lines": [
-        "*Nothing odd happens besides fond memories remembered.*"
-      ],
+      "lines": [ "generations_core.dialogue.eon.none_nothing" ],
       "input": {
         "type": "auto-continue",
         "allowSkip": false,

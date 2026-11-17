@@ -101,14 +101,15 @@ class RksConsoleMenu(
     }
 
     companion object {
+        // The 400 × 248 layout of HOOH-PLAN.md § 3: the machine's slots bottom left, the inventory bottom right.
         const val INPUT_X = 12
-        const val INPUT_Y = 170
-        const val OUTPUT_X = 84
-        const val OUTPUT_Y = 188
-        const val RESEARCH_X = 244
-        const val RESEARCH_Y = 118
-        const val PLAYER_X = 172
-        const val PLAYER_Y = 160
+        const val INPUT_Y = 172
+        const val OUTPUT_X = 86
+        const val OUTPUT_Y = 190
+        const val RESEARCH_X = 118
+        const val RESEARCH_Y = 190
+        const val PLAYER_X = 230
+        const val PLAYER_Y = 164
 
         /** The client's menu: the console from the client's level, the slots synced by the menu. */
         fun fromBuffer(id: Int, inventory: Inventory, buffer: FriendlyByteBuf): RksConsoleMenu =

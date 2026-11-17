@@ -76,9 +76,12 @@ public abstract class ServerPlayerMixin extends Player {
 
     @Unique
     public void generations_Core$processStatistics(double distanceX, double distanceY, double distanceZ) {
+        // The Eon manifestations (EON-PLAN.md): the blocks really travelled, to tell the teleports.
+        generations.gg.generations.core.generationscore.common.world.eon.EonManifest.moved((ServerPlayer) (Object) this, (float) Math.sqrt(distanceX * distanceX + distanceZ * distanceZ));
         if (!GenerationsCore.CONFIG.enigmaFragment.enabled) return;
-        BiomesVisited biomesVisited = BiomesVisited.get((ServerPlayer) (Object) this);
-        if(biomesVisited.numberOfVisitedBiomes() < GenerationsCore.CONFIG.enigmaFragment.limit)
+        // Generations' fragment for each new biome: replaced by the Eon manifestations (eon.json: legacyBiomeFragments, D2).
+        BiomesVisited biomesVisited = generations.gg.generations.core.generationscore.common.world.eon.EonManifest.legacyBiomeFragments() ? BiomesVisited.get((ServerPlayer) (Object) this) : null;
+        if(biomesVisited != null && biomesVisited.numberOfVisitedBiomes() < GenerationsCore.CONFIG.enigmaFragment.limit)
             serverLevel().getBiome(blockPosition()).unwrapKey().filter(a -> !a.equals(currentBiome)).ifPresent(biomeResourceKey -> {
             this.currentBiome = biomeResourceKey;
 

@@ -64,24 +64,37 @@ abstract class BirdShrineBlock @SafeVarargs constructor(
                 val pokemonProperties = getPropertiesDebug(imbuedStack)
 
                 if (!isActive(state) && stack.damageValue >= stack.maxDamage && pokemonProperties != null) {
-                    toggleActive(level, pos)
-                    level.playSound(null, pos, GenerationsSounds.LUGIA_SHRINE_SONG.value(), SoundSource.BLOCKS)
-
-                    if (!player.isCreative) stack.shrink(1)
-
-                    ScheduledTask.schedule(
-                        {
-                            toggleActive(level, pos)
-                            PokemonUtil.spawn(pokemonProperties, level, pos, state.getValue(FACING).toYRot())
-                        }, 100
-                    )
-
-                    return ItemInteractionResult.SUCCESS
+                    return summon(stack, state, level, pos, player, pokemonProperties)
                 }
             }
         }
 
         return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+    }
+
+    /**
+     * The summoning, once its conditions are met (server side): the original steps, unchanged for
+     * the three birds. Lugia's shrine plays its scene first (LugiaShrineBlock, LUGIA-PLAN.md).
+     */
+    protected open fun summon(stack: ItemStack, state: BlockState, level: Level, pos: BlockPos, player: Player, pokemon: Pokemon): ItemInteractionResult {
+        toggleActive(level, pos)
+        level.playSound(null, pos, GenerationsSounds.LUGIA_SHRINE_SONG.value(), SoundSource.BLOCKS)
+
+        if (!player.isCreative) stack.shrink(1)
+
+        scheduleSpawn(level, pos, state, pokemon)
+
+        return ItemInteractionResult.SUCCESS
+    }
+
+    /** The original appearance, 100 ticks after the song: the shrine toggled back, the Pokémon at the block. */
+    fun scheduleSpawn(level: Level, pos: BlockPos, state: BlockState, pokemon: Pokemon) {
+        ScheduledTask.schedule(
+            {
+                toggleActive(level, pos)
+                PokemonUtil.spawn(pokemon, level, pos, state.getValue(FACING).toYRot())
+            }, 100
+        )
     }
 
     fun getProperties(stack: ItemStack): Pokemon? = stack.item.instanceOrNull<WingItem>()?.key?.createPokemon(70)

@@ -57,6 +57,9 @@ public abstract class LevelRendererMixin {
         generations.gg.generations.core.generationscore.common.client.cinematic.CinematicClient.beforeRareCandy(frustumMatrix, projectionMatrix);
         // Mew's appearances and game (MEW-PLAN.md), the same way.
         generations.gg.generations.core.generationscore.common.client.mew.MewClient.beforeRareCandy(frustumMatrix, projectionMatrix);
+        generations.gg.generations.core.generationscore.common.client.hooh.HoOhClient.beforeRareCandy(frustumMatrix, projectionMatrix);
+        generations.gg.generations.core.generationscore.common.client.johto.JohtoClient.beforeRareCandy(frustumMatrix, projectionMatrix);
+        generations.gg.generations.core.generationscore.common.client.eon.EonClient.beforeRareCandy(frustumMatrix, projectionMatrix);
         GenerationsCoreClient.INSTANCE.firstRenderPass();
         // The RKS Machine's glass and liquid, over the Mewtwo of its tank (RareCandy drew it just above).
         generations.gg.generations.core.generationscore.common.client.rks.RksMachineClient.afterRareCandy();

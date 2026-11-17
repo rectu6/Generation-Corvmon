@@ -32,6 +32,12 @@ class S2CCinematicStartPacket(
     val debug: Boolean,
     /** Near the scene but unable to watch it (in a battle...): its ambience only, no camera (Mewtwo, D11). */
     val ambient: Boolean = false,
+    /** Entities hidden while the scene plays (a Johto statue its actor stands for). */
+    val hidden: List<UUID> = emptyList(),
+    /** Seen before by its invoker: they may skip it (JOHTO-PLAN.md D17). */
+    val skippable: Boolean = false,
+    /** The scene's own settings, "key=value;key=value" (a statue's material, a tower's size...). */
+    val options: String = "",
 ) : NetworkPacket<S2CCinematicStartPacket> {
     override val id: ResourceLocation = ID
 
@@ -50,6 +56,10 @@ class S2CCinematicStartPacket(
         buffer.writeBoolean(test)
         buffer.writeBoolean(debug)
         buffer.writeBoolean(ambient)
+        buffer.writeVarInt(hidden.size)
+        hidden.forEach { buffer.writeUUID(it) }
+        buffer.writeBoolean(skippable)
+        buffer.writeUtf(options, 1024)
     }
 
     companion object {
@@ -75,7 +85,41 @@ class S2CCinematicStartPacket(
             val species = buf.readUtf(256)
             val count = buf.readVarInt().coerceIn(0, 64)
             val aspects = List(count) { buf.readUtf(128) }
-            return S2CCinematicStartPacket(session, scene, origin, facing, spawn, start, duration, invoker, species, aspects, buf.readBoolean(), buf.readBoolean(), buf.readBoolean())
+            val test = buf.readBoolean()
+            val debug = buf.readBoolean()
+            val ambient = buf.readBoolean()
+            val hiddenCount = buf.readVarInt().coerceIn(0, 16)
+            val hidden = List(hiddenCount) { buf.readUUID() }
+            val skippable = buf.readBoolean()
+            val options = buf.readUtf(1024)
+            return S2CCinematicStartPacket(session, scene, origin, facing, spawn, start, duration, invoker, species, aspects, test, debug, ambient, hidden, skippable, options)
+        }
+
+        /** "key=value;key=value" → a map (the scene's options). */
+        fun parseOptions(text: String): Map<String, String> =
+            text.split(';').mapNotNull { part -> part.indexOf('=').takeIf { it > 0 }?.let { part.substring(0, it).trim() to part.substring(it + 1).trim() } }.toMap()
+    }
+}
+
+/** Its invoker skips a scene they have seen (JOHTO-PLAN.md D17); the server checks it may be skipped. */
+class C2SCinematicSkipPacket(val session: UUID) : NetworkPacket<C2SCinematicSkipPacket> {
+    override val id: ResourceLocation = ID
+
+    override fun encode(buffer: RegistryFriendlyByteBuf) {
+        buffer.writeUUID(session)
+    }
+
+    companion object {
+        val ID: ResourceLocation = GenerationsCore.id("cinematic_skip")
+
+        fun decode(buf: RegistryFriendlyByteBuf) = C2SCinematicSkipPacket(buf.readUUID())
+    }
+}
+
+object CinematicServerHandlers {
+    object Skip : com.cobblemon.mod.common.api.net.ServerNetworkPacketHandler<C2SCinematicSkipPacket> {
+        override fun handle(packet: C2SCinematicSkipPacket, server: net.minecraft.server.MinecraftServer, player: net.minecraft.server.level.ServerPlayer) {
+            server.execute { generations.gg.generations.core.generationscore.common.world.cinematic.LegendaryCinematics.skip(player, packet.session) }
         }
     }
 }

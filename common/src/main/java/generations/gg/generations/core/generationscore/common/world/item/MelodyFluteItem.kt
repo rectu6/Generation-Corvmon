@@ -121,8 +121,6 @@ class MelodyFluteItem(properties: Properties) : ElementalPostBattleUpdateItem(pr
             ) name = GenerationsShrines.STATIC_SHRINE.id.toLanguageKey("block")
             else if (isItem(GenerationsItems.FIERY_WING, stack) || isItem(GenerationsItems.SINISTER_WING, stack)) name =
                 GenerationsShrines.FIERY_SHRINE.id.toLanguageKey("block")
-            else if (isItem(GenerationsItems.RAINBOW_WING, stack)) name =
-                GenerationsShrines.HO_OH_SHRINE.id.toLanguageKey("block")
             else if (isItem(GenerationsItems.SILVER_WING, stack)) name =
                 GenerationsShrines.LUGIA_SHRINE.id.toLanguageKey("block")
 

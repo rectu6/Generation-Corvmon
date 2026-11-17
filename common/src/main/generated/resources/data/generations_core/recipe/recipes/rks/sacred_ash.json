@@ -3,24 +3,18 @@
   "category": "items",
   "order": 10,
   "description": "generations_core.rks.recipe.sacred_ash.desc",
+  "energy": "fire",
   "ingredients": [
     {
       "ingredient": {
-        "items": "minecraft:totem_of_undying",
+        "items": "generations_core:ho_oh_sacred_feather",
         "type": "generations_core:item"
       },
       "count": 1
     },
     {
       "ingredient": {
-        "items": "minecraft:coal",
-        "type": "generations_core:item"
-      },
-      "count": 1
-    },
-    {
-      "ingredient": {
-        "items": "generations_core:rainbow_wing",
+        "items": "generations_core:orb",
         "type": "generations_core:item"
       },
       "count": 1

@@ -11,6 +11,8 @@ import generations.gg.generations.core.generationscore.common.world.level.block.
 import generations.gg.generations.core.generationscore.common.world.level.block.entities.shrines.RegigigasShrineBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import generations.gg.generations.core.generationscore.common.world.regi.RegiSummon
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.item.Item
@@ -67,7 +69,11 @@ class RegigigasShrineBlock(materialIn: Properties) : InteractShrineBlock(
             stack.shrink(1)
 
             if (handler.isFull()) {
-                PokemonUtil.spawn(LegendKeys.REGIGIGAS.createProperties(70), level, pos.above())
+                // Its scene first, then the same Regigigas at its end (REGIS-PLAN.md § 2); the
+                // original at once when no scene can start.
+                if (!(level is ServerLevel && RegiSummon.summonGigas(level, pos, player))) {
+                    PokemonUtil.spawn(LegendKeys.REGIGIGAS.createProperties(70), level, pos.above())
+                }
                 handler.clearContent()
             }
 

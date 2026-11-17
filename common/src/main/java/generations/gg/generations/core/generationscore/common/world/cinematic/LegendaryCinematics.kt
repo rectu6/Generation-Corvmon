@@ -41,6 +41,10 @@ class CinematicSession(
     val ambient: MutableSet<UUID> = LinkedHashSet(),
     /** What makes the Pokémon appear (the RKS Machine's Mewtwo); the global onSpawn otherwise. */
     val onSpawn: ((CinematicSession) -> Unit)? = null,
+    /** Its invoker may skip it (seen before, JOHTO-PLAN.md D17). */
+    val skippable: Boolean = false,
+    /** Blocks no other scene near it (Johto's statues side by side). */
+    val exclusive: Boolean = true,
 )
 
 /**
@@ -83,6 +87,19 @@ object LegendaryCinematics {
         val test: Boolean,
         /** This scene's own spawn (RKS Machine); the global onSpawn otherwise. */
         val onSpawn: ((CinematicSession) -> Unit)? = null,
+        /** Does not block the scenes near it, and is not blocked by them (Johto, JOHTO-PLAN.md § 2). */
+        val exclusive: Boolean = true,
+        /** Only the invoker watches (the others nearby get the ambience if ambientRadius > 0). */
+        val solo: Boolean = false,
+        /** The ambience's radius for the others nearby; negative: the scene's default (Mewtwo's). */
+        val ambientRadius: Double = -1.0,
+        /** Who among them may get it. */
+        val ambientFilter: ((ServerPlayer) -> Boolean)? = null,
+        /** Entities hidden on the watchers' screens while it plays. */
+        val hidden: List<UUID> = emptyList(),
+        val skippable: Boolean = false,
+        /** The scene's own settings ("key=value;..."). */
+        val options: String = "",
     )
 
     fun init() {
@@ -132,25 +149,47 @@ object LegendaryCinematics {
         player.isAlive && !player.isSpectator && !watching.containsKey(player.uuid) &&
             UltraWarpSessions.get(player.uuid) == null && BattleRegistry.getBattleByParticipatingPlayer(player) == null
 
+    /** Why this request could not start now, or null (checked before anything is consumed). */
+    fun check(request: Request): Component? {
+        if (!config.enabled) return key("refused.disabled")
+        if (request.scene !in CinematicScenes.AVAILABLE) return key("refused.unavailable", request.scene)
+        if (!free(request.invoker)) return key("refused.busy")
+        if (request.exclusive) {
+            val radius = config.radius(request.scene)
+            val near = sessions.values.any { it.exclusive && it.dimension == request.level.dimension() && it.origin.distanceTo(request.origin) < 2.0 * maxOf(radius, 16.0) }
+            if (near) return key("refused.nearby")
+        }
+        return null
+    }
+
+    /** Its invoker skips a scene they may skip: cut short, what follows happens as after any interruption. */
+    fun skip(player: ServerPlayer, id: UUID) {
+        val session = sessions[id] ?: return
+        if (session.invoker != player.uuid || !session.skippable) return
+        val server = player.server
+        val interruption = session.machine.interrupt() ?: return
+        if (interruption.spawnNow) spawn(session)
+        end(server, session, CinematicEndReason.SKIPPED)
+        GenerationsCore.LOGGER.info("Legendary cinematic {} ({}) skipped by {}", session.scene, session.id, session.invokerName)
+    }
+
     fun start(request: Request): StartResult {
         val invoker = request.invoker
-        if (!config.enabled) return StartResult.Refused(key("refused.disabled"))
-        if (request.scene !in CinematicScenes.AVAILABLE) return StartResult.Refused(key("refused.unavailable", request.scene))
-        if (!free(invoker)) return StartResult.Refused(key("refused.busy"))
-        val radius = config.radius(request.scene)
-        val near = sessions.values.any { it.dimension == request.level.dimension() && it.origin.distanceTo(request.origin) < 2.0 * maxOf(radius, 16.0) }
-        if (near) return StartResult.Refused(key("refused.nearby"))
+        check(request)?.let { return StartResult.Refused(it) }
+        val radius = if (request.solo) 0.0 else config.radius(request.scene)
 
         val participants = LinkedHashSet<UUID>()
         participants += invoker.uuid
         val ambient = LinkedHashSet<UUID>()
-        // Mewtwo's scene has an ambience for those who cannot watch it (D11).
-        val ambientRadius = if (CinematicScenes.hasAmbience(request.scene)) config.ambientRadius else 0.0
+        // Mewtwo's scene has an ambience for those who cannot watch it (D11); Johto's set their own.
+        val ambientRadius = if (request.ambientRadius >= 0.0) request.ambientRadius else if (CinematicScenes.hasAmbience(request.scene)) config.ambientRadius else 0.0
         for (player in request.level.players()) {
             if (player.uuid == invoker.uuid) continue
             val distance = player.position().distanceTo(request.origin)
             if (distance <= radius && free(player)) participants += player.uuid
-            else if (distance <= ambientRadius && player.isAlive && !player.isSpectator && !watching.containsKey(player.uuid)) ambient += player.uuid
+            else if (distance <= ambientRadius && player.isAlive && !player.isSpectator && !watching.containsKey(player.uuid) &&
+                request.ambientFilter?.invoke(player) != false
+            ) ambient += player.uuid
         }
         val now = request.level.gameTime
         // Mewtwo's entity takes the actor's place right at the end (no second Mewtwo on screen for a second).
@@ -159,11 +198,13 @@ object LegendaryCinematics {
         val session = CinematicSession(
             UUID.randomUUID(), request.scene, request.level.dimension(), request.origin, request.facing, request.spawn,
             invoker.uuid, invoker.gameProfile.name, request.species, request.aspects, request.test, machine, participants, ambient, request.onSpawn,
+            request.skippable, request.exclusive,
         )
         sessions[session.id] = session
         fun packet(ambience: Boolean) = S2CCinematicStartPacket(
             session.id, session.scene, session.origin, session.facing, session.spawn, machine.startTick, machine.durationTicks,
             invoker.uuid, session.species.toString(), session.aspects.toList(), session.test, config.debugOverlay && session.test, ambience,
+            if (ambience) emptyList() else request.hidden, request.skippable && !ambience, request.options,
         )
         val players = request.level.server.playerList
         val watch = packet(false)

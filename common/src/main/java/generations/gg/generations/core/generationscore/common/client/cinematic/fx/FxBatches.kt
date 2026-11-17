@@ -57,6 +57,10 @@ class FxMaterial(
     val layer: Layer,
     val texture: CinematicTextures.Kind,
     val cull: Boolean = false,
+    /** Drawn over everything (no depth test): a faint glow seen through leaves. */
+    val xray: Boolean = false,
+    /** A texture of the resource packs instead of a generated one (the Sacred Feather's). */
+    val image: net.minecraft.resources.ResourceLocation? = null,
 ) {
     enum class Layer { SOLID, ALPHA, ADD }
 
@@ -130,7 +134,8 @@ class FxBatches {
             RenderSystem.disableBlend()
             RenderSystem.depthMask(true)
         } else {
-            RenderSystem.setShaderTexture(0, CinematicTextures.id(material.texture))
+            val image = material.image
+            if (image != null) RenderSystem.setShaderTexture(0, image) else RenderSystem.setShaderTexture(0, CinematicTextures.id(material.texture))
             RenderSystem.setShaderTexture(1, noise)
             RenderSystem.setShaderTexture(2, if (depth != 0) depth else CinematicTextures.id(CinematicTextures.Kind.WHITE))
             shader.safeGetUniform("FxNoise").set(material.noise[0], material.noise[1], material.noise[2], material.noise[3])
@@ -147,7 +152,8 @@ class FxBatches {
         shader.safeGetUniform("FxTime").set(time)
         if (material.cull) RenderSystem.enableCull() else RenderSystem.disableCull()
         RenderSystem.enableDepthTest()
-        RenderSystem.depthFunc(GL11.GL_LEQUAL)
+        RenderSystem.depthFunc(if (material.xray) GL11.GL_ALWAYS else GL11.GL_LEQUAL)
         BufferUploader.drawWithShader(mesh)
+        if (material.xray) RenderSystem.depthFunc(GL11.GL_LEQUAL)
     }
 }

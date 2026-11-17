@@ -49,6 +49,8 @@ class RksModuleItem(block: RksModuleBlock, properties: Properties) : BlockItem(b
         val data = RksModuleItemData.read(stack) ?: return
         val energy = data.getInt(RksConsoleBlockEntity.ITEM_ENERGY)
         if (energy > 0) tooltip += Component.translatable("generations_core.rks.item.energy", energy, RksSettings.mewtwo.energyRequired).withStyle(ChatFormatting.LIGHT_PURPLE)
+        val fire = data.getInt(RksConsoleBlockEntity.ITEM_FIRE_ENERGY)
+        if (fire > 0) tooltip += Component.translatable("generations_core.rks.item.energy.fire", fire, RksSettings.fire.energyRequired).withStyle(ChatFormatting.GOLD)
         if (data.getBoolean(RksModuleBlockEntity.ITEM_DAMAGED)) tooltip += Component.translatable("generations_core.rks.item.damaged").withStyle(ChatFormatting.RED)
     }
 }

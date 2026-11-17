@@ -24,22 +24,31 @@ import kotlin.math.sin
  * config/generations/core/mew/mew_client.json: this player's side of Mew's appearances and game
  * (MEW-PLAN.md § 13). particleIntensity 0 to 2 (0: none), volume 0 to 1, manifestationVisuals
  * (false: the false appearances are heard, not seen), hud (the challenge's discreet timer).
+ *
+ * The false appearances' visibility (HOOH-PLAN.md § 4): manifestationScale (Mew's size, 1 to 2),
+ * aura (its pink and blue halo), glowThroughLeaves (a faint glow seen through the leaves),
+ * waitForGaze (the show slows down, 3 s at most, until Mew has been looked at).
  */
 class MewClientConfig(
     var particleIntensity: Float = 1f,
     var volume: Float = 1f,
     var manifestationVisuals: Boolean = true,
     var hud: Boolean = true,
+    var manifestationScale: Float = 1.35f,
+    var aura: Boolean = true,
+    var glowThroughLeaves: Boolean = true,
+    var waitForGaze: Boolean = true,
 ) {
     fun validate() {
         particleIntensity = JsonConfigs.clamp(particleIntensity, 0f, 2f, 1f)
         volume = JsonConfigs.clamp(volume, 0f, 1f, 1f)
+        manifestationScale = JsonConfigs.clamp(manifestationScale, 1f, 2f, 1.35f)
     }
 
     fun particles(base: Int): Int = (base * particleIntensity).toInt()
 
     companion object {
-        const val VERSION = 1
+        const val VERSION = 2
 
         fun load(): MewClientConfig = JsonConfigs.load(
             "Mew (client)", JsonConfigs.file("mew", "mew_client.json"), MewClientConfig::class.java, ::MewClientConfig, VERSION, { it.validate() },
@@ -69,6 +78,8 @@ object MewFx {
     )
     val particles = FxParticles(3000, particleMaterials)
     val glows = FxMaterial("mewfx_glows", Layer.ADD, Kind.HALO)
+    /** The faint glow seen through the leaves (HOOH-PLAN.md § 4, D9). */
+    val glowsThrough = FxMaterial("mewfx_glows_through", Layer.ADD, Kind.HALO, xray = true)
     val trails = FxMaterial("mewfx_trails", Layer.ADD, Kind.STREAK)
     val rings = FxMaterial("mewfx_rings", Layer.ADD, Kind.RING).noise(0f, 0.3f, 4f, 0.4f)
 

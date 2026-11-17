@@ -44,7 +44,14 @@ object MewClient {
         val pose = MewPose()
         var next = 0
         val trail = ArrayDeque<Vector3d>()
+        /** When each trail point was left (the show's own time): the trail fades in 1.5 s. */
+        val trailTimes = ArrayDeque<Double>()
         var lastMote = 0.0
+        /** The show's own time: it runs slower while Mew waits to be seen (HOOH-PLAN.md § 4). */
+        var local = 0.0
+        var seenFor = 0.0
+        var seen = false
+        var held = 0.0
     }
 
     private val shows = ArrayList<Running>()
@@ -79,6 +86,11 @@ object MewClient {
             return actors[i]
         }
     }
+
+    /** The longest a show waits for the gaze, and how slowly it runs meanwhile. */
+    private const val MAX_HOLD = 3.0
+    private const val HOLD_SPEED = 0.3
+    private const val TRAIL_SECONDS = 1.5
 
     private var game: Game? = null
     private var level: ClientLevel? = null
@@ -353,9 +365,11 @@ object MewClient {
             player.set(p.x, p.y, p.z)
             for (r in shows) {
                 if (!r.visual) continue
-                val pose = r.show.pose(t - r.start, player, r.pose)
+                val pose = r.show.pose(r.local.coerceIn(0.0, r.show.duration), player, r.pose)
                 if (!pose.visible || !pose.isFinite() || pose.scale <= 0.01) continue
-                r.actor.render(pose.pos, pose.yaw, 0.0, pose.roll, pose.scale, ActorPose.HOVER, (t - r.start).toFloat())
+                val big = r.show.manifestation
+                val scale = if (big) pose.scale * config.manifestationScale else pose.scale
+                r.actor.render(pose.pos, pose.yaw, 0.0, pose.roll, scale, ActorPose.HOVER, r.local.toFloat(), bright = big)
             }
             val g = game ?: return
             val count = if (g.round == 2) g.points.size else 1
@@ -401,7 +415,7 @@ object MewClient {
             val dt = if (lastFrame.isNaN()) 0.0 else (t - lastFrame).coerceIn(0.0, 0.25)
             lastFrame = t
             player.set(p.x, p.y, p.z)
-            updateShows(t)
+            updateShows(t, dt)
             game?.let { updateGame(it, t, minecraft) }
             MewFx.render(dt.toFloat()) { batches, cx, cy, cz -> drawExtras(batches, cx, cy, cz, t) }
         } catch (e: Exception) {
@@ -410,12 +424,34 @@ object MewClient {
         }
     }
 
-    private fun updateShows(t: Double) {
+    /** Mew in the middle of the screen (about 20°), not too far: it has been noticed. */
+    private fun looked(at: Vector3d): Boolean {
+        val camera = Minecraft.getInstance().gameRenderer.mainCamera
+        val eye = camera.position
+        val dx = at.x - eye.x
+        val dy = at.y + 0.4 - eye.y
+        val dz = at.z - eye.z
+        val d = sqrt(dx * dx + dy * dy + dz * dz)
+        if (d < 0.5 || d > 64.0) return d < 0.5
+        val look = camera.lookVector
+        return (dx * look.x() + dy * look.y() + dz * look.z()) / d > 0.94
+    }
+
+    private fun updateShows(t: Double, dt: Double) {
         val iterator = shows.iterator()
         while (iterator.hasNext()) {
             val r = iterator.next()
-            val local = t - r.start
+            // The show's clock: slowed while Mew waits for the player's gaze (3 s at most).
+            val waiting = config.waitForGaze && r.visual && !r.seen && r.held < MAX_HOLD && r.show.holdable(r.local)
+            val speed = if (waiting) HOLD_SPEED else 1.0
+            r.held += dt * (1.0 - speed)
+            r.local += dt * speed
+            val local = r.local
             val pose = r.show.pose(local.coerceIn(0.0, r.show.duration), player, r.pose)
+            if (!r.seen && pose.visible && pose.scale > 0.2 && looked(pose.pos)) {
+                r.seenFor += dt
+                if (r.seenFor >= 0.6) r.seen = true
+            }
             val events = r.show.events
             while (r.next < events.size && events[r.next].time <= local) {
                 event(r, events[r.next], pose)
@@ -438,10 +474,19 @@ object MewClient {
                 val last = r.trail.lastOrNull()
                 if (last == null || last.distanceSquared(pose.pos) > 0.04) {
                     r.trail.addLast(Vector3d(pose.pos))
-                    while (r.trail.size > 18) r.trail.removeFirst()
+                    r.trailTimes.addLast(local)
+                    while (r.trail.size > 24) {
+                        r.trail.removeFirst()
+                        r.trailTimes.removeFirst()
+                    }
                 }
-            } else if (r.trail.isNotEmpty() && local > r.show.duration * 0.9) r.trail.removeFirst()
-            if (local > r.show.duration + 0.5) iterator.remove()
+            }
+            // The trail fades away in 1.5 s.
+            while (r.trailTimes.isNotEmpty() && local - r.trailTimes.first() > TRAIL_SECONDS) {
+                r.trail.removeFirst()
+                r.trailTimes.removeFirst()
+            }
+            if (local > r.show.duration + 0.5 && r.trail.isEmpty()) iterator.remove()
         }
     }
 
@@ -450,23 +495,44 @@ object MewClient {
         val y = pose.pos.y + 0.4
         val z = pose.pos.z
         val visual = r.visual
+        // The false appearances are louder (heard 24 to 32 blocks away, from their side).
+        val loud = if (r.show.manifestation) 2.2f else 1f
         when (e.kind) {
             MewShowEvent.Kind.APPEAR -> {
-                if (visual) MewFx.burst(x, y, z, config.particles(12), 1.5f, MewFx.pink, seed = r.hashCode())
-                sound("minecraft:entity.illusioner.mirror_move", x, y, z, 0.45f, 1.5f)
+                if (visual) {
+                    MewFx.burst(x, y, z, config.particles(if (r.show.manifestation) 26 else 12), if (r.show.manifestation) 2.2f else 1.5f, MewFx.pink, seed = r.hashCode())
+                    if (r.show.manifestation) MewFx.burst(x, y, z, config.particles(12), 1.6f, MewFx.blue, MewFx.SPARK, seed = r.hashCode() + 5)
+                }
+                sound("minecraft:entity.illusioner.mirror_move", x, y, z, 0.45f * loud, 1.5f)
+                // Mew's own sign: a high chime and a giggle, the same each time.
+                if (r.show.manifestation) {
+                    sound("minecraft:block.amethyst_block.chime", x, y, z, 1.6f, 1.7f)
+                    sound("minecraft:entity.allay.item_given", x, y, z, 1.2f, 1.6f)
+                }
             }
             MewShowEvent.Kind.CRY -> {
                 r.actor.cry()
-                sound("cobblemon:pokemon.mew.cry", x, y, z, 0.7f, 1.1f)
+                sound("cobblemon:pokemon.mew.cry", x, y, z, 0.7f * loud, 1.1f)
             }
             MewShowEvent.Kind.LAUGH -> {
                 r.actor.animate("glad")
-                sound("minecraft:entity.allay.ambient_without_item", x, y, z, 0.8f, 1.4f)
+                sound("minecraft:entity.allay.ambient_without_item", x, y, z, 0.8f * loud, 1.4f)
             }
-            MewShowEvent.Kind.PUFF -> if (visual) puff(x, y, z, r.hashCode()) else sound("minecraft:entity.illusioner.mirror_move", x, y, z, 0.5f, 1.8f)
+            MewShowEvent.Kind.PUFF -> if (visual) puff(x, y, z, r.hashCode()) else sound("minecraft:entity.illusioner.mirror_move", x, y, z, 0.5f * loud, 1.8f)
             MewShowEvent.Kind.TELEPORT -> {
-                if (visual) MewFx.burst(x, y, z, config.particles(16), 2f, MewFx.white, MewFx.SPARK, seed = r.hashCode() + 9)
-                sound("minecraft:entity.enderman.teleport", x, y, z, 0.4f, 1.7f)
+                if (visual) {
+                    MewFx.burst(x, y, z, config.particles(24), 2.6f, MewFx.white, MewFx.SPARK, seed = r.hashCode() + 9)
+                    MewFx.burst(x, y, z, config.particles(16), 1.8f, MewFx.pink, seed = r.hashCode() + 13)
+                }
+                sound("minecraft:entity.enderman.teleport", x, y, z, 0.4f * loud, 1.7f)
+            }
+            MewShowEvent.Kind.DISSOLVE -> {
+                if (visual) {
+                    MewFx.burst(x, y, z, config.particles(36), 1.4f, MewFx.pink, life = 2.4f, size = 0.12f, seed = r.hashCode() + 31)
+                    MewFx.burst(x, y, z, config.particles(20), 1.0f, MewFx.blue, life = 2.8f, size = 0.12f, seed = r.hashCode() + 37)
+                }
+                sound("minecraft:block.amethyst_block.resonate", x, y, z, 1.4f, 1.6f)
+                sound("minecraft:entity.illusioner.mirror_move", x, y, z, 1.0f, 1.3f)
             }
             MewShowEvent.Kind.BURST -> {
                 if (visual) {
@@ -543,19 +609,37 @@ object MewClient {
         if (CinematicClient.isActive()) return
         val right = MewFx.right
         val up = MewFx.up
-        // C's trail.
         for (r in shows) {
-            if (!r.visual || r.trail.size < 2) continue
-            var n = 0
-            for (p in r.trail) {
-                if (n >= 24) break
-                trailPoints[n * 3] = (p.x - cx).toFloat()
-                trailPoints[n * 3 + 1] = (p.y + 0.35 - cy).toFloat()
-                trailPoints[n * 3 + 2] = (p.z - cz).toFloat()
-                n++
+            if (!r.visual) continue
+            val big = r.show.manifestation
+            val size = if (big) config.manifestationScale else 1f
+            // The trails (A, C, D): wider, fading in 1.5 s.
+            if (r.trail.size >= 2) {
+                var n = 0
+                for (p in r.trail) {
+                    if (n >= 24) break
+                    trailPoints[n * 3] = (p.x - cx).toFloat()
+                    trailPoints[n * 3 + 1] = (p.y + 0.35 * size - cy).toFloat()
+                    trailPoints[n * 3 + 2] = (p.z - cz).toFloat()
+                    n++
+                }
+                val age = r.local - (r.trailTimes.lastOrNull() ?: r.local)
+                val fade = (1.0 - age / TRAIL_SECONDS).coerceIn(0.0, 1.0).toFloat()
+                // Oldest first in the deque: the ribbon thins toward its end.
+                FxMeshes.ribbon(batches.of(MewFx.trails), trailPoints, n, 0.01f, 0.26f * size, FxMeshes.withAlpha(MewFx.blue, 0f), FxMeshes.withAlpha(MewFx.pink, 0.85f * fade))
             }
-            // Oldest first in the deque: the ribbon thins toward its end.
-            FxMeshes.ribbon(batches.of(MewFx.trails), trailPoints, n, 0.01f, 0.16f, FxMeshes.withAlpha(MewFx.blue, 0f), FxMeshes.withAlpha(MewFx.pink, 0.8f))
+            // The aura: a pink core and a blue halo round Mew, pulsing; a faint glow through the leaves.
+            if (!big || !config.aura) continue
+            val pose = r.pose
+            if (!pose.visible || pose.scale <= 0.05 || !pose.isFinite()) continue
+            val ax = (pose.pos.x - cx).toFloat()
+            val ay = (pose.pos.y + 0.45 * size * pose.scale - cy).toFloat()
+            val az = (pose.pos.z - cz).toFloat()
+            val pulse = (0.85 + 0.15 * sin(r.local * 5.0)).toFloat()
+            val s = (pose.scale * size).toFloat()
+            FxMeshes.billboard(batches.of(MewFx.glows), ax, ay, az, 1.05f * s * pulse, 0f, FxMeshes.withAlpha(MewFx.pink, 0.55f), right, up)
+            FxMeshes.billboard(batches.of(MewFx.glows), ax, ay, az, 2.1f * s, (r.local * 0.4).toFloat(), FxMeshes.withAlpha(MewFx.blue, 0.28f * pulse), right, up)
+            if (config.glowThroughLeaves) FxMeshes.billboard(batches.of(MewFx.glowsThrough), ax, ay, az, 0.9f * s, 0f, FxMeshes.withAlpha(MewFx.pink, 0.16f * pulse), right, up)
         }
         val g = game ?: return
         when (g.round) {

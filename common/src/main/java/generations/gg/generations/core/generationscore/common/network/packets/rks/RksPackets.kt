@@ -7,6 +7,7 @@ import generations.gg.generations.core.generationscore.common.GenerationsCore
 import generations.gg.generations.core.generationscore.common.world.level.block.rks.RksConsoleBlockEntity
 import generations.gg.generations.core.generationscore.common.world.rks.machine.RksConsoleMenu
 import generations.gg.generations.core.generationscore.common.world.rks.machine.RksSacrifice
+import generations.gg.generations.core.generationscore.common.world.rks.RksEnergy
 import net.minecraft.client.Minecraft
 import net.minecraft.core.BlockPos
 import net.minecraft.network.RegistryFriendlyByteBuf
@@ -21,7 +22,7 @@ import java.util.UUID
  * (a double click, or a click on a machine that changed in between, is refused).
  *
  * action: LAUNCH (recipe), ANALYSE, START (the M2 experiment, after its confirmation), LIST
- * (the sacrifice list's page `revision`).
+ * (the sacrifice list's page `revision`, of the energy named by `recipe`: "psychic", "fire").
  */
 class C2SRksActionPacket(val pos: BlockPos, val action: Int, val recipe: String, val revision: Int) : NetworkPacket<C2SRksActionPacket> {
     override val id: ResourceLocation = ID
@@ -44,12 +45,13 @@ class C2SRksActionPacket(val pos: BlockPos, val action: Int, val recipe: String,
     }
 }
 
-/** The Psychic Pokémon given to the M2 protocol, by UUID (all checked again by the server). */
-class C2SRksSacrificePacket(val pos: BlockPos, val revision: Int, val pokemon: List<UUID>) : NetworkPacket<C2SRksSacrificePacket> {
+/** The Pokémon given to a reserve (kind: RksEnergy's ordinal), by UUID (all checked again by the server). */
+class C2SRksSacrificePacket(val pos: BlockPos, val kind: Int, val revision: Int, val pokemon: List<UUID>) : NetworkPacket<C2SRksSacrificePacket> {
     override val id: ResourceLocation = ID
 
     override fun encode(buffer: RegistryFriendlyByteBuf) {
         buffer.writeBlockPos(pos)
+        buffer.writeVarInt(kind)
         buffer.writeVarInt(revision)
         buffer.writeVarInt(pokemon.size)
         pokemon.forEach { buffer.writeUUID(it) }
@@ -61,19 +63,21 @@ class C2SRksSacrificePacket(val pos: BlockPos, val revision: Int, val pokemon: L
 
         fun decode(buf: RegistryFriendlyByteBuf): C2SRksSacrificePacket {
             val pos = buf.readBlockPos()
+            val kind = buf.readVarInt()
             val revision = buf.readVarInt()
             val count = buf.readVarInt().coerceIn(0, MAX)
-            return C2SRksSacrificePacket(pos, revision, List(count) { buf.readUUID() })
+            return C2SRksSacrificePacket(pos, kind, revision, List(count) { buf.readUUID() })
         }
     }
 }
 
 /**
- * A page of the Psychic Pokémon this player may give (party first, then the PC), with their
- * points; sent on request only.
+ * A page of the Pokémon this player may give to a reserve (kind: RksEnergy's ordinal; party
+ * first, then the PC), with their points; sent on request only.
  */
 class S2CRksSacrificeListPacket(
     val pos: BlockPos,
+    val kind: Int,
     val page: Int,
     val pages: Int,
     val total: Int,
@@ -91,6 +95,7 @@ class S2CRksSacrificeListPacket(
 
     override fun encode(buffer: RegistryFriendlyByteBuf) {
         buffer.writeBlockPos(pos)
+        buffer.writeVarInt(kind)
         buffer.writeVarInt(page)
         buffer.writeVarInt(pages)
         buffer.writeVarInt(total)
@@ -118,6 +123,7 @@ class S2CRksSacrificeListPacket(
 
         fun decode(buf: RegistryFriendlyByteBuf): S2CRksSacrificeListPacket {
             val pos = buf.readBlockPos()
+            val kind = buf.readVarInt()
             val page = buf.readVarInt()
             val pages = buf.readVarInt()
             val total = buf.readVarInt()
@@ -131,7 +137,7 @@ class S2CRksSacrificeListPacket(
                 val aspects = List(buf.readVarInt().coerceIn(0, 32)) { buf.readUtf(128) }
                 Entry(uuid, species, aspects, buf.readUtf(128), buf.readVarInt(), buf.readVarInt(), buf.readVarInt() - 1, buf.readBoolean())
             }
-            return S2CRksSacrificeListPacket(pos, page, pages, total, energy, required, revision, entries, buf.readUtf(256))
+            return S2CRksSacrificeListPacket(pos, kind, page, pages, total, energy, required, revision, entries, buf.readUtf(256))
         }
     }
 }
@@ -152,7 +158,7 @@ object RksPacketHandlers {
                     C2SRksActionPacket.LAUNCH -> ResourceLocation.tryParse(packet.recipe)?.let { console.launch(player, it, packet.revision) }
                     C2SRksActionPacket.ANALYSE -> console.analyse(player, packet.revision)
                     C2SRksActionPacket.START -> console.startExperiment(player, packet.revision)
-                    C2SRksActionPacket.LIST -> RksSacrifice.sendList(player, console, packet.revision)
+                    C2SRksActionPacket.LIST -> RksSacrifice.sendList(player, console, packet.revision, RksEnergy.byId(packet.recipe) ?: RksEnergy.PSYCHIC)
                 }
             }
         }
@@ -162,7 +168,8 @@ object RksPacketHandlers {
         override fun handle(packet: C2SRksSacrificePacket, server: MinecraftServer, player: ServerPlayer) {
             server.execute {
                 val console = console(player, packet.pos) ?: return@execute
-                RksSacrifice.sacrifice(player, console, packet.revision, packet.pokemon)
+                val kind = RksEnergy.entries.getOrNull(packet.kind) ?: return@execute
+                RksSacrifice.sacrifice(player, console, packet.revision, packet.pokemon, kind)
             }
         }
     }

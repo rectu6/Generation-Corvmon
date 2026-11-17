@@ -99,7 +99,10 @@ open class RksModuleBlock(properties: Properties, val module: RksModule) : Gener
         val data = stack.get(DataComponents.CUSTOM_DATA)?.copyTag()
         when (val be = level.getBlockEntity(pos)) {
             is RksConsoleBlockEntity -> {
-                if (data != null) be.energy = data.getInt(RksConsoleBlockEntity.ITEM_ENERGY).coerceIn(0, RksSettings.mewtwo.energyRequired)
+                if (data != null) {
+                    be.energy = data.getInt(RksConsoleBlockEntity.ITEM_ENERGY).coerceIn(0, RksSettings.mewtwo.energyRequired)
+                    be.fireEnergy = data.getInt(RksConsoleBlockEntity.ITEM_FIRE_ENERGY).coerceIn(0, RksSettings.fire.energyRequired)
+                }
                 be.setChanged()
                 level.scheduleTick(pos, this, 1)
             }
@@ -130,7 +133,10 @@ open class RksModuleBlock(properties: Properties, val module: RksModule) : Gener
         for (stack in drops) {
             if (!stack.`is`(asItem())) continue
             when (be) {
-                is RksConsoleBlockEntity -> if (be.energy > 0) RksModuleItemData.put(stack) { it.putInt(RksConsoleBlockEntity.ITEM_ENERGY, be.energy) }
+                is RksConsoleBlockEntity -> if (be.energy > 0 || be.fireEnergy > 0) RksModuleItemData.put(stack) {
+                    if (be.energy > 0) it.putInt(RksConsoleBlockEntity.ITEM_ENERGY, be.energy)
+                    if (be.fireEnergy > 0) it.putInt(RksConsoleBlockEntity.ITEM_FIRE_ENERGY, be.fireEnergy)
+                }
                 is RksModuleBlockEntity -> if (be.damaged) RksModuleItemData.put(stack) { it.putBoolean(RksModuleBlockEntity.ITEM_DAMAGED, true) }
             }
         }

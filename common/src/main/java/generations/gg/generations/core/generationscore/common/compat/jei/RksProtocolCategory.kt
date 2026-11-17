@@ -71,6 +71,11 @@ class RksProtocolCategory(private val helper: IGuiHelper, val category: RksCateg
                 graphics.drawString(font, text, 0, 69 + line * 10, 0xFF7A3FB0.toInt(), false)
             }
         }
+        recipe.energyKind?.let { kind ->
+            for ((line, text) in font.split(Component.translatable(kind.key("generations_core.rks.jei.energy"), kind.required), WIDTH).withIndex()) {
+                graphics.drawString(font, text, 0, 69 + line * 10, 0xFFB5470F.toInt(), false)
+            }
+        }
     }
 
     companion object {

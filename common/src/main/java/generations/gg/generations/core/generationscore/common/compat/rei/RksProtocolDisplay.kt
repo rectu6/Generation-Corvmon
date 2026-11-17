@@ -59,6 +59,10 @@ class RksProtocolReiCategory(val category: RksCategory) : DisplayCategory<RksPro
             widgets += Widgets.createLabel(Point(start.x, start.y + 70), Component.translatable("generations_core.rks.jei.mewtwo.short"))
                 .leftAligned().noShadow().color(0xFF7A3FB0.toInt(), 0xFFC9A0F0.toInt())
         }
+        display.recipe.energyKind?.let { kind ->
+            widgets += Widgets.createLabel(Point(start.x, start.y + 70), Component.translatable(kind.key("generations_core.rks.jei.energy.short"), kind.required))
+                .leftAligned().noShadow().color(0xFFB5470F.toInt(), 0xFFFFB070.toInt())
+        }
         return widgets
     }
 

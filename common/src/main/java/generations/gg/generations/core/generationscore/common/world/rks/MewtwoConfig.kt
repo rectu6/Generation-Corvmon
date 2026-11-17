@@ -20,19 +20,19 @@ import generations.gg.generations.core.generationscore.common.config.JsonConfigs
  * - cinematic: the awakening scene (otherwise Mewtwo appears at once).
  */
 class MewtwoConfig(
-    var energyRequired: Int = 100,
-    var points: StagePoints = StagePoints(),
-    var speciesPoints: MutableMap<String, Int> = LinkedHashMap(),
-    var excludedLabels: MutableList<String> = mutableListOf("legendary", "mythical", "ultra_beast", "paradox"),
-    var excludedSpecies: MutableList<String> = mutableListOf(),
-    var allowedSpecies: MutableList<String> = mutableListOf(),
-    var allowPc: Boolean = true,
+    override var energyRequired: Int = 100,
+    override var points: StagePoints = StagePoints(),
+    override var speciesPoints: MutableMap<String, Int> = LinkedHashMap(),
+    override var excludedLabels: MutableList<String> = mutableListOf("legendary", "mythical", "ultra_beast", "paradox"),
+    override var excludedSpecies: MutableList<String> = mutableListOf(),
+    override var allowedSpecies: MutableList<String> = mutableListOf(),
+    override var allowPc: Boolean = true,
     var research: MutableList<String> = defaultResearch(),
     var growthSeconds: Double = 300.0,
     var growthClock: String = CLOCK_LOADED,
     var spawn: Spawn = Spawn(),
     var cinematic: Boolean = true,
-) {
+) : SacrificeRules {
     class StagePoints(
         /** The first of a line that evolves (Abra). */
         var firstStage: Int = 1,

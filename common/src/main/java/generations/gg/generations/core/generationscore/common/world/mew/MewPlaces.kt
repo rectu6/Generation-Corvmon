@@ -6,6 +6,7 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.tags.BlockTags
 import net.minecraft.util.Mth
 import net.minecraft.world.level.ClipContext
+import net.minecraft.world.level.levelgen.Heightmap
 import net.minecraft.world.phys.HitResult
 import net.minecraft.world.phys.Vec3
 import java.util.Random
@@ -181,51 +182,142 @@ object MewPlaces {
         return safeNear(level, target.x, target.y, target.z)?.add(0.0, 1.2, 0.0) ?: point
     }
 
+    // ---------------------------------------------------------------- the false appearances (HOOH-PLAN.md § 4)
+
+    /** Seen from these eyes: no block between them and the place. */
+    private fun seen(level: ServerLevel, player: ServerPlayer, eyes: Vec3, at: Vec3): Boolean = !hidden(level, player, eyes, at)
+
+    /** Within this horizontal angle of the player's look. */
+    private fun inView(player: ServerPlayer, at: Vec3, halfAngle: Double): Boolean {
+        val dx = at.x - player.x
+        val dz = at.z - player.z
+        val d = Math.sqrt(dx * dx + dz * dz)
+        if (d < 0.5) return true
+        val look = forward(player.yRot)
+        return (dx * look.x + dz * look.z) / d >= cos(Math.toRadians(halfAngle))
+    }
+
+    /** A clear line between two points (Mew never flies through a block). */
+    private fun clearLine(level: ServerLevel, player: ServerPlayer, from: Vec3, to: Vec3): Boolean =
+        level.clip(ClipContext(from, to, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player)).type == HitResult.Type.MISS
+
+    /** The top of the trees or the ground at (x, z) (leaves included), loaded chunks only. */
+    private fun canopy(level: ServerLevel, x: Double, z: Double): Int? {
+        val pos = BlockPos(Mth.floor(x), 0, Mth.floor(z))
+        if (!level.isLoaded(pos)) return null
+        return level.getHeight(Heightmap.Types.MOTION_BLOCKING, pos.x, pos.z)
+    }
+
+    /** Mew's height over a place: above the grass, flowers and bushes that would hide it. */
+    private fun overPlants(level: ServerLevel, feet: Vec3): Double {
+        val base = BlockPos.containing(feet)
+        var lift = 0
+        while (lift < 2 && !level.getBlockState(base.above(lift + 1)).isAir) lift++
+        return feet.y + 1.15 + lift
+    }
+
     /**
-     * A false appearance's places (§ 6): origin, the second point (relative), Mew's way. Null when
-     * none was found (nothing is shown then).
+     * A false appearance's places (MEW-PLAN.md § 6, made visible by HOOH-PLAN.md § 4): origin, the
+     * second point (relative), Mew's way. Null when none was found (nothing is shown then). Every
+     * search is local and bounded (32 tries, loaded chunks).
+     *
+     * - A: across a clearing 10 to 16 blocks ahead, within 45° of the look, its start, middle and
+     *   end seen from the eyes (2 of 3), over the plants, on a clear line;
+     * - B: Mew behind the player, 5 to 8 blocks, on a free place seen from the eyes (it waits there
+     *   until the player turns, then dissolves into psychic motes);
+     * - C: a flight across the view, 5 to 8 blocks above the trees and the ground under its way;
+     * - D: in front of the player, on a free and seen place.
      */
     fun manifestation(level: ServerLevel, player: ServerPlayer, type: Int, random: Random): Triple<Vec3, Vec3, Float>? {
         val eyes = player.eyePosition
         return when (type) {
-            // A: across the forest, behind the trees, 12 to 20 blocks away.
-            0 -> {
-                for (i in 0 until TRIES) {
-                    val side = player.yRot + (random.nextDouble() * 140.0 - 70.0).toFloat()
-                    val d = 12.0 + random.nextDouble() * 8.0
-                    val mid = player.position().add(forward(side).scale(d))
-                    val across = forward(side + 90f).scale(4.0 + random.nextDouble() * 3.0)
-                    val a = safeNear(level, mid.x - across.x, player.y, mid.z - across.z) ?: continue
-                    val b = safeNear(level, mid.x + across.x, a.y, mid.z + across.z) ?: continue
-                    if (kotlin.math.abs(a.y - b.y) > 3.0) continue
-                    if (!hidden(level, player, eyes, a.add(0.0, 1.0, 0.0)) && i < TRIES / 2) continue
-                    val from = a.add(0.0, 1.0, 0.0)
-                    return Triple(from, b.add(0.0, 1.0, 0.0).subtract(from), yawTowards(from, b))
+            0 -> crossing(level, player, eyes, random)
+            1 -> presence(level, player, eyes, random)
+            2 -> aerial(level, player, eyes, random)
+            else -> curious(level, player, eyes, random)
+        }
+    }
+
+    private fun crossing(level: ServerLevel, player: ServerPlayer, eyes: Vec3, random: Random): Triple<Vec3, Vec3, Float>? {
+        for (i in 0 until TRIES) {
+            val side = player.yRot + (random.nextDouble() * 90.0 - 45.0).toFloat()
+            val d = 10.0 + random.nextDouble() * 6.0
+            val mid = player.position().add(forward(side).scale(d))
+            val across = forward(side + 90f).scale(4.5 + random.nextDouble() * 2.5)
+            val a = safeNear(level, mid.x - across.x, player.y, mid.z - across.z) ?: continue
+            val b = safeNear(level, mid.x + across.x, a.y, mid.z + across.z) ?: continue
+            if (kotlin.math.abs(a.y - b.y) > 3.0) continue
+            val from = Vec3(a.x, overPlants(level, a), a.z)
+            val to = Vec3(b.x, overPlants(level, b), b.z)
+            if (!clearLine(level, player, from, to)) continue
+            val middle = from.add(to).scale(0.5)
+            val visible = listOf(from, middle, to).count { seen(level, player, eyes, it.add(0.0, 0.3, 0.0)) }
+            if (visible < (if (i < TRIES * 3 / 4) 2 else 1)) continue
+            return Triple(from, to.subtract(from), yawTowards(from, to))
+        }
+        return null
+    }
+
+    private fun presence(level: ServerLevel, player: ServerPlayer, eyes: Vec3, random: Random): Triple<Vec3, Vec3, Float> {
+        for (i in 0 until TRIES) {
+            val side = player.yRot + 180f + (random.nextDouble() * 80.0 - 40.0).toFloat()
+            val d = 5.0 + random.nextDouble() * 3.0
+            val spot = player.position().add(forward(side).scale(d))
+            val feet = safeNear(level, spot.x, player.y, spot.z, 3) ?: continue
+            val at = Vec3(feet.x, overPlants(level, feet) + 0.2, feet.z)
+            if (!seen(level, player, eyes, at.add(0.0, 0.3, 0.0))) continue
+            return Triple(at, Vec3.ZERO, yawTowards(at, player.position()))
+        }
+        // As before: the cry right behind the player.
+        val behind = player.position().add(forward(player.yRot + 180f).scale(2.5)).add(0.0, 1.4, 0.0)
+        return Triple(behind, Vec3.ZERO, player.yRot)
+    }
+
+    private fun aerial(level: ServerLevel, player: ServerPlayer, eyes: Vec3, random: Random): Triple<Vec3, Vec3, Float>? {
+        for (i in 0 until TRIES) {
+            val side = player.yRot + (random.nextDouble() * 100.0 - 50.0).toFloat()
+            val dist = 10.0 + random.nextDouble() * 5.0
+            val centre = player.position().add(forward(side).scale(dist))
+            val half = forward(side + 90f).scale(12.0)
+            val start = centre.subtract(half)
+            val end = centre.add(half)
+            // The highest tree or ground under the way (5 points).
+            var top = Int.MIN_VALUE
+            var ok = true
+            for (k in 0..4) {
+                val p = start.add(end.subtract(start).scale(k / 4.0))
+                val h = canopy(level, p.x, p.z)
+                if (h == null) {
+                    ok = false
+                    break
                 }
-                null
+                top = maxOf(top, h)
             }
-            // B: a presence behind the player.
-            1 -> {
-                val behind = player.position().add(forward(player.yRot + 180f).scale(2.5)).add(0.0, 1.4, 0.0)
-                Triple(behind, Vec3.ZERO, player.yRot)
-            }
-            // C: high over the player's surroundings, across the sky.
-            2 -> {
-                val side = player.yRot + (random.nextDouble() * 120.0 - 60.0).toFloat()
-                val ground = ground(level, player.x, player.y, player.z) ?: player.y
-                val height = 8.0 + random.nextDouble() * 6.0
-                val start = player.position().add(forward(side - 90f).scale(14.0)).add(forward(side).scale(6.0))
-                val from = Vec3(start.x, ground + height, start.z)
-                val path = forward(side + 90f).scale(28.0)
-                Triple(from, Vec3(path.x, (random.nextDouble() - 0.5) * 3.0, path.z), side + 90f)
-            }
-            // D: curious, right in front of the player.
-            else -> {
-                val ahead = forward(player.yRot).scale(3.5)
-                val at = safeNear(level, player.x + ahead.x, player.y, player.z + ahead.z, 3) ?: Vec3(player.x + ahead.x, player.y, player.z + ahead.z)
+            if (!ok) continue
+            val height = maxOf(top + 5.0 + random.nextDouble() * 3.0, player.y + 6.0)
+            // A mountain over the player: too high to be seen well.
+            if (height > player.eyeY + 24.0) continue
+            val from = Vec3(start.x, height, start.z)
+            val to = Vec3(end.x, height + (random.nextDouble() - 0.5) * 3.0, end.z)
+            val visible = listOf(from, from.add(to).scale(0.5), to).count { seen(level, player, eyes, it) }
+            if (visible < (if (i < TRIES * 3 / 4) 2 else 1)) continue
+            return Triple(from, to.subtract(from), yawTowards(from, to))
+        }
+        return null
+    }
+
+    private fun curious(level: ServerLevel, player: ServerPlayer, eyes: Vec3, random: Random): Triple<Vec3, Vec3, Float> {
+        for (angle in listOf(0f, 20f, -20f, 40f, -40f)) {
+            for (d in listOf(3.5, 4.5, 3.0)) {
+                val ahead = forward(player.yRot + angle).scale(d)
+                val at = safeNear(level, player.x + ahead.x, player.y, player.z + ahead.z, 3) ?: continue
                 val from = at.add(0.0, 0.9, 0.0)
-                Triple(from, player.position().subtract(from), yawTowards(from, player.position()))
+                if (!free(level, BlockPos.containing(from)) || !seen(level, player, eyes, from.add(0.0, 0.3, 0.0))) continue
+                return Triple(from, player.position().subtract(from), yawTowards(from, player.position()))
             }
         }
+        val ahead = forward(player.yRot).scale(3.5)
+        val from = Vec3(player.x + ahead.x, player.y + 0.9, player.z + ahead.z)
+        return Triple(from, player.position().subtract(from), yawTowards(from, player.position()))
     }
 }

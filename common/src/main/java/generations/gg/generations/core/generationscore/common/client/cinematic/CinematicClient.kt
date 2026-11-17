@@ -56,10 +56,18 @@ object CinematicClient {
         /** The scene's duration over the seconds it is written for (20, Mewtwo's 24). */
         val stretch: Double,
     ) {
-        /** The scene's other actors (Mew's illusions), the same species. */
-        val extras = Array(scene.extraActors) { CinematicActor(actor.species, actor.aspects) }
+        /** The scene's other actors (Mew's illusions: the same species; Johto's beasts: their own). */
+        val extras = Array(scene.extraActors) { i ->
+            val own = scene.extraSpecies(i)?.let { ResourceLocation.tryParse(it) }
+            if (own != null) CinematicActor(own, emptySet()) else CinematicActor(actor.species, actor.aspects)
+        }
         val extraKeys = Array(scene.extraActors) { generations.gg.generations.core.generationscore.common.client.cinematic.scenes.ActorKey() }
         val extraWorld = Array(scene.extraActors) { Vector3d() }
+        val look = generations.gg.generations.core.generationscore.common.client.cinematic.scenes.ActorLook()
+
+        /** The skip key held since (clock seconds), or -1. */
+        var skipHeld = -1.0
+        var skipSent = false
 
         /** Near the scene but unable to watch it: its ambience only (effects, sound), no camera, no screen (D11). */
         val ambient: Boolean get() = packet.ambient
@@ -137,6 +145,25 @@ object CinematicClient {
                     generations.gg.generations.core.generationscore.common.client.cinematic.scenes.MewtwoScene(landing, packet.test, title, 1.95 - height / 2.0)
                 }
                 CinematicScenes.MEW -> generations.gg.generations.core.generationscore.common.client.cinematic.scenes.MewScene(landing, packet.test, title)
+                CinematicScenes.HO_OH -> generations.gg.generations.core.generationscore.common.client.cinematic.scenes.HoOhScene(landing, title)
+                CinematicScenes.LUGIA -> generations.gg.generations.core.generationscore.common.client.cinematic.scenes.LugiaScene(
+                    landing, packet.test, title, S2CCinematicStartPacket.parseOptions(packet.options),
+                )
+                in CinematicScenes.REGIS -> {
+                    // The Regi's size (its hitbox), for the cameras and the effects round it.
+                    val form = PokemonSpecies.getByIdentifier(species)?.standardForm
+                    val height = form?.let { it.hitbox.height() * it.baseScale }?.toDouble() ?: 2.0
+                    val width = form?.let { it.hitbox.width() * it.baseScale }?.toDouble() ?: 1.5
+                    generations.gg.generations.core.generationscore.common.client.cinematic.scenes.RegiScene(
+                        packet.scene, landing, packet.test, title, height, width, S2CCinematicStartPacket.parseOptions(packet.options),
+                    )
+                }
+                CinematicScenes.LATIAS -> generations.gg.generations.core.generationscore.common.client.cinematic.scenes.LatiasScene(landing, packet.test, title)
+                CinematicScenes.LATIOS -> generations.gg.generations.core.generationscore.common.client.cinematic.scenes.LatiosScene(landing, packet.test, title)
+                CinematicScenes.JOHTO_HISTORY, CinematicScenes.HO_OH_SUMMON, in CinematicScenes.AWAKENINGS, in CinematicScenes.ENCOUNTERS ->
+                    generations.gg.generations.core.generationscore.common.client.johto.JohtoScenes.create(
+                        packet.scene, landing, title, S2CCinematicStartPacket.parseOptions(packet.options),
+                    )
                 else -> ArticunoScene(landing, packet.test, title)
             }
             val particles: FxParticles = scene.particles(6000)
@@ -157,6 +184,8 @@ object CinematicClient {
             playback.ambienceSource = scene.ambience(stretch, offset)?.let { generations.gg.generations.core.generationscore.common.client.cinematic.audio.SynthBuffer(it).start("Generations cinematic ambience") }
             this.playback = playback
             failed = false
+            hidden.clear()
+            hidden.addAll(packet.hidden)
             CinematicRenderer.reset()
             minecraft.musicManager.stopPlaying()
             if (!packet.ambient) minecraft.setScreen(CinematicScreen())
@@ -193,6 +222,8 @@ object CinematicClient {
         CinematicAudio.clear()
         CinematicRenderer.reset()
         hidden.clear()
+        CinematicWeather.restore()
+        generations.gg.generations.core.generationscore.common.client.cinematic.audio.CinematicDuck.set(0f)
         val minecraft = Minecraft.getInstance()
         if (minecraft.screen is CinematicScreen) minecraft.setScreen(null)
     }
@@ -213,6 +244,30 @@ object CinematicClient {
         if (p.clock.seconds > p.durationSeconds + 3.0) return stopLocally()
         // The scene's screen holds the keys; it comes back when another closed it (the pause menu).
         if (!p.ambient && minecraft.screen == null && player.isAlive) minecraft.setScreen(CinematicScreen())
+        // The skip key held one second (a scene seen before, D17): asked once.
+        if (p.packet.skippable && !p.skipSent && p.skipHeld >= 0.0 && p.clock.seconds - p.skipHeld >= 1.0) {
+            p.skipSent = true
+            generations.gg.generations.core.generationscore.common.network.GenerationsNetwork.sendToServer(
+                generations.gg.generations.core.generationscore.common.network.packets.cinematic.C2SCinematicSkipPacket(p.packet.session),
+            )
+        }
+    }
+
+    /** Whether the scene playing may be skipped (its hint on screen). */
+    fun skippable(): Boolean = playback?.let { it.packet.skippable && !it.ambient && !it.skipSent } ?: false
+
+    /** How long the skip key has been held, from 0 to 1. */
+    fun skipProgress(): Float {
+        val p = playback ?: return 0f
+        if (p.skipHeld < 0.0) return 0f
+        return (p.clock.seconds - p.skipHeld).toFloat().coerceIn(0f, 1f)
+    }
+
+    /** The skip key (space) pressed or released on the scene's screen. */
+    fun holdSkip(down: Boolean) {
+        val p = playback ?: return
+        if (!p.packet.skippable) return
+        p.skipHeld = if (down) (if (p.skipHeld < 0.0) p.clock.seconds else p.skipHeld) else -1.0
     }
 
     /**
@@ -265,6 +320,17 @@ object CinematicClient {
         p.camera.toWorld(frame.actor.pos, frame.actorWorld)
         p.scene.update(frame)
         sounds(p, clamped)
+        // Johto's history: Minecraft's rain on this client only (D5), faded with the scene.
+        val rain = p.scene.rain(a)
+        if (rain >= 0f && t >= 0.0) {
+            val fade = (if (p.ending >= 0) 1.0 - CameraMath.smooth((seconds - p.ending) / 0.6) else 1.0).toFloat()
+            CinematicWeather.apply(level, rain * fade, p.scene.thunder(a).coerceAtLeast(0f) * fade)
+        }
+        // Lugia's silence: Minecraft's other sounds quieter for the one watching (not the ambience's).
+        if (!p.ambient && t >= 0.0) {
+            val fade = (if (p.ending >= 0) 1.0 - CameraMath.smooth((seconds - p.ending) / 0.6) else 1.0).toFloat()
+            generations.gg.generations.core.generationscore.common.client.cinematic.audio.CinematicDuck.set(p.scene.duck(a) * fade)
+        }
 
         script.director.evaluate(clamped, p.motion, p.shot)
         val endFade = if (p.ending >= 0) 1.0 - CameraMath.smooth((seconds - p.ending) / 0.6) else 1.0
@@ -353,14 +419,24 @@ object CinematicClient {
             CinematicRenderer.keep(frustum, projection)
             val actor = p.frame.actor
             if (actor.pose != ActorPose.HIDDEN && p.sceneTime >= 0.0) {
-                p.actor.render(p.frame.actorWorld, p.camera.yawToWorld(actor.yaw), actor.pitch, actor.roll, actor.scale, actor.pose, p.frame.a.toFloat())
+                val look = p.scene.actorLook(p.frame.a, p.look)
+                p.actor.render(
+                    p.frame.actorWorld, p.camera.yawToWorld(actor.yaw), actor.pitch, actor.roll, actor.scale, actor.pose, p.frame.a.toFloat(),
+                    look.bright, CinematicActor.materialTexture(look.material), look.tint, look.translucent, look.frozen,
+                )
             }
             if (p.sceneTime >= 0.0) for (i in p.extras.indices) {
                 val key = p.scene.extraActor(i, p.frame.a, p.extraKeys[i])
                 if (key.pose == ActorPose.HIDDEN || !key.isFinite()) continue
                 p.camera.toWorld(key.pos, p.extraWorld[i])
-                p.extras[i].render(p.extraWorld[i], p.camera.yawToWorld(key.yaw), key.pitch, key.roll, key.scale, key.pose, p.frame.a.toFloat() + i * 0.37f)
+                val look = p.scene.extraLook(i, p.frame.a, p.look)
+                p.extras[i].render(
+                    p.extraWorld[i], p.camera.yawToWorld(key.yaw), key.pitch, key.roll, key.scale, key.pose, p.frame.a.toFloat() + i * 0.37f,
+                    look.bright, CinematicActor.materialTexture(look.material), look.tint, look.translucent, look.frozen,
+                )
             }
+            // The scene's real blocks (the Regis' rocks, ice, steel, letters), drawn only.
+            if (p.sceneTime >= 0.0) generations.gg.generations.core.generationscore.common.client.cinematic.actor.CinematicProps.render(p.scene, p.camera, p.frame.a)
         } catch (e: Exception) {
             fail(e)
         }
@@ -376,5 +452,50 @@ object CinematicClient {
         } catch (e: Exception) {
             fail(e)
         }
+    }
+}
+
+/**
+ * Minecraft's rain and storm on this client only, while a scene asks for it (JOHTO-PLAN.md D5):
+ * the server's weather is never touched. The levels found before are given back at the end,
+ * unless the server changed the weather meanwhile (its own value then stays).
+ */
+object CinematicWeather {
+    private var level: ClientLevel? = null
+    private var savedRain = 0f
+    private var savedThunder = 0f
+    private var setRain = Float.NaN
+    private var setThunder = Float.NaN
+
+    fun apply(level: ClientLevel, rain: Float, thunder: Float) {
+        if (this.level !== level) {
+            restore()
+            this.level = level
+            savedRain = level.getRainLevel(1f)
+            savedThunder = level.getThunderLevel(1f)
+        } else if (!setRain.isNaN() && kotlin.math.abs(level.getRainLevel(1f) - setRain) > 1e-3f) {
+            // The server changed the weather: its value wins, and stays at the end.
+            this.level = null
+            setRain = Float.NaN
+            return
+        }
+        val r = maxOf(savedRain, rain.coerceIn(0f, 1f))
+        val th = maxOf(savedThunder, thunder.coerceIn(0f, 1f))
+        level.setRainLevel(r)
+        level.setThunderLevel(th)
+        setRain = r
+        setThunder = th
+    }
+
+    fun restore() {
+        val level = this.level ?: return
+        this.level = null
+        if (setRain.isNaN()) return
+        if (kotlin.math.abs(level.getRainLevel(1f) - setRain) <= 1e-3f) {
+            level.setRainLevel(savedRain)
+            level.setThunderLevel(savedThunder)
+        }
+        setRain = Float.NaN
+        setThunder = Float.NaN
     }
 }

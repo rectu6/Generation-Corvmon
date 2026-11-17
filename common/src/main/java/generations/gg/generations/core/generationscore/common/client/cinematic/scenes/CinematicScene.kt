@@ -133,4 +133,82 @@ interface CinematicScene {
         out.pose = ActorPose.HIDDEN
         return out
     }
+
+    /** Extra actor i's species ("cobblemon:raikou"), or null: the scene's Pokémon (Mew's illusions). */
+    fun extraSpecies(i: Int): String? = null
+
+    /** The scene's Pokémon's look at action time a (a statue, a ghost...): normal by default. */
+    fun actorLook(a: Double, out: ActorLook): ActorLook = out.normal()
+
+    /** Extra actor i's look at action time a. */
+    fun extraLook(i: Int, a: Double, out: ActorLook): ActorLook = out.normal()
+
+    /**
+     * The rain the watcher's own client shows at action time a, from 0 to 1 (JOHTO-PLAN.md D5:
+     * Minecraft's rain on this client only, given back at the end), or a negative value: none.
+     * thunder: the storm's darker sky, the same way.
+     */
+    fun rain(a: Double): Float = -1f
+
+    fun thunder(a: Double): Float = -1f
+
+    /**
+     * How much Minecraft's other sounds (ambience, weather, music, creatures) fade on the
+     * watcher's client at action time a, from 0 (not at all) to 1 (to a quarter): Lugia's
+     * silence of the depths (LUGIA-PLAN.md § 5). The scene's own sounds are not touched.
+     */
+    fun duck(a: Double): Float = 0f
+
+    /**
+     * Real blocks the scene draws in the world's pass (the Regis' rocks, ice, steel and Unown
+     * letters, REGIS-PLAN.md § 5): how many at most. Drawn only, never placed in the world.
+     */
+    val props: Int get() = 0
+
+    /** Prop i at action time a, or false: not drawn this frame. */
+    fun prop(i: Int, a: Double, out: PropKey): Boolean = false
+}
+
+/** A block drawn by a scene: its look, its centre in the scene's frame, its angles, its size, its glow (0 to 15). */
+class PropKey {
+    var state: net.minecraft.world.level.block.state.BlockState? = null
+    val pos = Vector3d()
+    var yaw = 0.0
+    var pitch = 0.0
+    var roll = 0.0
+    var scale = 1.0
+    var glow = 0
+}
+
+/** How an actor is drawn: its own skin, a statue's material, a tinted ghost. */
+class ActorLook {
+    /** A statue material's name ("concrete"), or null. */
+    var material: String? = null
+    /** ARGB the model is multiplied by (-1: none). */
+    var tint = -1
+    var translucent = false
+    /** Animations held still (a statue). */
+    var frozen = false
+    /** Full light (a ghost, a spirit in the sky). */
+    var bright = false
+
+    fun normal(): ActorLook {
+        material = null; tint = -1; translucent = false; frozen = false; bright = false
+        return this
+    }
+
+    fun statue(name: String?): ActorLook {
+        normal()
+        material = name
+        frozen = true
+        return this
+    }
+
+    fun ghost(argb: Int): ActorLook {
+        normal()
+        tint = argb
+        translucent = true
+        bright = true
+        return this
+    }
 }

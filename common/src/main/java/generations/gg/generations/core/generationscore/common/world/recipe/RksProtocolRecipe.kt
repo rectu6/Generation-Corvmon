@@ -15,6 +15,7 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.level.Level
+import generations.gg.generations.core.generationscore.common.world.rks.RksEnergy
 import java.util.Optional
 
 /** An ingredient of an RKS protocol and how many of it the protocol takes. */
@@ -41,6 +42,8 @@ data class CountedIngredient(val ingredient: GenerationsIngredient, val count: I
  * - description: a translation key for the menu.
  * - protocol: "standard", or "mewtwo" for the cloning experiment and its own conditions
  *   (rks/mewtwo.json).
+ * - energy: "" (none), or a reserve of the machine ("fire": HOOH-PLAN.md § 9) that must be full
+ *   to launch, and is taken with the ingredients at the end (its size: the reserve's rules).
  */
 class RksProtocolRecipe(
     val category: RksCategory,
@@ -48,6 +51,7 @@ class RksProtocolRecipe(
     group: String,
     val description: String,
     val protocol: String,
+    val energy: String,
     val inputs: List<CountedIngredient>,
     result: RksResult<*>,
     processingTime: Int,
@@ -57,6 +61,9 @@ class RksProtocolRecipe(
 ) : RksRecipe(group, result, consumesTimeCapsules, key, experience, processingTime, false) {
 
     val isMewtwo: Boolean get() = protocol == MEWTWO
+
+    /** The reserve this recipe takes, null for none (an unknown name: none). */
+    val energyKind: RksEnergy? get() = if (energy.isEmpty()) null else RksEnergy.byId(energy)
 
     override fun matches(input: RksInput, level: Level): Boolean = allocate(input.items()) != null
 
@@ -136,6 +143,7 @@ class RksProtocolRecipe(
                 Codec.STRING.optionalFieldOf("group", "").forGetter { it.group },
                 Codec.STRING.optionalFieldOf("description", "").forGetter(RksProtocolRecipe::description),
                 Codec.STRING.optionalFieldOf("protocol", STANDARD).forGetter(RksProtocolRecipe::protocol),
+                Codec.STRING.optionalFieldOf("energy", "").forGetter(RksProtocolRecipe::energy),
                 CountedIngredient.CODEC.listOf().fieldOf("ingredients").forGetter(RksProtocolRecipe::inputs),
                 GenerationsCore.RKS_RESULT_TYPE.codec.fieldOf("result").forGetter { it.result },
                 Codec.intRange(1, 20 * 60 * 60).optionalFieldOf("processingTime", DEFAULT_TICKS).forGetter { it.processingTime },
@@ -153,6 +161,7 @@ class RksProtocolRecipe(
             ByteBufCodecs.STRING_UTF8.encode(buffer, value.group)
             ByteBufCodecs.STRING_UTF8.encode(buffer, value.description)
             ByteBufCodecs.STRING_UTF8.encode(buffer, value.protocol)
+            ByteBufCodecs.STRING_UTF8.encode(buffer, value.energy)
             buffer.writeVarInt(value.inputs.size)
             for (input in value.inputs) {
                 GenerationsIngredidents.STREAM_CODEC.encode(buffer, input.ingredient)
@@ -171,6 +180,7 @@ class RksProtocolRecipe(
             val group = ByteBufCodecs.STRING_UTF8.decode(buffer)
             val description = ByteBufCodecs.STRING_UTF8.decode(buffer)
             val protocol = ByteBufCodecs.STRING_UTF8.decode(buffer)
+            val energy = ByteBufCodecs.STRING_UTF8.decode(buffer)
             val inputs = List(buffer.readVarInt()) {
                 val ingredient = GenerationsIngredidents.STREAM_CODEC.decode(buffer)
                 CountedIngredient(ingredient, buffer.readVarInt())
@@ -180,7 +190,7 @@ class RksProtocolRecipe(
             val capsules = buffer.readBoolean()
             val key = SpeciesKey.OPTIONAL_STREAM_CODEC.decode(buffer)
             val experience = buffer.readFloat()
-            return RksProtocolRecipe(category, order, group, description, protocol, inputs, result, ticks, capsules, key, experience)
+            return RksProtocolRecipe(category, order, group, description, protocol, energy, inputs, result, ticks, capsules, key, experience)
         }
     }
 }

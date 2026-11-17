@@ -478,7 +478,6 @@ class ItemDatagen(packOutput: PackOutput, existingFileHelper: ExistingFileHelper
         createItem(GenerationsItems.ENIGMA_STONE, "legend_items/")
         createItem(GenerationsItems.METEORITE_SHARD, "legend_items/")
         createItem(GenerationsItems.SACRED_ASH, "legend_items/")
-        createItem(GenerationsItems.RAINBOW_WING, "legend_items/")
         createItem(GenerationsItems.SILVER_WING, "legend_items/")
         createItem(GenerationsItems.BLUE_PETAL, "legend_items/")
         createItem(GenerationsItems.GREEN_PETAL, "legend_items/")

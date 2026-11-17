@@ -171,6 +171,9 @@ object GenerationsCoreClient {
         // The legendary cinematics (CINEMATIQUES-PLAN.md).
         generations.gg.generations.core.generationscore.common.client.cinematic.CinematicClient.init()
         generations.gg.generations.core.generationscore.common.client.mew.MewClient.init()
+        generations.gg.generations.core.generationscore.common.client.hooh.HoOhClient.init()
+        generations.gg.generations.core.generationscore.common.client.johto.JohtoClient.init()
+        generations.gg.generations.core.generationscore.common.client.eon.EonClient.init()
     }
 
 
@@ -245,7 +248,6 @@ object GenerationsCoreClient {
                     isItem(GenerationsItems.BELLIGERENT_WING, stack) -> 0.5f
                     isItem(GenerationsItems.FIERY_WING, stack) -> 0.625f
                     isItem(GenerationsItems.SINISTER_WING, stack) -> 0.75f
-                    isItem(GenerationsItems.RAINBOW_WING, stack) -> 0.875f
                     isItem(GenerationsItems.SILVER_WING, stack) -> 1.0f
                     else -> 0f
                 }

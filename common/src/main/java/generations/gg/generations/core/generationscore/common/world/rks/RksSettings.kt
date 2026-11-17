@@ -11,6 +11,9 @@ object RksSettings {
         private set
     var mewtwo: MewtwoConfig = MewtwoConfig()
         private set
+    /** The Sacred Ash's fire energy (HOOH-PLAN.md § 9). */
+    var fire: FireEnergyConfig = FireEnergyConfig()
+        private set
 
     fun init() {
         PlatformEvents.SERVER_STARTED.subscribe(Priority.NORMAL) { reload() }
@@ -19,6 +22,7 @@ object RksSettings {
     fun reload() {
         machine = RksMachineConfig.load()
         mewtwo = MewtwoConfig.load()
+        fire = FireEnergyConfig.load()
     }
 
     /** Whether the machine may make this recipe: its category is on (older recipe formats always are). */

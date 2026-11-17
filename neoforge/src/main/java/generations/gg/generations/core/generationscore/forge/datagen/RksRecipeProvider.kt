@@ -133,14 +133,6 @@ class RksRecipeProvider(arg: PackOutput, registries: CompletableFuture<HolderLoo
             .criterion("orb", InventoryChangeTrigger.TriggerInstance.hasItems(GenerationsItems.ORB.value()))
             .save(exporter, id("genesect"))
 
-        ShapedRksRecipeJsonBuilder.create(GenerationsItems.SACRED_ASH) //TODO: Add SpeciesKey if needed
-            .pattern("ABC")
-            .input('A', Items.TOTEM_OF_UNDYING)
-            .input('B', Items.COAL)
-            .input('C', GenerationsItems.RAINBOW_WING)
-            .criterion("rainbow_wing", InventoryChangeTrigger.TriggerInstance.hasItems(GenerationsItems.RAINBOW_WING.value()))
-            .save(exporter, id("rainbow_wing"))
-
         unownBlock(exporter, GenerationsBlocks.UNOWN_BLOCK_A, "a")
         unownBlock(exporter, GenerationsBlocks.UNOWN_BLOCK_B, "b")
         unownBlock(exporter, GenerationsBlocks.UNOWN_BLOCK_C, "c")

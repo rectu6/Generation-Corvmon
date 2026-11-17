@@ -674,7 +674,8 @@ public class MewBench {
             boolean endsHidden = !pose.getVisible();
             String what = "show " + names[k];
             check(invalid == 0, what + ": " + invalid + " invalid poses");
-            check(k == 1 ? visible == 0 : visible > 1000, what + ": Mew seen " + visible + "/2001");
+            // B (build 61): Mew shows itself, then dissolves; the others keep it longer.
+            check(visible > (k == 1 ? 300 : 1000), what + ": Mew seen " + visible + "/2001");
             check(sorted && !show.getEvents().isEmpty(), what + ": events in order within " + show.getDuration() + " s");
             check(endsHidden, what + ": gone at its end");
             check(maxStep < 40.0, what + ": Mew's speed at most " + maxStep + " blocks a second (teleports aside)");

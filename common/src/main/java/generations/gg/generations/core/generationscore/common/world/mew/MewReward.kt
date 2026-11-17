@@ -95,7 +95,7 @@ object MewReward {
         val landing = CinematicPlaces.landing(level, origin, facing, width, height)
         val hunter = player.uuid
         val result = LegendaryCinematics.start(
-            LegendaryCinematics.Request(level, CinematicScenes.MEW, origin, facing, landing, player, MEW, emptySet(), test) { session -> sceneEnds(session, hunter) }
+            LegendaryCinematics.Request(level, CinematicScenes.MEW, origin, facing, landing, player, MEW, emptySet(), test, onSpawn = { session -> sceneEnds(session, hunter) })
         )
         if (result is LegendaryCinematics.StartResult.Started) {
             // A test scene spawns nothing (the engine's test mode): nothing to wait for.

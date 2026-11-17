@@ -15,6 +15,8 @@ import generations.gg.generations.core.generationscore.common.world.level.block.
 import generations.gg.generations.core.generationscore.common.world.level.block.rks.RksConsoleBlockEntity
 import generations.gg.generations.core.generationscore.common.world.level.block.rks.RksModuleBlock
 import generations.gg.generations.core.generationscore.common.world.recipe.PokemonResult
+import generations.gg.generations.core.generationscore.common.world.recipe.RksProtocolRecipe
+import generations.gg.generations.core.generationscore.common.world.rks.RksEnergy
 import generations.gg.generations.core.generationscore.common.world.rks.RksSettings
 import generations.gg.generations.core.generationscore.common.world.rks.machine.RksMachines
 import generations.gg.generations.core.generationscore.common.world.rks.machine.RksState
@@ -34,9 +36,10 @@ import net.minecraft.world.phys.HitResult
 /**
  * /generations rks (RKS-PLAN.md § 6; operators, Cobblemon permission generations_core.command.rks,
  * level 2), on the machine looked at, otherwise the nearest console within 16 blocks:
- * - give modules|dossiers|kit [player]: the five modules, the three research files, a repair kit;
- * - energy <0-100>: the psychic energy;
+ * - give modules|dossiers|kit|feather [player]: the five modules, the three research files, a repair kit, a Sacred Feather of Ho-Oh;
+ * - energy <0-100>: the psychic energy; energy fire <value>|reset|full: the fire energy (HOOH-PLAN.md § 12);
  * - prepare: Mewtwo's components and the research files into the EMPTY slots only;
+ * - prepare sacred_ash: the Sacred Ash's feather and Orb into the empty slots, the fire reserve full;
  * - start: the M2 experiment at once, nothing taken;
  * - progress <percent>, speed <multiplier>: the growth;
  * - cinematic: the awakening's scene alone (no Mewtwo, no damage);
@@ -65,9 +68,21 @@ object RksCommands {
         dispatcher.register(
             Commands.literal("generations").then(
                 Commands.literal("rks").requires(::allowed)
-                    .then(Commands.literal("give").then(give("modules")).then(give("dossiers")).then(give("kit")))
-                    .then(Commands.literal("energy").then(Commands.argument("value", IntegerArgumentType.integer(0, 10_000)).executes { energy(it) }))
-                    .then(Commands.literal("prepare").executes { onMachine(it.source) { c -> prepare(it.source, c) } })
+                    .then(Commands.literal("give").then(give("modules")).then(give("dossiers")).then(give("kit")).then(give("feather")))
+                    .then(
+                        Commands.literal("energy")
+                            .then(Commands.argument("value", IntegerArgumentType.integer(0, 10_000)).executes { energy(it) })
+                            .then(
+                                Commands.literal("fire")
+                                    .then(Commands.argument("value", IntegerArgumentType.integer(0, 10_000)).executes { energy(it, RksEnergy.FIRE) })
+                                    .then(Commands.literal("reset").executes { c -> onMachine(c.source) { console -> setEnergy(c.source, console, RksEnergy.FIRE, 0) } })
+                                    .then(Commands.literal("full").executes { c -> onMachine(c.source) { console -> setEnergy(c.source, console, RksEnergy.FIRE, RksEnergy.FIRE.required) } }),
+                            ),
+                    )
+                    .then(
+                        Commands.literal("prepare").executes { onMachine(it.source) { c -> prepare(it.source, c) } }
+                            .then(Commands.literal("sacred_ash").executes { onMachine(it.source) { c -> prepareSacredAsh(it.source, c) } }),
+                    )
                     .then(Commands.literal("start").executes { onMachine(it.source) { c -> start(it.source, c) } })
                     .then(Commands.literal("progress").then(Commands.argument("percent", DoubleArgumentType.doubleArg(0.0, 100.0)).executes { progress(it) }))
                     .then(Commands.literal("speed").then(Commands.argument("multiplier", DoubleArgumentType.doubleArg(0.0, 1000.0)).executes { speed(it) }))
@@ -126,21 +141,24 @@ object RksCommands {
         val stacks = when (what) {
             "modules" -> GenerationsUtilityBlocks.RKS_MODULES.values.map { ItemStack(it.value()) }
             "dossiers" -> listOf(GenerationsItems.RKS_RESEARCH_M01_GENETICS, GenerationsItems.RKS_RESEARCH_M02_STABILIZATION, GenerationsItems.RKS_RESEARCH_M03_CONTAINMENT).map { ItemStack(it.value()) }
+            "feather" -> listOf(ItemStack(GenerationsItems.HO_OH_SACRED_FEATHER.value()))
             else -> listOf(ItemStack(GenerationsItems.RKS_REPAIR_KIT.value()))
         }
         for (stack in stacks) if (!player.inventory.add(stack)) player.drop(stack, false)
         return ok(source, "given", stacks.size, player.displayName ?: player.name)
     }
 
-    private fun energy(context: CommandContext<CommandSourceStack>): Int = onMachine(context.source) { console ->
-        val value = IntegerArgumentType.getInteger(context, "value")
-        console.commandEnergy(value)
-        ok(context.source, "energy", console.energy, RksSettings.mewtwo.energyRequired)
+    private fun energy(context: CommandContext<CommandSourceStack>, kind: RksEnergy = RksEnergy.PSYCHIC): Int = onMachine(context.source) { console ->
+        setEnergy(context.source, console, kind, IntegerArgumentType.getInteger(context, "value"))
     }
 
-    private fun prepare(source: CommandSourceStack, console: RksConsoleBlockEntity): Int {
-        val level = source.level
-        val recipe = RksMachines.mewtwoRecipe(level)?.value() ?: return fail(source, "no_recipe")
+    private fun setEnergy(source: CommandSourceStack, console: RksConsoleBlockEntity, kind: RksEnergy, value: Int): Int {
+        console.commandEnergy(value, kind)
+        return ok(source, kind.key("energy"), console.energyOf(kind), kind.required)
+    }
+
+    /** Fills the empty input slots with what the recipe still lacks. */
+    private fun fill(console: RksConsoleBlockEntity, recipe: RksProtocolRecipe): Int {
         var filled = 0
         for (input in recipe.inputs) {
             val example = input.ingredient.matchingStacks().firstOrNull() ?: continue
@@ -151,6 +169,23 @@ object RksCommands {
             console.items[slot] = example.copyWithCount(minOf(input.count - present, example.maxStackSize))
             filled++
         }
+        return filled
+    }
+
+    /** The Sacred Ash's test (HOOH-PLAN.md § 12): its ingredients in the slots, the fire reserve full. */
+    private fun prepareSacredAsh(source: CommandSourceStack, console: RksConsoleBlockEntity): Int {
+        val holder = RksMachines.recipes(source.level).firstOrNull { it.value().energyKind == RksEnergy.FIRE }
+            ?: return fail(source, "no_recipe_ash")
+        val filled = fill(console, holder.value())
+        console.commandEnergy(RksEnergy.FIRE.required, RksEnergy.FIRE)
+        console.setChanged()
+        return ok(source, "prepared_ash", filled, RksEnergy.FIRE.required)
+    }
+
+    private fun prepare(source: CommandSourceStack, console: RksConsoleBlockEntity): Int {
+        val level = source.level
+        val recipe = RksMachines.mewtwoRecipe(level)?.value() ?: return fail(source, "no_recipe")
+        var filled = fill(console, recipe)
         for ((i, item) in console.researchItems().withIndex()) {
             val slot = RksConsoleBlockEntity.RESEARCH + i
             if (console.items[slot].isEmpty) {
@@ -221,8 +256,8 @@ object RksCommands {
         val m = console.machine
         val missing = console.missing.joinToString(", ") { it.id }.ifEmpty { "-" }
         val pos = console.blockPos
-        val line = "RKS %d %d %d  %s  %s  energy %d/%d  analysed %s  experiment %s  growth %.1f%% x%.2f  spawned %s  damaged %s  missing %s  revision %d".format(
-            pos.x, pos.y, pos.z, console.facing.serializedName, m.state.name, console.energy, RksSettings.mewtwo.energyRequired,
+        val line = "RKS %d %d %d  %s  %s  energy %d/%d  fire %d/%d  analysed %s  experiment %s  growth %.1f%% x%.2f  spawned %s  damaged %s  missing %s  revision %d".format(
+            pos.x, pos.y, pos.z, console.facing.serializedName, m.state.name, console.energy, RksSettings.mewtwo.energyRequired, console.fireEnergy, RksSettings.fire.energyRequired,
             m.analysed, m.experiment, m.progress * 100.0, m.speed, m.spawned, m.damaged, missing, m.revision,
         )
         source.sendSuccess({ Component.literal(line).withStyle(if (m.state == RksState.DAMAGED) ChatFormatting.RED else ChatFormatting.GRAY) }, false)

@@ -25,6 +25,13 @@ class CinematicScreen : Screen(Component.translatable("generations_core.cinemati
             Minecraft.getInstance().setScreen(net.minecraft.client.gui.screens.PauseScreen(true))
             return true
         }
+        // A scene seen before: space held one second skips it (JOHTO-PLAN.md D17).
+        if (keyCode == GLFW.GLFW_KEY_SPACE) CinematicClient.holdSkip(true)
+        return true
+    }
+
+    override fun keyReleased(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
+        if (keyCode == GLFW.GLFW_KEY_SPACE) CinematicClient.holdSkip(false)
         return true
     }
 
@@ -54,6 +61,13 @@ class CinematicScreen : Screen(Component.translatable("generations_core.cinemati
         }
         val alpha = (script.title(t) * endFade).toFloat()
         if (alpha > 0.01f) title(graphics, p, alpha, t)
+        if (CinematicClient.skippable() && p.sceneTime > 1.0) {
+            val held = CinematicClient.skipProgress()
+            val text = Component.translatable("generations_core.cinematic.skip").string
+            val colour = ((0x90 + (0x6F * held).toInt()) shl 24) or 0xE8E8E8
+            HdText.draw(graphics, text, width - 12f - text.length * 4.6f, height - 18f, 8f, colour, shadow = true)
+            if (held > 0f) graphics.fill(width - 12 - (90 * held).toInt(), height - 7, width - 12, height - 6, 0xFFFFD86A.toInt())
+        }
         if (p.packet.debug) {
             val lines = listOf(
                 "%s  t %.2f / a %.2f s  (%.1f s real)".format(p.scene.id, t, p.frame.a, p.clock.seconds),

@@ -68,6 +68,16 @@ class GenerationsCobblemonEvents {
             generations.gg.generations.core.generationscore.common.world.rks.RksSettings.init()
             // The Mew hunt (MEW-PLAN.md).
             generations.gg.generations.core.generationscore.common.world.mew.MewHunt.init()
+            generations.gg.generations.core.generationscore.common.world.hooh.HoOhPassage.init()
+            // The Legend of Johto (JOHTO-PLAN.md).
+            generations.gg.generations.core.generationscore.common.world.johto.Johto.init()
+            // Lugia's shrine with its scene (LUGIA-PLAN.md).
+            generations.gg.generations.core.generationscore.common.world.lugia.LugiaSummon.init()
+            // The Regis' shrines with their scenes (REGIS-PLAN.md).
+            generations.gg.generations.core.generationscore.common.world.regi.RegiSummon.init()
+            // The Eon manifestations and the Enigma Stone's summoning with its scene (EON-PLAN.md).
+            generations.gg.generations.core.generationscore.common.world.eon.EonManifest.init()
+            generations.gg.generations.core.generationscore.common.world.eon.EonSummon.init()
             CobblemonEvents.TERASTALLIZATION.subscribe(Priority.NORMAL, GenerationsInstructionProcessor::processTerastallization)
             CobblemonEvents.BATTLE_STARTED_PRE.subscribe(Priority.NORMAL, GenerationsInstructionProcessor::preBattleChanges)
 

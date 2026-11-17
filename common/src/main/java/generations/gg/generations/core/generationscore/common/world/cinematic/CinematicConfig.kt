@@ -27,6 +27,18 @@ class CinematicConfig(
     var ambientRadius: Double = 50.0,
     /** Scene → species ("cobblemon:articuno"). */
     var scenes: MutableMap<String, String> = defaultScenes(),
+    /** Lugia's shrine plays its scene before Lugia appears (LUGIA-PLAN.md); false: the original 5 s. */
+    var lugiaShrine: Boolean = true,
+    /** The players this near Lugia's shrine see its scene in their world, without its camera. */
+    var lugiaSpectatorRadius: Double = 64.0,
+    /** The Regis' shrines play their scene before the Regi appears (REGIS-PLAN.md); false: at once. */
+    var regiShrines: Boolean = true,
+    /** The players this near a Regi's shrine see its scene in their world, without its camera. */
+    var regiSpectatorRadius: Double = 64.0,
+    /** The Enigma Stone's summoning plays Latias's or Latios's scene (EON-PLAN.md § 7); false: the original appearance at once. */
+    var eonCinematic: Boolean = true,
+    /** The players this near the summoner see the scene in their world, without its camera. */
+    var eonSpectatorRadius: Double = 48.0,
 ) {
     @Suppress("SENSELESS_COMPARISON")
     fun validate() {
@@ -40,6 +52,9 @@ class CinematicConfig(
         for ((scene, radius) in defaultSceneRadius()) sceneRadius.putIfAbsent(scene, radius)
         sceneRadius.replaceAll { _, radius -> JsonConfigs.clamp(radius, 0.0, 256.0, 50.0) }
         ambientRadius = JsonConfigs.clamp(ambientRadius, 0.0, 256.0, 50.0)
+        lugiaSpectatorRadius = JsonConfigs.clamp(lugiaSpectatorRadius, 0.0, 128.0, 64.0)
+        regiSpectatorRadius = JsonConfigs.clamp(regiSpectatorRadius, 0.0, 128.0, 64.0)
+        eonSpectatorRadius = JsonConfigs.clamp(eonSpectatorRadius, 0.0, 128.0, 48.0)
         if (scenes == null) scenes = defaultScenes()
         for (scene in CinematicScenes.ALL) {
             val species = scenes[scene]
@@ -64,10 +79,18 @@ class CinematicConfig(
         const val VERSION = 1
 
         fun defaultSceneSeconds(): MutableMap<String, Double> =
-            linkedMapOf(CinematicScenes.MEWTWO to CinematicScenes.MEWTWO_SECONDS, CinematicScenes.MEW to CinematicScenes.MEW_SECONDS)
+            linkedMapOf(CinematicScenes.MEWTWO to CinematicScenes.MEWTWO_SECONDS, CinematicScenes.MEW to CinematicScenes.MEW_SECONDS, CinematicScenes.HO_OH to CinematicScenes.HO_OH_SECONDS).also { map ->
+                // The Legend of Johto (JOHTO-PLAN.md): as written.
+                for (scene in CinematicScenes.ALL.drop(6)) map[scene] = CinematicScenes.writtenSeconds(scene)
+            }
 
-        /** Mewtwo 50 blocks (D11 of the RKS plan), Mew 32 like the birds (D10 of the Mew plan). */
-        fun defaultSceneRadius(): MutableMap<String, Double> = linkedMapOf(CinematicScenes.MEWTWO to 50.0, CinematicScenes.MEW to 32.0)
+        /**
+         * Mewtwo 50 blocks (D11 of the RKS plan), Mew 32 like the birds (D10 of the Mew plan); Johto's
+         * scenes are watched by their invoker alone (the nearby players get the ambience, johto.json).
+         */
+        fun defaultSceneRadius(): MutableMap<String, Double> = linkedMapOf(CinematicScenes.MEWTWO to 50.0, CinematicScenes.MEW to 32.0, CinematicScenes.HO_OH to 0.0).also { map ->
+            for (scene in CinematicScenes.ALL.drop(6)) map[scene] = 0.0
+        }
 
         fun defaultScenes(): MutableMap<String, String> =
             CinematicScenes.ALL.associateWithTo(LinkedHashMap()) { CinematicScenes.defaultSpecies(it) }

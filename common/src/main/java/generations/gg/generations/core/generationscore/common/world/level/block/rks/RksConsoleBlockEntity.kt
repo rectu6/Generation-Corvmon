@@ -18,6 +18,7 @@ import generations.gg.generations.core.generationscore.common.world.recipe.Pokem
 import generations.gg.generations.core.generationscore.common.world.recipe.RksMachineHost
 import generations.gg.generations.core.generationscore.common.world.recipe.RksProtocolRecipe
 import generations.gg.generations.core.generationscore.common.world.rks.MewtwoConfig
+import generations.gg.generations.core.generationscore.common.world.rks.RksEnergy
 import generations.gg.generations.core.generationscore.common.world.rks.RksSettings
 import generations.gg.generations.core.generationscore.common.world.rks.machine.RksConsoleMenu
 import generations.gg.generations.core.generationscore.common.world.rks.machine.RksLayout
@@ -57,7 +58,8 @@ import java.util.UUID
 /**
  * The RKS Machine's master (RKS-PLAN.md § 3.2): the control console keeps the machine's facing
  * (its block's), its modules (checked at each placement or removal, and at load), its state
- * (RksStateMachine), the psychic energy, the slots and the experiment.
+ * (RksStateMachine), the psychic and fire energies (two separate reserves, HOOH-PLAN.md § 9),
+ * the slots and the experiment.
  *
  * Slots: 0 to 8 the inputs (any order, counted ingredients), 9 the output, 10 to 12 the research
  * files M-01, M-02, M-03 (open once the samples are analysed).
@@ -72,8 +74,25 @@ class RksConsoleBlockEntity(pos: BlockPos, state: BlockState) :
     val machine = RksStateMachine()
     val state: RksState get() = machine.state
 
+    /** The psychic energy (Mewtwo's protocol). */
     var energy = 0
+    /** The fire energy (the Sacred Ash), kept apart from the psychic one. */
+    var fireEnergy = 0
     val items: NonNullList<ItemStack> = NonNullList.withSize(SLOTS, ItemStack.EMPTY)
+
+    fun energyOf(kind: RksEnergy): Int = when (kind) {
+        RksEnergy.PSYCHIC -> energy
+        RksEnergy.FIRE -> fireEnergy
+    }
+
+    /** Sets a reserve (capped by its rules); the caller syncs. */
+    fun setEnergy(kind: RksEnergy, value: Int) {
+        val v = value.coerceIn(0, kind.required)
+        when (kind) {
+            RksEnergy.PSYCHIC -> energy = v
+            RksEnergy.FIRE -> fireEnergy = v
+        }
+    }
 
     /** The craft under way. */
     var craftRecipe: ResourceLocation? = null
@@ -232,6 +251,9 @@ class RksConsoleBlockEntity(pos: BlockPos, state: BlockState) :
         if (recipe.isMewtwo) return message(player, "error.protocol")
         if (!RksSettings.allows(recipe)) return message(player, "error.category_off")
         if (recipe.allocate(inputs()) == null) return message(player, "error.missing_ingredients")
+        recipe.energyKind?.let { kind ->
+            if (energyOf(kind) < kind.required) return message(player, kind.key("error.energy"), energyOf(kind), kind.required)
+        }
         val result = recipe.result
         if (result is ItemResult && !outputFits(result.stack)) return message(player, "error.output_full")
         if (!machine.accept(revision)) return
@@ -263,6 +285,15 @@ class RksConsoleBlockEntity(pos: BlockPos, state: BlockState) :
         if (result is ItemResult && !outputFits(result.stack)) return // waits for room
         // A Pokémon goes to a player or appears in front of the machine: someone must be there.
         val player = if (result is ItemResult) null else (receiver(level) ?: return)
+        // The recipe's energy, checked again (a command may have changed it): taken with the ingredients.
+        val kind = recipe.energyKind
+        if (kind != null && energyOf(kind) < kind.required) {
+            message(receiver(level), kind.key("error.energy"), energyOf(kind), kind.required)
+            craftRecipe = null
+            machine.finishCraft(level.gameTime)
+            changed()
+            return
+        }
         val leftovers = recipe.consume(inputs()) { capsule -> capsulePokemon = Optional.ofNullable(capsule.getPokemon()) }
         if (leftovers == null) {
             message(receiver(level), "error.missing_ingredients")
@@ -271,6 +302,7 @@ class RksConsoleBlockEntity(pos: BlockPos, state: BlockState) :
             changed()
             return
         }
+        if (kind != null) setEnergy(kind, energyOf(kind) - kind.required)
         when (result) {
             is ItemResult -> {
                 val made = result.stack.copy()
@@ -485,8 +517,8 @@ class RksConsoleBlockEntity(pos: BlockPos, state: BlockState) :
         return ok
     }
 
-    fun commandEnergy(value: Int) {
-        energy = value.coerceIn(0, mewtwo.energyRequired)
+    fun commandEnergy(value: Int, kind: RksEnergy = RksEnergy.PSYCHIC) {
+        setEnergy(kind, value)
         machine.touch()
         changed()
     }
@@ -571,6 +603,7 @@ class RksConsoleBlockEntity(pos: BlockPos, state: BlockState) :
         }
         nbt.put("Machine", tag)
         nbt.putInt("Energy", energy)
+        nbt.putInt("FireEnergy", fireEnergy)
         nbt.putInt("Missing", missingMask)
         starter?.let { nbt.putUUID("Starter", it) }
         craftRecipe?.let { nbt.putString("Recipe", it.toString()) }
@@ -590,6 +623,7 @@ class RksConsoleBlockEntity(pos: BlockPos, state: BlockState) :
         }
         machine.load(values)
         energy = nbt.getInt("Energy")
+        fireEnergy = nbt.getInt("FireEnergy")
         missingMask = if (nbt.contains("Missing")) nbt.getInt("Missing") else missingMask
         starter = if (nbt.hasUUID("Starter")) nbt.getUUID("Starter") else null
         craftRecipe = if (nbt.contains("Recipe")) ResourceLocation.tryParse(nbt.getString("Recipe")) else null
@@ -644,5 +678,7 @@ class RksConsoleBlockEntity(pos: BlockPos, state: BlockState) :
         const val SLOTS = 13
         /** In the console's item: the psychic energy it kept. */
         const val ITEM_ENERGY = "RksEnergy"
+        /** In the console's item: the fire energy it kept. */
+        const val ITEM_FIRE_ENERGY = "RksFireEnergy"
     }
 }

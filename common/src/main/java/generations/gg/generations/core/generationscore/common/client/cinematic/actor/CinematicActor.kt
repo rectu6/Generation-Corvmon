@@ -39,10 +39,23 @@ class CinematicActor(val species: ResourceLocation, val aspects: Set<String>) {
 
     /**
      * Queues the model at its world feet (yaw: Minecraft's; pitch nose down, roll left wing up,
-     * degrees). seconds: the action's time (its animations follow the slow motion).
+     * degrees). seconds: the action's time (its animations follow the slow motion). bright: lit
+     * at full light whatever the place (the manifestations, Ho-Oh in the sky).
      */
-    fun render(feet: Vector3d, yaw: Double, pitch: Double, roll: Double, scale: Double, pose: ActorPose, seconds: Float) {
+    fun render(feet: Vector3d, yaw: Double, pitch: Double, roll: Double, scale: Double, pose: ActorPose, seconds: Float, bright: Boolean = false) =
+        render(feet, yaw, pitch, roll, scale, pose, seconds, bright, null, -1, false)
+
+    /**
+     * The same, with a look (JOHTO-PLAN.md § 2): material, a statue's texture (a Johto statue:
+     * drawn like StatueEntityRenderer, its animations frozen when `frozen`); tint, the colour the
+     * model is multiplied by (ARGB, -1: none), translucent with its alpha (the spectral beasts).
+     */
+    fun render(
+        feet: Vector3d, yaw: Double, pitch: Double, roll: Double, scale: Double, pose: ActorPose, seconds: Float, bright: Boolean,
+        material: ResourceLocation?, tint: Int, translucent: Boolean, frozen: Boolean = false,
+    ) {
         if (pose == ActorPose.HIDDEN || scale <= 0.01) return
+        if (translucent && (tint ushr 24) < 4) return
         val minecraft = Minecraft.getInstance()
         val level = minecraft.level ?: return
         val camera = minecraft.gameRenderer.mainCamera.position
@@ -56,7 +69,7 @@ class CinematicActor(val species: ResourceLocation, val aspects: Set<String>) {
         val model = VaryingModelRepository.getPoser(species, state)
         val context = RenderContext()
         model.context = context
-        VaryingModelRepository.getTextureNoSubstitute(species, state)?.let { context.put(RenderContext.TEXTURE, it) }
+        if (material == null) VaryingModelRepository.getTextureNoSubstitute(species, state)?.let { context.put(RenderContext.TEXTURE, it) }
         context.put(RenderContext.SCALE, form.baseScale)
         context.put(RenderContext.SPECIES, species)
         context.put(RenderContext.ASPECTS, aspects)
@@ -69,10 +82,10 @@ class CinematicActor(val species: ResourceLocation, val aspects: Set<String>) {
             for (name in pending) state.addFirstAnimation(setOf(name))
             pending.clear()
         }
-        val step = if (lastSeconds < 0f) 0f else (seconds - lastSeconds).coerceIn(0f, 0.5f)
+        val step = if (lastSeconds < 0f || frozen) 0f else (seconds - lastSeconds).coerceIn(0f, 0.5f)
         lastSeconds = seconds
         state.updatePartialTicks(step * 20f)
-        model.applyAnimations(null, state, 0f, 0f, seconds * 20f, 0f, 0f)
+        model.applyAnimations(null, state, 0f, 0f, (if (frozen) 0f else seconds) * 20f, 0f, 0f)
 
         val pose = PoseStack()
         pose.translate(feet.x - camera.x, feet.y - camera.y, feet.z - camera.z)
@@ -91,14 +104,46 @@ class CinematicActor(val species: ResourceLocation, val aspects: Set<String>) {
         pose.scale(-1f, -1f, 1f)
         pose.translate(0.0, -1.501, 0.0)
         val buffers = minecraft.renderBuffers().bufferSource()
-        val renderType = RenderType.entityCutout(VaryingModelRepository.getTexture(species, state))
+        val texture = material ?: VaryingModelRepository.getTexture(species, state)
+        val renderType = when {
+            material != null -> RenderType.entitySolid(material)
+            translucent -> RenderType.entityTranslucent(texture)
+            else -> RenderType.entityCutout(texture)
+        }
         val buffer = buffers.getBuffer(renderType)
-        val light = LevelRenderer.getLightColor(level, BlockPos.containing(feet.x, feet.y + 1.0, feet.z))
-        model.withLayerContext(buffers, state, VaryingModelRepository.getLayers(species, state)) {
-            model.render(context, pose, buffer, light, OverlayTexture.NO_OVERLAY, -1)
+        val light = if (bright) net.minecraft.client.renderer.LightTexture.FULL_BRIGHT else LevelRenderer.getLightColor(level, BlockPos.containing(feet.x, feet.y + 1.0, feet.z))
+        if (material != null) {
+            // A statue: its material for every layer, as StatueEntityRenderer does.
+            generations.gg.generations.core.generationscore.common.client.render.entity.ModifiableTextureSupplier.texture = material
+            model.withLayerContext(buffers, state, statueLayers) {
+                model.render(context, pose, buffer, light, OverlayTexture.NO_OVERLAY, tint)
+            }
+        } else {
+            model.withLayerContext(buffers, state, if (translucent) emptyList() else VaryingModelRepository.getLayers(species, state)) {
+                model.render(context, pose, buffer, light, OverlayTexture.NO_OVERLAY, tint)
+            }
         }
         model.setDefault()
         // A RareCandy model is only queued here; any other kind is drawn now.
         buffers.endBatch(renderType)
+    }
+
+    companion object {
+        /** A statue's one layer, whose texture is the material (StatueEntityRenderer's, made the same way). */
+        private val statueLayers: List<com.cobblemon.mod.common.client.render.ModelLayer> by lazy {
+            val layer = com.cobblemon.mod.common.client.render.ModelLayer()
+            try {
+                val field = com.cobblemon.mod.common.client.render.ModelLayer::class.java.getDeclaredField("texture")
+                field.isAccessible = true
+                field.set(layer, generations.gg.generations.core.generationscore.common.client.render.entity.ModifiableTextureSupplier)
+                listOf(layer)
+            } catch (e: Exception) {
+                emptyList()
+            }
+        }
+
+        /** A statue material's texture ("concrete", "marble"...), or null when the pack has none. */
+        fun materialTexture(name: String?): ResourceLocation? =
+            if (name.isNullOrBlank()) null else generations.gg.generations.core.generationscore.common.client.GenerationsTextureLoader.getLocation(name)
     }
 }

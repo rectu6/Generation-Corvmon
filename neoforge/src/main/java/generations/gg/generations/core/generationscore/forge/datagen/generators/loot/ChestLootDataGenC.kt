@@ -750,7 +750,7 @@ object ChestLootDataGenC {
             POKE_BALL, GenerationsItems.ICY_WING, GenerationsItems.ELEGANT_WING,
             CobblemonItems.HEALTH_FEATHER, GenerationsItems.STATIC_WING, GenerationsItems.BELLIGERENT_WING,
             GenerationsItems.FIERY_WING, GenerationsItems.SINISTER_WING, GenerationsItems.SILVER_WING,
-            GenerationsItems.RAINBOW_WING, CobblemonItems.COBA_BERRY, CobblemonItems.FLYING_GEM,
+            CobblemonItems.COBA_BERRY, CobblemonItems.FLYING_GEM,
             GenerationsItems.FLYING_MEMORY_DRIVE, CobblemonItems.IRON_BALL,
             CobblemonItems.SHARP_BEAK, GenerationsItems.SKY_PLATE, CobblemonItems.UTILITY_UMBRELLA,
             CobblemonItems.AIR_BALLOON, CobblemonItems.GREPA_BERRY, CobblemonItems.LANSAT_BERRY,

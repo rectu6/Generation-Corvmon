@@ -80,6 +80,7 @@
     "client.PokemonItemRendererMixin",
     "client.PokemonOnShoulderRendererCompanionAccessorMixin",
     "client.SoundBufferLibraryMixin",
+    "client.SoundEngineMixin",
     "client.PokemonOnShoulderRenderMixin",
     "client.PokemonRendererMixin",
     "client.PosableStateMixin",

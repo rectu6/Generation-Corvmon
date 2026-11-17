@@ -66,6 +66,30 @@ Les composants génétiques sont dans la recette `mewtwo.json`, pas ici. Le bar�
 pré-évolution mais avec des évolutions = `firstStage` ; avec les deux = `middleStage` ; avec une pré-évolution seulement =
 `finalStage` ; ni l'une ni l'autre = `noEvolution`. Une valeur de `speciesPoints` passe avant.
 
+## 3 bis. Énergie Feu et Cendres sacrées (`config/generations/core/rks/fire_energy.json`, build 61)
+
+Deux réserves **séparées** dans la console : l'énergie psychique (Mewtwo, `mewtwo.json`) et l'énergie Feu
+(« énergie de renaissance »). Aucune ne sert à l'autre. Les deux sont gardées dans l'objet Console au
+démontage (`RksEnergy`, `RksFireEnergy`) et rendues en la reposant.
+
+| Clé | Défaut | Rôle |
+|---|---|---|
+| `energyRequired` | 150 | taille de la réserve Feu, et ce que prend une recette `"energy": "fire"` |
+| `points` | 1 / 2 / 3 / 2 | même barème que Mewtwo (Salamèche 1, Reptincel 2, Dracaufeu 3, sans évolution 2) |
+| `speciesPoints`, `excludedLabels`, `excludedSpecies`, `allowedSpecies`, `allowPc` | comme `mewtwo.json` | |
+
+Pokémon Feu (type principal ou secondaire), de l'équipe ou du PC ; légendaires, fabuleux, Ultra-Chimères et
+Paradoxe refusés. Sacrifice par le même panneau que Mewtwo (liste paginée envoyée par le serveur, double
+confirmation, chaque Pokémon revérifié par son UUID, la révision de la machine comme verrou).
+
+**Recette** `sacred_ash.json` : 1 Plume sacrée de Ho-Oh + 1 Orbe (`generations_core:orb`) + `"energy": "fire"`
+→ 1 Cendre Sacrée (`generations_core:sacred_ash`, l'objet des statues). Le champ facultatif `energy` du format
+`rks_protocol` exige la réserve pleine pour lancer et la vide à la fin de la fabrication, avec les ingrédients.
+L'ancienne recette (totem + charbon + Arcenci'Aile) est retirée ; l'Arcenci'Aile garde son rôle au shrine de Ho-Oh.
+
+Commandes : `/generations rks energy fire <valeur>|reset|full`, `/generations rks prepare sacred_ash` (plume et
+Orbe dans les cases vides, réserve Feu pleine), `/generations rks give feather`.
+
 ## 4. `config/generations/core/cinematics/cinematics.json` (clés ajoutées)
 
 | Clé | Défaut | Rôle |

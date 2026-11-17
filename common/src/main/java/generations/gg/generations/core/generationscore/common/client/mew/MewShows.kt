@@ -32,6 +32,8 @@ class MewShowEvent(val time: Double, val kind: Kind) {
         TELEPORT,
         /** Explodes into psychic motes (the opening's end). */
         BURST,
+        /** Dissolves into psychic motes that linger (B). */
+        DISSOLVE,
     }
 }
 
@@ -54,6 +56,15 @@ abstract class MewShow(val duration: Double) {
 
     /** The place of the motes (B: where the player will turn). */
     open val motesAt: Vector3d? get() = null
+
+    /**
+     * While Mew has not been looked at yet, this moment may slow down (HOOH-PLAN.md § 4: the show
+     * waits for the player's gaze, 3 s at most). False for the challenge's scenes.
+     */
+    open fun holdable(t: Double): Boolean = false
+
+    /** A false appearance (its Mew is drawn bigger and brighter, with an aura). */
+    open val manifestation: Boolean get() = false
 
     companion object {
         fun smooth(x: Double): Double {
@@ -84,21 +95,27 @@ abstract class MewShow(val duration: Double) {
 
         /** The false appearance of that type (0 to 3 = A to D). */
         fun manifestation(type: Int, seed: Int, origin: Vector3d, yaw: Double, second: Vector3d, seconds: Double): MewShow = when (type) {
-            0 -> Crossing(origin, second, seconds.coerceIn(2.0, 4.0), seed)
-            1 -> Presence(origin, seconds.coerceIn(3.0, 9.0))
-            2 -> Aerial(origin, second, seconds.coerceIn(3.0, 7.0), seed)
-            else -> Curious(origin, second, yaw, seconds.coerceIn(4.0, 7.0))
+            0 -> Crossing(origin, second, seconds.coerceIn(3.0, 10.0), seed)
+            1 -> Presence(origin, seconds.coerceIn(5.0, 12.0))
+            2 -> Aerial(origin, second, seconds.coerceIn(4.0, 12.0), seed)
+            else -> Curious(origin, second, yaw, seconds.coerceIn(4.5, 10.0))
         }
     }
 }
 
-/** A — across the forest: a quick pass between two points behind the trees, a look, a small cry, a puff. */
+/** A — across the forest: a pass between two points of a clearing, a look at the player, a small cry, a puff. */
 class Crossing(val from: Vector3d, val delta: Vector3d, duration: Double, val seed: Int) : MewShow(duration) {
     override val events = listOf(
         MewShowEvent(0.0, MewShowEvent.Kind.APPEAR),
         MewShowEvent(duration * 0.48, MewShowEvent.Kind.CRY),
         MewShowEvent(duration - 0.15, MewShowEvent.Kind.PUFF),
     )
+
+    override fun holdable(t: Double): Boolean = t in 0.3..duration * 0.8
+
+    override fun trail(t: Double): Boolean = t < duration - 0.15
+
+    override val manifestation: Boolean get() = true
 
     override fun pose(t: Double, player: Vector3d, out: MewPose): MewPose {
         val u = phase(t, 0.0, duration - 0.1)
@@ -115,25 +132,47 @@ class Crossing(val from: Vector3d, val delta: Vector3d, duration: Double, val se
     }
 }
 
-/** B — a presence: a cry behind the player, pink motes where they turn (about 6 s), no Mew. */
+/**
+ * B — a presence: a cry behind the player; Mew is there when they turn, stares at them, then
+ * dissolves into psychic motes that linger a few seconds (HOOH-PLAN.md § 4, D7).
+ */
 class Presence(val at: Vector3d, duration: Double) : MewShow(duration) {
-    override val events = listOf(MewShowEvent(0.2, MewShowEvent.Kind.CRY))
+    private val dissolve = (duration - 2.6).coerceAtLeast(2.0)
+
+    override val events = listOf(
+        MewShowEvent(0.2, MewShowEvent.Kind.CRY),
+        MewShowEvent(0.55, MewShowEvent.Kind.APPEAR),
+        MewShowEvent(dissolve * 0.6, MewShowEvent.Kind.LAUGH),
+        MewShowEvent(dissolve, MewShowEvent.Kind.DISSOLVE),
+    )
 
     override fun pose(t: Double, player: Vector3d, out: MewPose): MewPose {
-        out.pos.set(at)
-        out.visible = false
-        out.scale = 0.0
+        out.pos.set(at.x, at.y + 0.12 * sin(t * 2.2), at.z)
+        out.yaw = yaw(at.x, at.z, player.x, player.z)
+        out.roll = 7.0 * sin(t * 1.7)
+        out.scale = smooth(phase(t, 0.5, 0.85)) * (1.0 - smooth(phase(t, dissolve - 0.1, dissolve + 0.25)))
+        out.visible = t in 0.5..(dissolve + 0.25)
         return out
     }
 
-    override fun motes(t: Double): Double = 9.0 * smooth(phase(t, 0.3, 1.0)) * (1.0 - smooth(phase(t, duration - 1.5, duration)))
+    override fun holdable(t: Double): Boolean = t in 0.9..(dissolve - 0.3)
+
+    override fun motes(t: Double): Double =
+        4.0 * smooth(phase(t, 0.5, 1.0)) * (1.0 - smooth(phase(t, dissolve - 0.2, dissolve))) +
+            16.0 * smooth(phase(t, dissolve, dissolve + 0.2)) * (1.0 - smooth(phase(t, duration - 1.2, duration)))
 
     override val motesAt: Vector3d get() = at
+
+    override val manifestation: Boolean get() = true
 }
 
-/** C — in the sky: a flight 8 to 14 blocks up, a psychic trail, a flash of teleportation. */
+/** C — in the sky: a flight over the trees, a psychic trail, a flash of teleportation. */
 class Aerial(val from: Vector3d, val delta: Vector3d, duration: Double, val seed: Int) : MewShow(duration) {
-    private val vanish = duration * 0.85
+    private val vanish = duration * 0.88
+
+    override fun holdable(t: Double): Boolean = t in 0.3..(vanish - 0.4)
+
+    override val manifestation: Boolean get() = true
 
     override val events = listOf(
         MewShowEvent(0.0, MewShowEvent.Kind.APPEAR),
@@ -156,8 +195,14 @@ class Aerial(val from: Vector3d, val delta: Vector3d, duration: Double, val seed
 
 /** D — curious: it appears in front of the player, stares, circles round them once, laughs, vanishes. */
 class Curious(val at: Vector3d, val toPlayer: Vector3d, val facing: Double, duration: Double) : MewShow(duration) {
-    private val circleStart = 1.4
-    private val circleEnd = (duration - 1.4).coerceAtLeast(circleStart + 1.5)
+    private val circleStart = 1.6
+    private val circleEnd = (duration - 1.5).coerceAtLeast(circleStart + 2.0)
+
+    override fun holdable(t: Double): Boolean = t in 0.3..circleStart
+
+    override fun trail(t: Double): Boolean = t in circleStart..circleEnd
+
+    override val manifestation: Boolean get() = true
 
     override val events = listOf(
         MewShowEvent(0.0, MewShowEvent.Kind.APPEAR),

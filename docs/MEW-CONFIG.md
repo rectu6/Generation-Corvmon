@@ -142,9 +142,18 @@ l'arrêt, et **tout de suite** au déblocage et à `reset`.
   D12), hors combat, cinématique, voyage Ultra-Warp ou mini-jeu : un tirage de `chancePercent` toutes les
   `intervalMinutes` **actives** ; le premier créneau de chaque joueur est tiré au hasard. Type choisi par
   `weight` parmi les types activés ; `seconds` : sa durée.
-- A : passage rapide derrière les arbres, regard, petit cri, bouffée rose. B : cri derrière le joueur et
-  motes roses, sans Mew. C : survol à 8–14 blocs avec une traînée, éclair de téléportation. D : apparaît
-  devant le joueur, le fixe, tourne autour de lui, rit, disparaît.
+- A : traversée d'une trouée à 10–16 blocs dans le regard (±45°, départ, milieu et arrivée visibles depuis les
+  yeux, au-dessus des herbes, sur une ligne libre), regard, petit cri, bouffée rose. B : cri derrière le joueur,
+  puis Mew est là où il se retourne (5 à 8 blocs, place libre et visible), le fixe et se dissout en particules
+  psychiques qui restent quelques secondes. C : survol 5 à 8 blocs au-dessus des arbres et du relief du trajet
+  (carte des hauteurs), à travers le regard, traînée, éclair de téléportation. D : apparaît devant le joueur
+  (place libre et visible), le fixe, tourne autour de lui avec une traînée, rit, disparaît.
+- **Visibilité (build 61, HOOH-PLAN.md § 4)** : durées 6 / 7 / 7 / 6 s (`mew.json` passe en version 2 et ne change
+  une durée que si elle avait gardé l'ancienne valeur 3 / 6 / 5 / 5) ; Mew plus grand, en pleine lumière, aura rose
+  et bleue, traînées plus larges qui s'effacent en 1,5 s, signature sonore (carillon aigu et rire) à chaque
+  apparition, sons plus forts (24 à 32 blocs) ; **le spectacle attend le regard** : tant que Mew n'a pas été au
+  centre de l'écran (≈ 20°) pendant 0,6 s, ses moments clés ralentissent (×0,3, 3 s de plus au plus). La
+  fréquence, les poids, les tirages et le mini-jeu sont **inchangés**.
 - **Un seul paquet** au joueur concerné (type, graine, points, durée) ; tout le reste est calculé par son
   client : aucune entité, rien d'attrapable ni de frappable, la caméra jamais prise. Les autres joueurs ne
   voient rien (D10).
@@ -216,7 +225,9 @@ l'arrêt, et **tout de suite** au déblocage et à `reset`.
 ## 6. Côté client (`mew_client.json`)
 
 `particleIntensity` (0 à 2, 0 = aucune), `volume` (0 à 1), `manifestationVisuals` (`false` : les fausses
-apparitions s'entendent sans se voir), `hud` (chrono du défi). Rendu léger après le monde (avec ou sans
+apparitions s'entendent sans se voir), `hud` (chrono du défi), et depuis le build 61 : `manifestationScale` (taille
+de Mew pendant une fausse apparition, 1 à 2, 1,35), `aura` (halo rose et bleu), `glowThroughLeaves` (faible lueur
+visible à travers le feuillage), `waitForGaze` (le spectacle attend le regard). Rendu léger après le monde (avec ou sans
 shader), sans post-traitement ; les modèles sont dessinés dans la passe du monde.
 
 ## 7. Toutes les commandes (`/generations mew …`)

@@ -13,8 +13,18 @@ import java.util.function.BiConsumer
 open class UpdateStatueHandler<V, T : UpdateStatuePacket<V, T>>(private var accessor: EntityDataAccessor<V>) : ServerNetworkPacketHandler<T> {
 
 
+    /**
+     * JOHTO-PLAN.md D7: any client could send this (a modified one turned any statue into a
+     * legendary to call at will). Now: an operator (level 2), a chisel in hand, within 8 blocks,
+     * and never a statue of the Legend of Johto (registered statues are locked).
+     */
     override fun handle(packet: T, server: MinecraftServer, player: ServerPlayer) {
+        val chisel = player.mainHandItem.`is`(generations.gg.generations.core.generationscore.common.world.item.GenerationsItems.CHISEL) ||
+            player.offhandItem.`is`(generations.gg.generations.core.generationscore.common.world.item.GenerationsItems.CHISEL)
+        if (!player.hasPermissions(2) || !chisel) return
         player.level().getEntity(packet.entityId).takeIf { it is StatueEntity }?.let { it as StatueEntity }?.run {
+            if (distanceTo(player) > 8f) return
+            if (generations.gg.generations.core.generationscore.common.world.johto.Johto.places.statue(uuid) != null) return
             entityData.set(accessor, packet.value)
         }
     }

@@ -618,6 +618,12 @@ object GenerationsItems: ItemPlatformRegistry() {
     val RKS_RESEARCH_M02_STABILIZATION = register("rks_research_m02_stabilization", { generations.gg.generations.core.generationscore.common.world.item.rks.RksResearchItem(it) })
     val RKS_RESEARCH_M03_CONTAINMENT = register("rks_research_m03_containment", { generations.gg.generations.core.generationscore.common.world.item.rks.RksResearchItem(it) })
     val RKS_REPAIR_KIT = register("rks_repair_kit", { generations.gg.generations.core.generationscore.common.world.item.rks.RksRepairKitItem(it) }, UTILITY)
+    // The Passage of the Rainbow (HOOH-PLAN.md § 8): no recipe, no loot; the Sacred Ash's ingredient.
+    val HO_OH_SACRED_FEATHER = register("ho_oh_sacred_feather", { generations.gg.generations.core.generationscore.common.world.item.hooh.HoOhSacredFeatherItem(it) }, LEGENDARY_ITEMS)
+    // The Legend of Johto (JOHTO-PLAN.md § 8): one per won trial, consumed at the Bell Tower's altar.
+    val RAIKOU_MEMORY = register("raikou_memory", { generations.gg.generations.core.generationscore.common.world.item.johto.JohtoMemoryItem(it) }, LEGENDARY_ITEMS)
+    val ENTEI_MEMORY = register("entei_memory", { generations.gg.generations.core.generationscore.common.world.item.johto.JohtoMemoryItem(it) }, LEGENDARY_ITEMS)
+    val SUICUNE_MEMORY = register("suicune_memory", { generations.gg.generations.core.generationscore.common.world.item.johto.JohtoMemoryItem(it) }, LEGENDARY_ITEMS)
     val ADAMANT_ORB = register("adamant_orb", { CreationTrioItem(it.stacksTo(1), LegendKeys.DIALGA, GenerationsCore.id("models/block/shrines/creation_trio/adamant_orb.pk")) }, LEGENDARY_ITEMS)
     val GRISEOUS_ORB = register("griseous_orb", { CreationTrioItem(it.stacksTo(1), LegendKeys.GIRATINA, GenerationsCore.id("models/block/shrines/creation_trio/griseous_orb.pk")) }, LEGENDARY_ITEMS)
     val LUSTROUS_ORB = register("lustrous_orb", { CreationTrioItem(it.stacksTo(1), LegendKeys.PALKIA, GenerationsCore.id("models/block/shrines/creation_trio/lustrous_orb.pk")) }, LEGENDARY_ITEMS)
@@ -668,7 +674,6 @@ object GenerationsItems: ItemPlatformRegistry() {
     val LIGHT_STONE = register("light_stone", { TaoTrioStoneItem(it.stacksTo(1).durability(100), LegendKeys.RESHIRAM) }, LEGENDARY_ITEMS)
     val DARK_STONE = register("dark_stone", { TaoTrioStoneItem(it.stacksTo(1).durability(100), LegendKeys.ZEKROM) }, LEGENDARY_ITEMS)
     val DRAGON_STONE = register("dragon_stone", { TaoTrioStoneItem(it.stacksTo(1).durability(100), LegendKeys.KYUREM) }, LEGENDARY_ITEMS)
-    val RAINBOW_WING = register("rainbow_wing", { WingItem(it, "rainbow", ElementalTypes.FLYING, LegendKeys.HO_OH) }, LEGENDARY_ITEMS)
     val SILVER_WING = register("silver_wing", { WingItem(it, "silver", ElementalTypes.FLYING, LegendKeys.LUGIA) }, LEGENDARY_ITEMS)
     val DARK_SOUL = register("dark_soul", ::ItemWithLangTooltipImpl, LEGENDARY_ITEMS)
     val DRAGON_SOUL = register("dragon_soul", ::ItemWithLangTooltipImpl, LEGENDARY_ITEMS)

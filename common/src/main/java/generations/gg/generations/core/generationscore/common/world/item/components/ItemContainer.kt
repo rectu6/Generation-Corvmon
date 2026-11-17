@@ -105,7 +105,6 @@ class MelodFluteContainer(imbued: ItemStack = ItemStack.EMPTY): SingleItemStackC
                     MelodyFluteItem.isItem(GenerationsItems.BELLIGERENT_WING, stack) ||
                     MelodyFluteItem.isItem(GenerationsItems.FIERY_WING, stack) ||
                     MelodyFluteItem.isItem(GenerationsItems.SINISTER_WING, stack) ||
-                    MelodyFluteItem.isItem(GenerationsItems.RAINBOW_WING, stack) ||
                     MelodyFluteItem.isItem(GenerationsItems.SILVER_WING, stack)
     }
 
